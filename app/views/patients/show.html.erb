@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+<fieldset class="f-set f-patient">
+  <legend>Patient Info.</legend>
+</fieldset>
+<div id="patient-details">
+  <h1 id="name">
+    <%= @patient.firstname %>&nbsp;<%= @patient.middlename %>&nbsp;<%= @patient.lastname %>
+    <ul>
+      <li>HIN: <%= @patient.health_insurance_number %></li>
+      <li class="expire">Expires on: <%= @patient.health_expiry_date.nil? ? '' : @patient.health_expiry_date.to_formatted_s(:long) %></li>
+    </ul>
+  </h1>
+  <h2 id="heading">
+    <%= @patient.gender == 'M' ? 'Male' : 'Female' %>, <%= @patient.marital_status == 'Y' ? 'Married' : 'Unmarried' %><br />
+    Birthdate: <%= @patient.birthdate.nil? ? '' : @patient.birthdate.to_formatted_s(:long) %>
+  </h2>
+  <div class="address-details">
+    <div class="address">
+      <%= @patient.address1 %><br />
+      <%= @patient.address2 %><br />
+      <%= @patient.city %><br />
+      <%= @patient.province %><br />
+      <%= @patient.postal_code %><br />
+    </div>
+    <div class="contact">
+      Home (Ph):&nbsp; <%= @patient.home_phone %><br />
+      Mobile (Ph):&nbsp;<%= @patient.mobile %><br />
+    </div>
+    <div class="misc">
+      Patient Unique ID: <%= @patient.patient_unique_id %><br /><br />
+      Version Code: <%= @patient.version_code %><br /><br />
+      Is Active: <%= @patient.isactive %>
+    </div>
+    <div class="clear">
+    </div>
+  </div>
+</div>
+<h3>Physician Visited</h3>
+<table>
+  <tr>
+    <th>Physician number</th>
+    <th>Firstname</th>
+    <th>Middlename</th>
+    <th>Lastname</th>
+    <th></th>
+  </tr>
+
+<% for physician in @patient.physicians %>
+  <tr>
+    <td><%= physician.physician_number %></td>
+    <td><%= physician.firstname %></td>
+    <td><%= physician.middlename %></td>
+    <td><%= physician.lastname %></td>
+    <td><%= link_to 'Show', physician %></td>
+  </tr>
+<% end %>
+</table>
+<br />
+<br />
+<%= link_to 'Edit', edit_patient_path(@patient) %> |
+<%= link_to 'Back', patients_path %>

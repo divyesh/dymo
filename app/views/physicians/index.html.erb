@@ -1,0 +1,37 @@
+<h1>Listing physicians</h1>
+<%= form_tag physicians_path, :method => 'get', :id => 'patients_search' do %>
+  <p>
+    <%= text_field_tag :search, params[:search], :class => 'text' %>
+    <%= submit_tag "Search", :name => nil %>&nbsp;&nbsp;&nbsp; or &nbsp;&nbsp;&nbsp; <%= link_to 'Add New Physician', new_physician_path %>
+  </p>
+<% end %>
+
+<br />
+
+<table>
+  <tr>
+    <th>Physician number</th>
+    <th>Firstname</th>
+    <th>Middlename</th>
+    <th>Lastname</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @physicians.each do |physician| %>
+  <tr>
+    <td><%= physician.physician_number %></td>
+    <td><%= physician.firstname %></td>
+    <td><%= physician.middlename %></td>
+    <td><%= physician.lastname %></td>
+    <td><%= link_to 'Show', physician %></td>
+    <td><%= link_to 'Edit', edit_physician_path(physician) %></td>
+    <td><%= link_to 'Destroy', physician, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= will_paginate @physicians %>

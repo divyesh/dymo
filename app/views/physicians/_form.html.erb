@@ -1,0 +1,38 @@
+<%= simple_form_for(@physician) do |f| %>
+  <% if @physician.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@physician.errors.count, "error") %> prohibited this physician from being saved:</h2>
+
+      <ul>
+      <% @physician.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.input :physician_number %>
+  <%= f.input :firstname %>
+  <%= f.input :middlename %>
+  <%= f.input :lastname %>
+  <%= f.input :physician_unique_id %>
+  <%= f.input :cpso %>
+  <%= f.input :type do %>
+    <%= f.collection_radio :type, [['1', 'Physician Type 1'],['2', 'Physician Type 2']], :first, :last %>
+  <% end %>
+  <%= f.input :gender do %>
+    <%= f.collection_radio :gender, [['M', 'Male'],['F', 'Female']], :first, :last %>
+  <% end %>
+  <%= f.input :location %>
+  <%= f.input :address1 %>
+  <%= f.input :address2 %>
+  <%= f.input :city %>
+  <%= f.input :province %>
+  <%= f.input :country, :as => :string %>
+  <%= f.input :postal_code %>
+  <%= f.input :phone %>
+  <%= f.input :fax %>
+  <%= f.input :emergency_number %>
+  <%= f.input :email %>
+  <%= f.input :isactive %>
+  <%= f.button :submit %>
+<% end %>

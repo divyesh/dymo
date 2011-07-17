@@ -1,0 +1,41 @@
+<%= simple_form_for(@patient) do |f| %>
+  <% if @patient.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@patient.errors.count, "error") %> prohibited this patient from being saved:</h2>
+
+      <ul>
+      <% @patient.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.input :patient_unique_id %>
+  <%= f.input :firstname %>
+  <%= f.input :middlename %>
+  <%= f.input :lastname %>
+  <%= f.input :health_insurance_number %>
+  <%= f.input :health_expiry_date %>
+  <%= f.input :birthdate %>
+  <%= f.input :version_code %>
+  <%= f.input :gender do %>
+    <%= f.collection_radio :gender, [['M','Male'] ,['F', 'Female']], :first, :last, :class => 'radio-collection' %>
+  <% end %>
+  <%= f.input :marital_status do %>
+    <%= f.collection_radio :marital_status, [['Y','Married'] ,['N', 'Unmarried']], :first, :last, :class => 'radio-collection' %>
+  <% end %>
+  <%= f.input :address1 %>
+  <%= f.input :address2 %>
+  <%= f.input :city %>
+  <%= f.input :province %>
+  <%= f.input :postal_code %>
+  <%= f.input :home_phone %>
+  <%= f.input :mobile %>
+  <%= f.input :isactive %>
+  <%= f.input :physicians do %>
+   <%= f.collection_select :physician_ids, Physician.all, :id, :firstname, :prompt => "Select a Physician" %>
+  <% end %>
+  <%= f.button :submit %>
+
+<% end %>
