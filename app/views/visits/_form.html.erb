@@ -1,0 +1,16 @@
+<%= simple_form_for(@visit) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="inputs">
+    <%= f.input :patient_id do %>
+      <%= f.collection_select :patient_id, Patient.all, :id, :fullname_with_health_insurance_number , :prompt => 'Select a Patient' %>
+    <% end %>
+    <%= f.input :physician_id do %>
+      <%= f.collection_select :physician_id, Physician.all, :id, :fullname_with_physician_number, :prompt => 'Select a Physician' %>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

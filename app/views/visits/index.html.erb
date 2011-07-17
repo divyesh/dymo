@@ -1,0 +1,49 @@
+<h1>Listing visits</h1>
+<%= form_tag visits_path, :method => 'get', :id => "search_form" do %>
+  <p>
+    <%= text_field_tag :search, params[:search], :class => 'text' %>
+    <%= submit_tag "Search", :name => nil %>&nbsp;&nbsp;&nbsp; or &nbsp;&nbsp;&nbsp; <%= link_to 'Add Visit', new_visit_path %>
+  </p>
+<% end %>
+<br />
+<table>
+  <tr>
+    <th>OHIP</th>
+    <th>Health Expiry</th>
+    <th>Lastname</th>
+    <th>Firstname</th>
+    <th>Middlename</th>
+    <th>Birthdate</th>
+    <th>Address</th>
+    <th>Physician</th>
+    <th>Visited on</th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @visits.each do |visit| %>
+  <tr>
+    <td><%= visit.patient.health_insurance_number %><%= visit.patient.version_code %></td>
+    <td><%= visit.patient.health_expiry_date.nil? ? '' : visit.patient.health_expiry_date.to_formatted_s(:long) %></td>
+    <td><%= visit.patient.lastname %></td>
+    <td><%= visit.patient.firstname %></td>
+    <td><%= visit.patient.middlename %></td>
+    <td><%= visit.patient.birthdate.nil? ? '' : visit.patient.birthdate.to_formatted_s(:long) %></td>
+    <td>
+      <%= visit.patient.address1 %><br />
+      <%= visit.patient.address2 %><br />
+      <%= visit.patient.city %><br />
+      <%= visit.patient.province %><br />
+      <%= visit.patient.postal_code %><br />
+      <%= visit.patient.home_phone %><br />
+      <%= visit.patient.mobile %>
+    </td>
+    <td><%= visit.physician.lastname %>&nbsp;<%= visit.physician.firstname %>&nbsp;<%= visit.physician.middlename %></td>
+    <td><%= visit.created_at.strftime("%b %d, %Y") %></td>
+    <td class="actions"><%= link_to 'Remove', visit, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><a href="#">Print Label</a></td>
+  </tr>
+<% end %>
+</table>
+<br />
+<%= will_paginate @visits %>
