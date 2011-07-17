@@ -1,4 +1,8 @@
 Dymo::Application.routes.draw do
+  resources :visits
+
+  resources :appointments
+
   resources :physicians
 
   resources :patients

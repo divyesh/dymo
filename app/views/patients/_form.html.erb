@@ -33,9 +33,11 @@
   <%= f.input :home_phone %>
   <%= f.input :mobile %>
   <%= f.input :isactive %>
-  <%= f.input :physicians do %>
-   <%= f.collection_select :physician_ids, Physician.all, :id, :firstname, :prompt => "Select a Physician" %>
+
+  <% if controller.action_name == 'new' %>
+    <%= f.input :physicians do %>
+     <%= f.collection_select :physician_ids, Physician.all, :id, :firstname, :prompt => "Select a Physician" %>
+    <% end %>
   <% end %>
   <%= f.button :submit %>
-
 <% end %>

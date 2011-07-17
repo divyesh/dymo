@@ -26,36 +26,34 @@
       Home (Ph):&nbsp; <%= @patient.home_phone %><br />
       Mobile (Ph):&nbsp;<%= @patient.mobile %><br />
     </div>
-    <div class="misc">
-      Patient Unique ID: <%= @patient.patient_unique_id %><br /><br />
-      Version Code: <%= @patient.version_code %><br /><br />
-      Is Active: <%= @patient.isactive %>
-    </div>
     <div class="clear">
     </div>
   </div>
 </div>
-<h3>Physician Visited</h3>
+<h3 class="new-visit">Visits:
+  <%= link_to '(Add Visit)', :controller => "visits", :action => :new, :id => @patient.id %></h3>
 <table>
   <tr>
     <th>Physician number</th>
+    <th>Lastname</th>
     <th>Firstname</th>
     <th>Middlename</th>
-    <th>Lastname</th>
+    <th>Visited on</th>
     <th></th>
   </tr>
 
-<% for physician in @patient.physicians %>
+<% for visit in @patient.visits %>
   <tr>
-    <td><%= physician.physician_number %></td>
-    <td><%= physician.firstname %></td>
-    <td><%= physician.middlename %></td>
-    <td><%= physician.lastname %></td>
-    <td><%= link_to 'Show', physician %></td>
+    <td><%= visit.physician.physician_number %></td>
+    <td><%= visit.physician.lastname %></td>
+    <td><%= visit.physician.firstname %></td>
+    <td><%= visit.physician.middlename %></td>
+    <td><%= visit.created_at.strftime("%b %d, %Y") %></td>
+    <td><a href="#">Print Label</a></td>
   </tr>
 <% end %>
 </table>
 <br />
 <br />
-<%= link_to 'Edit', edit_patient_path(@patient) %> |
-<%= link_to 'Back', patients_path %>
+<%= link_to 'edit', edit_patient_path(@patient) %> |
+<%= link_to 'back', patients_path %>

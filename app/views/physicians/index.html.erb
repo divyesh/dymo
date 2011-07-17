@@ -14,6 +14,8 @@
     <th>Firstname</th>
     <th>Middlename</th>
     <th>Lastname</th>
+    <th>CPSO</th>
+    <th>Address</th>
     <th></th>
     <th></th>
     <th></th>
@@ -25,6 +27,21 @@
     <td><%= physician.firstname %></td>
     <td><%= physician.middlename %></td>
     <td><%= physician.lastname %></td>
+    <td><%= physician.cpso %></td>
+    <td>
+      <%= physician.location %><br />
+      <%= physician.address1 %><br />
+      <%= physician.address2 %><br />
+      <%= physician.city %><br />
+      <%= physician.province %><br />
+      <%= physician.country %><br />
+      <%= physician.postal_code %><br />
+      <%= physician.phone %><br />
+      <%= physician.fax %><br />
+      <%= physician.emergency_number %><br />
+      <%= physician.email %><br />
+
+    </td>
     <td><%= link_to 'Show', physician %></td>
     <td><%= link_to 'Edit', edit_physician_path(physician) %></td>
     <td><%= link_to 'Destroy', physician, :confirm => 'Are you sure?', :method => :delete %></td>

@@ -1,6 +1,7 @@
 class Physician < ActiveRecord::Base
-  has_many :appointments
-  has_many :patients, :through => :appointments
+  has_many :visits
+  has_many :patients, :through => :visits
+  validates_presence_of :firstname, :lastname, :middlename
 
   def self.search(search)
     if search
@@ -8,5 +9,9 @@ class Physician < ActiveRecord::Base
     else
       scoped
     end
+  end
+
+  def fullname_with_physician_number
+    "#{lastname} #{firstname} #{middlename} - #{physician_number}"
   end
 end

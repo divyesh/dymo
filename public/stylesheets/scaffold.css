@@ -34,11 +34,10 @@ div.field input{
 
 .field_with_errors {
   padding: 2px;
-  background-color: red;
   display: table;
 }
 
-#error_explanation {
+#error_explanation, .error_notification{
   width: 450px;
   border: 2px solid red;
   padding: 7px;
@@ -46,7 +45,11 @@ div.field input{
   margin-bottom: 20px;
   background-color: #f0f0f0;
 }
-
+.error_notification{
+  background-color: #c00;
+  color: #fff;
+  padding-bottom: 7px;
+}
 #error_explanation h2 {
   text-align: left;
   font-weight: bold;
@@ -57,25 +60,26 @@ div.field input{
   background-color: #c00;
   color: #fff;
 }
-
+#error_explanation ul{
+  padding-top: 7px;
+}
 #error_explanation ul li {
   font-size: 12px;
   list-style: square;
+  margin-left: 25px;
+  padding-bottom: 7px;
 }
 #hd{
-  height: 80px;
 }
 #logo{
-  width: 960px;
   font-size: 25px;
   font-weight: bold;
-  margin: 0 auto;
-  padding-top: 30px;
+  padding-top: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 #pg{
-  width: 960px;
   background-color: #fff;
-  margin: 0 auto;
   padding: 20px 0;
   border: solid 1px #666;
 }
@@ -88,9 +92,7 @@ div.field input{
   font-size: 12px;
 }
 #ft p{
-  width: 960px;
-  margin: 0 auto;
-  padding: 10px;
+  padding: 20px 40px 20px 40px;
 }
 a{
   color: #0000ff;
@@ -125,22 +127,23 @@ table{
 }
 table th{
   font-weight: bold;
+  background-color: #f2f2f2;
 }
 table th, table td{
-  padding: 5px 10px;
+  padding: 5px;
   border: solid 1px #ccc;
 }
-#patients_search{
+#patients_search, #search_form{
   margin-bottom: 20px;
 }
-#patients_search input.text{
+#patients_search input.text, #search_form input.text{
   width: 300px;
   padding: 2px;
 }
 .top-nav{
   float: right;
   font-size: 12px;
-  padding-top: 10px;
+  padding-top: 7px;
 }
 .top-nav li{
   float: left;
@@ -253,4 +256,10 @@ table th, table td{
 }
 .f-patient legend{
   color: blue;
+}
+td.actions{
+  line-height: 20px;
+}
+.new-visit a{
+  font-size: 12px;
 }

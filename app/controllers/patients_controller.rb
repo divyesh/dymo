@@ -2,7 +2,7 @@ class PatientsController < ApplicationController
   # GET /patients
   # GET /patients.xml
   def index
-    @patients = Patient.search(params[:search]).paginate(:per_page => 5, :page => params[:page])
+    @patients = Patient.search(params[:search]).order("created_at desc").paginate(:per_page => 5, :page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

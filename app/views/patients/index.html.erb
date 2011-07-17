@@ -9,13 +9,12 @@
 <br />
 <table>
   <tr>
-    <th>Patient Unique ID</th>
+    <th>OHIP</th>
+    <th>Health Expiry Date</th>
+    <th>Last name</th>
     <th>First name</th>
     <th>Middle name</th>
-    <th>Last name</th>
-    <th>Health Insurance number</th>
-    <th>Version Code</th>
-    <th>Health Expiry Date</th>
+    <th>Address</th>
     <th>Birthdate</th>
     <th></th>
     <th></th>
@@ -24,13 +23,20 @@
 
 <% @patients.each do |patient| %>
   <tr>
-    <td><%= patient.patient_unique_id %></td>
+    <td><%= patient.health_insurance_number %><%= patient.version_code %></td>
+    <td><%= patient.health_expiry_date.nil? ? '' : patient.health_expiry_date.to_formatted_s(:long) %></td>
+    <td><%= patient.lastname %></td>
     <td><%= patient.firstname %></td>
     <td><%= patient.middlename %></td>
-    <td><%= patient.lastname %></td>
-    <td><%= patient.health_insurance_number %></td>
-    <td><%= patient.version_code %></td>
-    <td><%= patient.health_expiry_date.nil? ? '' : patient.health_expiry_date.to_formatted_s(:long) %></td>
+    <td>
+      <%= patient.address1 %><br />
+      <%= patient.address2 %><br />
+      <%= patient.city %><br />
+      <%= patient.province %><br />
+      <%= patient.postal_code %><br />
+      <%= patient.home_phone %><br />
+      <%= patient.mobile %>
+    </td>
     <td><%= patient.birthdate.nil? ? '' : patient.birthdate.to_formatted_s(:long) %></td>
     <td><%= link_to 'Show', patient %></td>
     <td><%= link_to 'Edit', edit_patient_path(patient) %></td>
