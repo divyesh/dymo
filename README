@@ -1,9 +1,14 @@
 How to run this application?
 
-- Download from github.
-- extract somewhere
-- run rake db:create to create database
-- run rake db:migrate to create tables
-- you can find sample data under sample_data/ folder. import this in mysql db.
-- run rails s to start server
-- visit http://localhost:3000
+Download from github.
+extract c:/dymo
+
+Execute following commands
+
+c:/> cd dymo
+c:/dymo/> bundle install
+c:/dymo/> rake db:create
+c:/dymo/> rake db:migrate
+c:/dymo/> rails s
+
+visit http://localhost:3000

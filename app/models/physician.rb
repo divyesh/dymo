@@ -5,7 +5,8 @@ class Physician < ActiveRecord::Base
 
   def self.search(search)
     if search
-      where('firstname LIKE ?', "%#{search}%")
+      where('firstname LIKE ? OR lastname LIKE ? OR middlename LIKE ? OR physician_number LIKE ?', "%#{search}%","%#{search}%","%#{search}%","%#{search}%")
+
     else
       scoped
     end
