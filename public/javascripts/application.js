@@ -20,7 +20,7 @@ $(document).ready(function () {
     var province = $(this).attr("province");
     var postalcode = $(this).attr("postal_code");
 
-    printPatientLabel(patientName, healthNumber, expiry, dob, sex, address1, address, city, province, postalcode, homephone, mobile, physician, visiteddate);
+    printPatientLabel(patientName, healthNumber, expiry, dob, sex, address, city, province, postalcode, homephone, mobile, physician, visiteddate);
 
   });
 });
