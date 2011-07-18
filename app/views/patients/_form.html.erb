@@ -11,20 +11,16 @@
     </div>
   <% end %>
 
-  <%= f.input :patient_unique_id %>
+  <%= f.input :healthnumber %>
+  <%= f.input :version_code %>
+  <%= f.input :health_expiry_date, :as => :date, :start_year => Date.today.year, :end_year => Date.today.year + 100 %>
   <%= f.input :lastname %>
   <%= f.input :firstname %>
   <%= f.input :middlename %>
-  <%= f.input :healthnumber %>
-  <%= f.input :health_expiry_date, :as => :date, :start_year => Date.today.year, :end_year => Date.today.year + 100 %>
-  <%= f.input :birthdate , :as => :date, :start_year => Date.today.year, :end_year => Date.today.year - 100 %>
-  <%= f.input :version_code %>
   <%= f.input :gender do %>
     <%= f.collection_radio :gender, [['M','Male'] ,['F', 'Female']], :first, :last, :class => 'radio-collection' %>
   <% end %>
-  <%= f.input :marital_status do %>
-    <%= f.collection_radio :marital_status, [['Y','Married'] ,['N', 'Unmarried']], :first, :last, :class => 'radio-collection' %>
-  <% end %>
+  <%= f.input :birthdate , :as => :date, :start_year => Date.today.year, :end_year => Date.today.year - 100 %>
   <%= f.input :address1 %>
   <%= f.input :address2 %>
   <%= f.input :city %>
@@ -32,7 +28,6 @@
   <%= f.input :postal_code %>
   <%= f.input :home_phone %>
   <%= f.input :mobile %>
-
   <% if controller.action_name == 'new' %>
     <%= f.input :physicians do %>
      <%= f.collection_select :physician_ids, Physician.all, :id, :firstname, :prompt => "Select a Physician" %>

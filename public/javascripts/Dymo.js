@@ -1,4 +1,4 @@
-﻿function printPatientLabel(PatientName, healthNumber, expiry, dob, sex, address1, address2, homephone, mobile, physician, visiteddate) {
+﻿function printPatientLabel(PatientName, healthNumber, expiry, dob, sex, address, city, province, postalcode, phone, mobile, physician, visiteddate) {
     try {
 //        $.post("patients/patieninfo", function(data) {
             var data = '<?xml version="1.0" encoding="utf-8"?>' +

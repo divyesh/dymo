@@ -1,7 +1,7 @@
 class Physician < ActiveRecord::Base
   has_many :visits
   has_many :patients, :through => :visits
-  validates_presence_of :firstname, :lastname, :middlename
+  validates_presence_of :firstname, :lastname
 
   def self.search(search)
     if search
@@ -13,6 +13,6 @@ class Physician < ActiveRecord::Base
   end
 
   def fullname_with_physician_number
-    "#{lastname} #{firstname} #{middlename} - #{physician_number}"
+    "#{firstname} #{lastname}"
   end
 end

@@ -6,7 +6,7 @@
   <h1 id="name">
     <%= @patient.firstname %>&nbsp;<%= @patient.middlename %>&nbsp;<%= @patient.lastname %>
     <ul>
-      <li>HIN: <%= @patient.healthnumber %></li>
+      <li>OHIP: <%= @patient.healthnumber %>&nbsp;<%= @patient.version_code %></li>
       <li class="expire">Expires on: <%= @patient.health_expiry_date.nil? ? '' : @patient.health_expiry_date.to_formatted_s(:long) %></li>
     </ul>
   </h1>

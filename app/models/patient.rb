@@ -3,7 +3,7 @@ class Patient < ActiveRecord::Base
   has_many :physicians, :through => :visits
   validates_length_of :healthnumber, :maximum => 13
   validates_length_of :version_code, :maximum => 2
-  validates_presence_of :firstname, :lastname, :middlename
+  validates_presence_of :firstname, :lastname
 
   def self.search(search)
     if search

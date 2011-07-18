@@ -14,11 +14,7 @@
   <%= f.input :lastname %>
   <%= f.input :firstname %>
   <%= f.input :middlename %>
-  <%= f.input :physician_unique_id %>
   <%= f.input :cpso %>
-  <%= f.input :type do %>
-    <%= f.collection_radio :type, [['1', 'Physician Type 1'],['2', 'Physician Type 2']], :first, :last %>
-  <% end %>
   <%= f.input :gender do %>
     <%= f.collection_radio :gender, [['M', 'Male'],['F', 'Female']], :first, :last %>
   <% end %>
@@ -27,12 +23,10 @@
   <%= f.input :address2 %>
   <%= f.input :city %>
   <%= f.input :province %>
-  <%= f.input :country, :as => :string %>
   <%= f.input :postal_code %>
   <%= f.input :phone %>
   <%= f.input :fax %>
   <%= f.input :emergency_number %>
   <%= f.input :email %>
-  <%= f.input :isactive %>
   <%= f.button :submit %>
 <% end %>

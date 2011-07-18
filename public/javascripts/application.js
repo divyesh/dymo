@@ -15,8 +15,14 @@ $(document).ready(function () {
     var mobile = $(this).attr("mobile");
     var physician = $(this).attr("physician");
     var visiteddate = $(this).attr("visiteddate");
+    var address = address1 + address2;
+    var city = $(this).attr("city");
+    var province = $(this).attr("province");
+    var postalcode = $(this).attr("postal_code");
 
-    printPatientLabel(patientName, healthNumber, expiry, dob, sex, address1, address2, homephone, mobile, physician, visiteddate);
+    alert(address);
+
+    printPatientLabel(patientName, healthNumber, expiry, dob, sex, address1, address, city, province, postalcode, homephone, mobile, physician, visiteddate);
 
   });
 });
