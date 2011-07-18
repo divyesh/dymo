@@ -7,13 +7,13 @@ class Patient < ActiveRecord::Base
 
   def self.search(search)
     if search
-      where('firstname LIKE ? OR lastname LIKE ? OR middlename LIKE ? OR health_insurance_number LIKE ?', "%#{search}%","%#{search}%","%#{search}%","%#{search}%")
+      where('firstname LIKE ? OR lastname LIKE ? OR middlename LIKE ? OR healthnumber LIKE ?', "%#{search}%","%#{search}%","%#{search}%","%#{search}%")
     else
       scoped
     end
   end
 
   def fullname_with_health_insurance_number
-    "#{lastname} #{firstname} #{middlename} - #{health_insurance_number}"
+    "#{lastname} #{firstname} #{middlename} - #{healthnumber}"
   end
 end

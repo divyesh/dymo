@@ -12,53 +12,11 @@
 
 ActiveRecord::Schema.define(:version => 20110717163131) do
 
-  create_table "patients", :force => true do |t|
-    t.string   "firstname"
-    t.string   "middlename"
-    t.string   "lastname"
-    t.string   "health_insurance_number"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "patient_unique_id"
-    t.string   "version_code"
-    t.date     "health_expiry_date"
-    t.date     "birthdate"
-    t.string   "gender"
-    t.string   "marital_status"
-    t.string   "address1"
-    t.string   "address2"
-    t.string   "city"
-    t.string   "province"
-    t.string   "postal_code"
-    t.string   "home_phone"
-    t.string   "mobile"
-    t.boolean  "isactive"
-  end
+# Could not dump table "patients" because of following StandardError
+#   Unknown type 'bool' for column 'isactive'
 
-  create_table "physicians", :force => true do |t|
-    t.string   "physician_number"
-    t.string   "firstname"
-    t.string   "middlename"
-    t.string   "lastname"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "gender"
-    t.string   "cpso"
-    t.string   "type"
-    t.string   "physician_unique_id"
-    t.string   "location"
-    t.string   "address1"
-    t.string   "address2"
-    t.string   "city"
-    t.string   "province"
-    t.string   "country"
-    t.string   "postal_code"
-    t.string   "phone"
-    t.string   "fax"
-    t.string   "emergency_number"
-    t.string   "email"
-    t.boolean  "isactive"
-  end
+# Could not dump table "physicians" because of following StandardError
+#   Unknown type 'bool' for column 'isactive'
 
   create_table "visits", :force => true do |t|
     t.integer  "patient_id"

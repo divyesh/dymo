@@ -23,7 +23,7 @@
 
 <% @visits.each do |visit| %>
   <tr>
-    <td><%= visit.patient.health_insurance_number %><%= visit.patient.version_code %></td>
+    <td><%= visit.patient.healthnumber %><%= visit.patient.version_code %></td>
     <td><%= visit.patient.health_expiry_date.nil? ? '' : visit.patient.health_expiry_date.to_formatted_s(:long) %></td>
     <td><%= visit.patient.lastname %></td>
     <td><%= visit.patient.firstname %></td>
