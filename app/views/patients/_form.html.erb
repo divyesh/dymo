@@ -12,12 +12,12 @@
   <% end %>
 
   <%= f.input :patient_unique_id %>
+  <%= f.input :lastname %>
   <%= f.input :firstname %>
   <%= f.input :middlename %>
-  <%= f.input :lastname %>
   <%= f.input :healthnumber %>
-  <%= f.input :health_expiry_date %>
-  <%= f.input :birthdate %>
+  <%= f.input :health_expiry_date, :as => :date, :start_year => Date.today.year, :end_year => Date.today.year + 100 %>
+  <%= f.input :birthdate , :as => :date, :start_year => Date.today.year, :end_year => Date.today.year - 100 %>
   <%= f.input :version_code %>
   <%= f.input :gender do %>
     <%= f.collection_radio :gender, [['M','Male'] ,['F', 'Female']], :first, :last, :class => 'radio-collection' %>
@@ -32,7 +32,6 @@
   <%= f.input :postal_code %>
   <%= f.input :home_phone %>
   <%= f.input :mobile %>
-  <%= f.input :isactive %>
 
   <% if controller.action_name == 'new' %>
     <%= f.input :physicians do %>

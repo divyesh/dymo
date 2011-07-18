@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Dymo</title>
+  <title>MedHealth</title>
   <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
+  <%= javascript_include_tag 'jquery', 'DYMO.Label.Framework.1.0.beta', 'Dymo', 'application' %>
   <%= csrf_meta_tag %>
 </head>
 <body>
 
   <div id="hd">
     <h1 id="logo">
-      Dymo Print Application
+      MedHealth App
       <ul class="top-nav">
         <li><%= link_to 'Visits', visits_path %></li>
         <li>|</li>
@@ -29,7 +29,7 @@
 
   <div id="ft">
      <p>
-       Created by Kunal chaudhari.
+      <%= link_to 'Visits', visits_path %> | <%= link_to 'Patients', patients_path %> | <%= link_to 'Physicians', physicians_path %> | MedHealth App
      </p>
   </div>
 
