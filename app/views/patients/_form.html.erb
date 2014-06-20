@@ -14,11 +14,11 @@
   <%= f.input :healthnumber %>
   <%= f.input :version_code %>
   <%= f.input :health_expiry_date, :as => :date, :start_year => Date.today.year, :end_year => Date.today.year + 100 %>
-  <%= f.input :lastname %>
-  <%= f.input :firstname %>
+  <%= f.input :lastname, required: false %>
+  <%= f.input :firstname, required: false %>
   <%= f.input :middlename %>
-  <%= f.input :gender do %>
-    <%= f.collection_radio :gender, [['M','Male'] ,['F', 'Female']], :first, :last, :class => 'radio-collection' %>
+  <%= f.input :gender do %>    
+    <%= f.collection_radio_buttons :gender, [['M','Male'] ,['F', 'Female']], :first, :last %>
   <% end %>
   <%= f.input :birthdate , :as => :date, :start_year => Date.today.year, :end_year => Date.today.year - 100 %>
   <%= f.input :address1 %>
@@ -28,9 +28,9 @@
   <%= f.input :postal_code %>
   <%= f.input :home_phone %>
   <%= f.input :mobile %>
-  <% if controller.action_name == 'new' %>
+  <% if @patient.new_record? %>
     <%= f.input :physicians do %>
-     <%= f.collection_select :physician_ids, Physician.all, :id, :fullname_with_physician_number, :prompt => "Select a Physician" %>
+      <%= f.collection_select :physician_ids, Physician.all, :id, :fullname_with_physician_number, :prompt => "Select a Physician" %>
     <% end %>
   <% end %>
   <%= f.button :submit %>

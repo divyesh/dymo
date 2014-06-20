@@ -1,6 +1,7 @@
-// Place your application-specific JavaScript functions and classes here
-// This file is automatically included by javascript_include_tag :defaults
-//function printPatientLabel(PatientName, healthNumber, expiry, dob, sex, address1, address2, homephone, mobile) {
+//= require jquery
+//= require jquery_ujs
+//= require DYMO.Label.Framework.1.0.beta
+//= require Dymo
 
 $(document).ready(function () {
   $(".print-label-link").click(function(){

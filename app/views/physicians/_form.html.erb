@@ -11,12 +11,12 @@
     </div>
   <% end %>
   <%= f.input :physician_number %>
-  <%= f.input :lastname %>
-  <%= f.input :firstname %>
+  <%= f.input :lastname, required: false %>
+  <%= f.input :firstname, required: false %>
   <%= f.input :middlename %>
   <%= f.input :cpso %>
   <%= f.input :gender do %>
-    <%= f.collection_radio :gender, [['M', 'Male'],['F', 'Female']], :first, :last %>
+    <%= f.collection_radio_buttons :gender, [['M', 'Male'],['F', 'Female']], :first, :last %>
   <% end %>
   <%= f.input :location %>
   <%= f.input :address1 %>

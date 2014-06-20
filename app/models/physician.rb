@@ -8,7 +8,7 @@ class Physician < ActiveRecord::Base
       where('firstname LIKE ? OR lastname LIKE ? OR middlename LIKE ? OR physician_number LIKE ?', "%#{search}%","%#{search}%","%#{search}%","%#{search}%")
 
     else
-      scoped
+      all
     end
   end
 

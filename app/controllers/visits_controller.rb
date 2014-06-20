@@ -46,7 +46,7 @@ class VisitsController < ApplicationController
   # POST /visits
   # POST /visits.xml
   def create
-    @visit = Visit.new(params[:visit])
+    @visit = Visit.new(visit_params)
 
     respond_to do |format|
       if @visit.save
@@ -65,7 +65,7 @@ class VisitsController < ApplicationController
     @visit = Visit.find(params[:id])
 
     respond_to do |format|
-      if @visit.update_attributes(params[:visit])
+      if @visit.update_attributes(visit_params)
         format.html { redirect_to(@visit, :notice => 'Visit was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -86,4 +86,11 @@ class VisitsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  private
+
+  def visit_params
+    params.require(:visit).permit(:patient_id, :physician_id)
+  end
+
 end

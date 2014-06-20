@@ -1,4 +1,9 @@
 /*
+*= require_self
+*= require simple_form
+*/
+
+/*
 Copyright (c) 2010, Yahoo! Inc. All rights reserved.
 Code licensed under the BSD License:
 http://developer.yahoo.com/yui/license.html
@@ -172,9 +177,14 @@ table th, table td{
   margin: 0;
 }
 
-.simple_form label.collection_radio {
-  margin-right: 10px;
-  margin-left: 2px;
+.simple_form label.collection_radio_buttons {
+  margin-right: 20px;
+  margin-left: 5px;
+  float: none;
+}
+
+.simple_form .radio_buttons {
+  padding-left: 140px;
 }
 
 .simple_form .error {

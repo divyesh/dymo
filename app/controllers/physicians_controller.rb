@@ -40,7 +40,7 @@ class PhysiciansController < ApplicationController
   # POST /physicians
   # POST /physicians.xml
   def create
-    @physician = Physician.new(params[:physician])
+    @physician = Physician.new(physician_params)
 
     respond_to do |format|
       if @physician.save
@@ -59,7 +59,7 @@ class PhysiciansController < ApplicationController
     @physician = Physician.find(params[:id])
 
     respond_to do |format|
-      if @physician.update_attributes(params[:physician])
+      if @physician.update_attributes(physician_params)
         format.html { redirect_to(@physician, :notice => 'Physician was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -80,4 +80,11 @@ class PhysiciansController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  private
+  
+  def physician_params
+    params.require(:physician).permit(:physician_number, :lastname, :firstname, :middlename, :cpso, :gender, :location, :address1, :address2, :city, :province, :postal_code, :phone, :fax, :emergency_number, :email)
+  end
+  
 end

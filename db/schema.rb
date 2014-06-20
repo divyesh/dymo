@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -8,17 +9,17 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110717163131) do
+ActiveRecord::Schema.define(version: 20110717163131) do
 
-# Could not dump table "patients" because of following StandardError
-#   Unknown type 'bool' for column 'isactive'
+# Could not dump table "patients" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
-# Could not dump table "physicians" because of following StandardError
-#   Unknown type 'bool' for column 'isactive'
+# Could not dump table "physicians" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
-  create_table "visits", :force => true do |t|
+  create_table "visits", force: true do |t|
     t.integer  "patient_id"
     t.integer  "physician_id"
     t.datetime "created_at"

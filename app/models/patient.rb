@@ -9,7 +9,7 @@ class Patient < ActiveRecord::Base
     if search
       where('firstname LIKE ? OR lastname LIKE ? OR middlename LIKE ? OR healthnumber LIKE ?', "%#{search}%","%#{search}%","%#{search}%","%#{search}%")
     else
-      scoped
+      all
     end
   end
 

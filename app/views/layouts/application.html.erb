@@ -2,8 +2,10 @@
 <html>
 <head>
   <title>MedHealth</title>
-  <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag 'jquery', 'DYMO.Label.Framework.1.0.beta', 'Dymo', 'application' %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <%= stylesheet_link_tag    "application", media: "all" %>
+  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tag %>
 </head>
 <body>

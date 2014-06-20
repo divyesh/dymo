@@ -41,7 +41,7 @@ class PatientsController < ApplicationController
   # POST /patients
   # POST /patients.xml
   def create
-    @patient = Patient.new(params[:patient])
+    @patient = Patient.new(patient_params)
 
     respond_to do |format|
       if @patient.save
@@ -60,7 +60,7 @@ class PatientsController < ApplicationController
     @patient = Patient.find(params[:id])
 
     respond_to do |format|
-      if @patient.update_attributes(params[:patient])
+      if @patient.update_attributes(patient_params)
         format.html { redirect_to(@patient, :notice => 'Patient was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -81,4 +81,11 @@ class PatientsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  private
+
+  def patient_params
+    params.require(:patient).permit(:healthnumber, :version_code, :health_expiry_date, :lastname, :firstname, :middlename, :gender, :birthdate, :address1, :address2, :city, :province, :postal_code, :home_phone, :mobile, physician_ids: [])
+  end
+
 end
