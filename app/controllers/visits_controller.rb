@@ -1,11 +1,13 @@
 class VisitsController < ApplicationController
+
   # GET /visits
   # GET /visits.xml
   def index
     @visits = Visit.search(params[:search]).order("created_at desc").paginate(:per_page => 25, :page => params[:page])
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
+      format.html.phone
       format.xml  { render :xml => @visits }
     end
   end
@@ -31,6 +33,7 @@ class VisitsController < ApplicationController
     @visit.patient_id = params[:id] || nil
     respond_to do |format|
       format.html # new.html.erb
+      format.html.phone
       format.xml  { render :xml => @visit }
     end
   end
@@ -51,6 +54,7 @@ class VisitsController < ApplicationController
     respond_to do |format|
       if @visit.save
         format.html { redirect_to(@visit, :notice => 'Visit was successfully created.') }
+        format.html.phone { redirect_to(@visit, :notice => 'Visit was successfully created.') }
         format.xml  { render :xml => @visit, :status => :created, :location => @visit }
       else
         format.html { render :action => "new" }
@@ -92,5 +96,4 @@ class VisitsController < ApplicationController
   def visit_params
     params.require(:visit).permit(:patient_id, :physician_id)
   end
-
 end

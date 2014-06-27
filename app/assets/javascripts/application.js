@@ -13,7 +13,7 @@ $(document).ready(function () {
     var address1 = $(this).attr("address1");
     var address2 = $(this).attr("address2");
     var homephone = $(this).attr("homephone");
-    var mobile = $(this).attr("mobile");
+    var  = $(this).attr("");
     var physician = $(this).attr("physician");
     var visiteddate = $(this).attr("visiteddate");
     var address = address1 + address2;
@@ -21,7 +21,7 @@ $(document).ready(function () {
     var province = $(this).attr("province");
     var postalcode = $(this).attr("postal_code");
 
-    printPatientLabel(patientName, healthNumber, expiry, dob, sex, address, city, province, postalcode, homephone, mobile, physician, visiteddate);
+    printPatientLabel(patientName, healthNumber, expiry, dob, sex, address, city, province, postalcode, homephone, , physician, visiteddate);
 
   });
 });

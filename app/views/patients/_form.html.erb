@@ -33,5 +33,5 @@
       <%= f.collection_select :physician_ids, Physician.all, :id, :fullname_with_physician_number, :prompt => "Select a Physician" %>
     <% end %>
   <% end %>
-  <%= f.button :submit %>
+  <div class="actions"><%= f.button :submit %></div>
 <% end %>

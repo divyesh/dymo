@@ -1,0 +1,8 @@
+/*
+*= require_self
+*= require jquery.mobile
+*/
+
+.actions, .form-actions {
+  margin-top: 2em;
+}

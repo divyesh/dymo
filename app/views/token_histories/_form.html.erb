@@ -1,0 +1,13 @@
+<%= simple_form_for [@token, @token_history] do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <div class="input integer optional token_history_token_id"><label for="token_history_token_id" class="integer optional control-label">Token #</label> <strong><%= @token.no %></strong></div>
+    <%= f.input :punch_in_time %>
+    <%= f.input :note, as: :text %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

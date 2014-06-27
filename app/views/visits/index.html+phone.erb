@@ -1,0 +1,59 @@
+<%= content_for :header do %>
+  <%= link_to 'Add Visit', new_visit_path %>
+<% end %>
+<%= content_for :title do %>
+  Listing Visits
+<% end %>
+<div role="main" class="ui-content">
+  <%= form_tag visits_path, :method => 'get', :id => "search_form" do %>
+    <p>
+      <%= text_field_tag :search, params[:search], :class => 'text' %>
+      <%= submit_tag "Search", :name => nil %>
+    </p>
+  <% end %>
+  <br />
+  <table data-role="table" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Columns to display..." data-column-popup-theme="a">
+    <thead>
+      <tr class="ui-bar-d">
+        <th>OHIP</th>
+        <th>Health Expiry</th>
+        <th>Lastname</th>
+        <th>Firstname</th>
+        <th data-priority="3">Middlename</th>
+        <th data-priority="2">Birthdate</th>
+        <th data-priority="1">Address</th>
+        <th>Physician</th>
+        <th>Visited on</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+  <% @visits.each do |visit| %>
+    <tr>
+      <td><%= visit.patient.healthnumber %>&nbsp;<%= visit.patient.version_code %></td>
+      <td><%= visit.patient.health_expiry_date.nil? ? '' : visit.patient.health_expiry_date.to_formatted_s(:long) %></td>
+      <td><%= visit.patient.lastname %></td>
+      <td><%= visit.patient.firstname %></td>
+      <td><%= visit.patient.middlename %></td>
+      <td><%= visit.patient.birthdate.nil? ? '' : visit.patient.birthdate.to_formatted_s(:long) %></td>
+      <td>
+        <%= visit.patient.address1 %><br />
+        <%= visit.patient.address2 %><br />
+        <%= visit.patient.city %><br />
+        <%= visit.patient.province %><br />
+        <%= visit.patient.postal_code %><br />
+        <%= visit.patient.home_phone %><br />
+        <%= visit.patient.mobile %>
+      </td>
+      <td><%= visit.physician.lastname %>&nbsp;<%= visit.physician.firstname %>&nbsp;<%= visit.physician.middlename %></td>
+      <td><%= visit.created_at.strftime("%b %d, %Y") %></td>
+      <td class="actions"><%= link_to 'Remove', visit, :confirm => 'Are you sure?', :method => :delete %></td>
+      <td><a href="javascript:void(0);" healthNumber="<%= visit.patient.healthnumber + ' ' + visit.patient.version_code %>" expiry="<%= visit.patient.health_expiry_date.nil? ? '' : visit.patient.health_expiry_date.to_formatted_s(:long) %>" birthdate="<%= visit.patient.birthdate.nil? ? '' : visit.patient.birthdate.to_formatted_s(:long) %>" sex="<%= visit.patient.gender %>" address1="<%= visit.patient.address1 %>" address2="<%= visit.patient.address2 %>" homephone="<%= visit.patient.home_phone %>" ="<%= visit.patient.mobile %>"  patientName="<%= visit.patient.lastname + ' ' + visit.patient.firstname + ' ' + visit.patient.middlename %>" physician="<%= visit.physician.firstname + ' ' + visit.physician.lastname %>" visiteddate="<%= visit.created_at.strftime("%b %d, %Y") %>" city="<%= visit.patient.city %>" province="<%= visit.patient.province %>" postalcode="<%= visit.patient.postal_code %>" class="print-label-link">Print Label</a></td>
+    </tr>
+  <% end %>
+  </table>
+  <br />
+  <%= will_paginate @visits %>
+  
+</div><!-- /content -->

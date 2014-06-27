@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MedHealth</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <%= stylesheet_link_tag    "mobile" %>
+  <%= javascript_include_tag "mobile" %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+  <div data-role="page">
+    <div data-role="panel" id="navPanel">
+      <h1>MedHealth</h1>
+      <ul data-role="listview">
+        <li><%= link_to 'Visits', visits_path %></li>
+        <li><%= link_to 'Patients', patients_path %></li>
+        <li><%= link_to 'Physicians', physicians_path %></li>
+        <li><%= link_to 'Tokens', tokens_path %></li>
+      </ul>
+    </div><!-- /panel -->
+    <div data-role="header">
+      <a href="#navPanel" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-btn ui-icon-bars ui-btn-icon-left ui-shadow ui-corner-all">Menu</a>
+      <h1><%= yield :title %></h1>
+      <%= yield :header %>
+    </div><!-- /header -->
+    <%= yield %>
+    <div data-role="footer" data-position="fixed">
+      <%= link_to 'Visits', visits_path %> | <%= link_to 'Patients', patients_path %> | <%= link_to 'Physicians', physicians_path %> | MedHealth App
+    </div><!-- /footer -->
+  </div><!-- /page -->
+
+</body>
+</html>

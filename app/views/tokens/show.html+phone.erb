@@ -1,0 +1,43 @@
+<%= content_for :title do %>
+  Token Info.
+<% end %>
+<div role="main" class="ui-content">
+  <p>
+    <strong>Token #:</strong>
+    <%= @token.no %>
+  </p>
+  <p>
+    <strong>Patient:</strong>
+    <%= @token.patient.fullname_with_health_insurance_number %>
+  </p>
+  <%= link_to 'Punch in', new_token_token_history_path(@token) %> | <%= link_to 'Edit', edit_token_path(@token) %> |
+  <%= link_to 'Back', tokens_path %>
+  <br /><br />
+  <hr />
+
+  <h2>Token Punch In(s):</h2>
+
+  <table data-role="table" data-mode="column" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Columns to display..." data-column-popup-theme="a">
+    <thead>
+      <tr class="ui-bar-d">
+        <th>Token #</th>
+        <th>Punch in time</th>
+        <th>Note</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @token.token_histories.each do |token_history| %>
+        <tr>
+          <td><%= token_history.token_id %></td>
+          <td><%= token_history.punch_in_time.to_formatted_s(:long) %></td>
+          <td><%= token_history.note %></td>
+          <td><%= link_to 'Edit', edit_token_token_history_path(@token, token_history) %></td>
+          <td><%= link_to 'Destroy', [@token, token_history], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  
+</div>

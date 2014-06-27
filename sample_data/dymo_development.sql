@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `patients` (
   `province` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `postal_code` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `home_phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `mobile` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `isactive` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=18 ;
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `patients` (
 -- Dumping data for table `patients`
 --
 
-INSERT INTO `patients` (`id`, `firstname`, `middlename`, `lastname`, `health_insurance_number`, `created_at`, `updated_at`, `patient_unique_id`, `version_code`, `health_expiry_date`, `birthdate`, `gender`, `marital_status`, `address1`, `address2`, `city`, `province`, `postal_code`, `home_phone`, `mobile`, `isactive`) VALUES
+INSERT INTO `patients` (`id`, `firstname`, `middlename`, `lastname`, `health_insurance_number`, `created_at`, `updated_at`, `patient_unique_id`, `version_code`, `health_expiry_date`, `birthdate`, `gender`, `marital_status`, `address1`, `address2`, `city`, `province`, `postal_code`, `home_phone`, ``, `isactive`) VALUES
 (2, 'Kunal ', 'Kasanjibhai', 'Chaudhari', '1234563', '2011-07-16 12:51:18', '2011-07-17 09:26:40', 'u123456d', 'vcode', '2048-07-17', '1983-10-01', 'M', 'N', 'A/20, Bhuvneshvarinagar', 'Shashtri Road, Opp. Narsinh Baug', 'Bardoli', 'Surat', '394602', '02622221204', '9913719765', 1),
 (3, 'Divyesh', 'Chhibubhai ', 'Konkani', '1234569', '2011-07-16 12:52:21', '2011-07-16 12:52:21', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (4, 'Arpana', 'Kunalbhai', 'Chaudhari', '1234568', '2011-07-16 12:52:45', '2011-07-16 12:52:45', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),

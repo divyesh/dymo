@@ -1,0 +1,29 @@
+<h1>Listing token_histories</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Punch in time</th>
+      <th>Note</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @token_histories.each do |token_history| %>
+      <tr>
+        <td><%= token_history.token_id %></td>
+        <td><%= token_history.punch_in_time %></td>
+        <td><%= token_history.note %></td>
+        <td><%= link_to 'Show', token_history %></td>
+        <td><%= link_to 'Edit', edit_token_history_path(token_history) %></td>
+        <td><%= link_to 'Destroy', token_history, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Token history', new_token_token_history_path(@token) %>

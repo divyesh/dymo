@@ -1,0 +1,9 @@
+<%= content_for :title do %>
+  Editing Physician
+<% end %>
+<div role="main" class="ui-content">
+  <%= render 'form' %>
+
+  <%= link_to 'Show', @physician %> |
+  <%= link_to 'Back', physicians_path %>
+</div>

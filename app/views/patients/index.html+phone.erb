@@ -1,0 +1,58 @@
+<%= content_for :header do %>
+  <%= link_to 'Add New Patient', new_patient_path %>
+<% end %>
+<%= content_for :title do %>
+  Listing Patients
+<% end %>
+<div role="main" class="ui-content">
+  <%= form_tag patients_path, :method => 'get', :id => 'patients_search' do %>
+    <p>
+      <%= text_field_tag :search, params[:search], :class => 'text' %>
+      <%= submit_tag "Search", :name => nil %>
+    </p>
+  <% end %>
+
+  <br />
+  <table data-role="table" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Columns to display..." data-column-popup-theme="a">
+    <thead>
+      <tr class="ui-bar-d">
+        <th>OHIP</th>
+        <th>Health Expiry Date</th>
+        <th>Last name</th>
+        <th>First name</th>
+        <th>Middle name</th>
+        <th data-priority="1">Address</th>
+        <th data-priority="2">Birthdate</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+  <% @patients.each do |patient| %>
+    <tr>
+      <td><%= patient.healthnumber %> + " " + <%= patient.version_code %></td>
+      <td><%= patient.health_expiry_date.nil? ? '' : patient.health_expiry_date.to_formatted_s(:long) %></td>
+      <td><%= patient.lastname %></td>
+      <td><%= patient.firstname %></td>
+      <td><%= patient.middlename %></td>
+      <td>
+        <%= patient.address1 %><br />
+        <%= patient.address2 %><br />
+        <%= patient.city %><br />
+        <%= patient.province %><br />
+        <%= patient.postal_code %><br />
+        <%= patient.home_phone %><br />
+        <%= patient. %>
+      </td>
+      <td><%= patient.birthdate.nil? ? '' : patient.birthdate.to_formatted_s(:long) %></td>
+      <td><%= link_to 'Show', patient %></td>
+      <td><%= link_to 'Edit', edit_patient_path(patient) %></td>
+      <td><%= link_to 'Destroy', patient, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+  </table>
+  <br />
+  <br />
+  <%= will_paginate @patients %>
+</div>

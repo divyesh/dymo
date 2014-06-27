@@ -1,0 +1,61 @@
+<%= content_for :title do %>
+  Patient Info.
+<% end %>
+<div role="main" class="ui-content">
+  <div id="patient-details" >
+    <h1 id="name">
+      <%= @patient.firstname %>&nbsp;<%= @patient.middlename %>&nbsp;<%= @patient.lastname %>
+      <ul>
+        <li>OHIP: <%= @patient.healthnumber %>&nbsp;<%= @patient.version_code %></li>
+        <li class="expire">Expires on: <%= @patient.health_expiry_date.nil? ? '' : @patient.health_expiry_date.to_formatted_s(:long) %></li>
+      </ul>
+    </h1>
+    <h2 id="heading">
+      <%= @patient.gender == 'M' ? 'Male' : 'Female' %>, <%= @patient.marital_status == 'Y' ? 'Married' : 'Unmarried' %><br />
+      Birthdate: <%= @patient.birthdate.nil? ? '' : @patient.birthdate.to_formatted_s(:long) %>
+    </h2>
+    <div class="address-details">
+      <div class="address">
+        <%= @patient.address1 %><br />
+        <%= @patient.address2 %><br />
+        <%= @patient.city %><br />
+        <%= @patient.province %><br />
+        <%= @patient.postal_code %><br />
+      </div>
+      <div class="contact">
+        Home (Ph):&nbsp; <%= @patient.home_phone %><br />
+         (Ph):&nbsp;<%= @patient. %><br />
+      </div>
+      <div class="clear">
+      </div>
+    </div>
+  </div>
+  <h3 class="new-visit">Visits:
+    <%= link_to '(Add Visit)', :controller => "visits", :action => :new, :id => @patient.id %></h3>
+  <table>
+    <tr>
+      <th>Physician number</th>
+      <th>Lastname</th>
+      <th>Firstname</th>
+      <th>Middlename</th>
+      <th>Visited on</th>
+      <th></th>
+    </tr>
+
+  <% for visit in @patient.visits %>
+    <tr>
+      <td><%= visit.physician.physician_number %></td>
+      <td><%= visit.physician.lastname %></td>
+      <td><%= visit.physician.firstname %></td>
+      <td><%= visit.physician.middlename %></td>
+      <td><%= visit.created_at.strftime("%b %d, %Y") %></td>
+      <td><a href="javascript:void(0);" healthNumber="<%= visit.patient.healthnumber %>" expiry="<%= visit.patient.health_expiry_date.nil? ? '' : visit.patient.health_expiry_date.to_formatted_s(:long) %>" birthdate="<%= visit.patient.birthdate.nil? ? '' : visit.patient.birthdate.to_formatted_s(:long) %>" sex="<%= visit.patient.gender %>" address1="<%= visit.patient.address1 %>" address2="<%= visit.patient.address2 %>" homephone="<%= visit.patient.home_phone %>" ="<%= visit.patient. %>"  patientName="<%= visit.patient.lastname + ' ' + visit.patient.firstname + ' ' + visit.patient.middlename %>" physician="<%= visit.physician.lastname + ' ' + visit.physician.firstname + ' ' + visit.physician.middlename %>" visiteddate="<%= visit.created_at.strftime("%b %d, %Y") %>" class="print-label-link">Print Label</a></td>
+    </tr>
+  <% end %>
+  </table>
+  <br />
+  <br />
+  <%= link_to 'edit', edit_patient_path(@patient) %> |
+  <%= link_to 'back', patients_path %>
+  
+</div>

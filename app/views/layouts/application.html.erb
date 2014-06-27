@@ -18,13 +18,16 @@
         <li>|</li>
         <li><%= link_to 'Patients', patients_path %></li>
         <li>|</li>
-        <li class="last"><%= link_to 'Physicians', physicians_path %></li>
+        <li><%= link_to 'Physicians', physicians_path %></li>
+        <li>|</li>
+        <li class="last"><%= link_to 'Tokens', tokens_path %></li>
       </ul>
     </h1>
   </div>
 
   <div id="pg">
    <div id="bd">
+       <p id="notice"><%= notice %></p>
       <%= yield %>
     </div>
   </div>

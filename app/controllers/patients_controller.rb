@@ -7,6 +7,7 @@ class PatientsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
+      format.html.phone
       format.xml  { render :xml => @patients }
     end
   end
@@ -18,6 +19,7 @@ class PatientsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
+      format.html.phone
       format.xml  { render :xml => @patient }
     end
   end
@@ -29,6 +31,7 @@ class PatientsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
+      format.html.phone
       format.xml  { render :xml => @patient }
     end
   end
@@ -36,6 +39,10 @@ class PatientsController < ApplicationController
   # GET /patients/1/edit
   def edit
     @patient = Patient.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.html.phone
+    end
   end
 
   # POST /patients
@@ -49,6 +56,7 @@ class PatientsController < ApplicationController
         format.xml  { render :xml => @patient, :status => :created, :location => @patient }
       else
         format.html { render :action => "new" }
+        format.html.phone { render :action => "new" }
         format.xml  { render :xml => @patient.errors, :status => :unprocessable_entity }
       end
     end
@@ -65,6 +73,7 @@ class PatientsController < ApplicationController
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
+        format.html.phone { render :action => "edit" }
         format.xml  { render :xml => @patient.errors, :status => :unprocessable_entity }
       end
     end

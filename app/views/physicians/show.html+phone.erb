@@ -1,0 +1,45 @@
+<%= content_for :title do %>
+  Physician Info.
+<% end %>
+<div role="main" class="ui-content">
+  <div id="patient-details">
+    <h1 id="name">
+      <%= @physician.firstname %>&nbsp;<%= @physician.middlename %>&nbsp;<%= @physician.lastname %>
+      <ul>
+        <li>Physician Number: <%= @physician.physician_number %></li>
+      </ul>
+    </h1>
+    <h2 id="heading">
+      Gender: <%= @physician.gender == 'M' ? 'Male' : 'Female' %><br />
+      CPSO: <%= @physician.cpso %><br />
+      Type: <%=@physician.type == '1' ? 'Physician Type 1' : 'Physician Type 2'  %><br />
+    </h2>
+    <div class="address-details">
+      <div class="address">
+        <%= @physician.address1 %><br />
+        <%= @physician.address2 %><br />
+        <%= @physician.city %><br />
+        <%= @physician.province %><br />
+        <%= @physician.country %><br />
+        <%= @physician.postal_code %><br />
+      </div>
+      <div class="contact">
+        Phone:&nbsp; <%= @physician.phone %><br />
+        Emergency Number:&nbsp;<%= @physician.emergency_number %><br /><br />
+        Email:&nbsp;<%= @physician.email %>
+      </div>
+      <div class="misc">
+        Physician Unique ID: <%= @physician.physician_unique_id %><br /><br />
+        Is Active: <%= @physician.isactive %>
+      </div>
+      <div class="clear">
+      </div>
+    </div>
+  </div>
+
+  <br/>
+  <br/>
+  <%= link_to 'Edit', edit_physician_path(@physician) %> |
+  <%= link_to 'Back', physicians_path %>
+
+</div>

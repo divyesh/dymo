@@ -1,0 +1,17 @@
+<p>
+  <strong>Token:</strong>
+  <%= @token_history.token_id %>
+</p>
+
+<p>
+  <strong>Punch in time:</strong>
+  <%= @token_history.punch_in_time %>
+</p>
+
+<p>
+  <strong>Note:</strong>
+  <%= @token_history.note %>
+</p>
+
+<%= link_to 'Edit', edit_token_token_history_path(@token, @token_history) %> |
+<%= link_to 'Back', token_path(@token) %>

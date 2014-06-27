@@ -6,6 +6,7 @@ class PhysiciansController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
+      format.html.phone
       format.xml  { render :xml => @physicians }
     end
   end
@@ -17,6 +18,7 @@ class PhysiciansController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
+      format.html.phone
       format.xml  { render :xml => @physician }
     end
   end
@@ -28,6 +30,7 @@ class PhysiciansController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
+      format.html.phone
       format.xml  { render :xml => @physician }
     end
   end
@@ -35,6 +38,10 @@ class PhysiciansController < ApplicationController
   # GET /physicians/1/edit
   def edit
     @physician = Physician.find(params[:id])
+    respond_to do |format|
+      format.html # new.html.erb
+      format.html.phone
+    end
   end
 
   # POST /physicians
@@ -48,6 +55,7 @@ class PhysiciansController < ApplicationController
         format.xml  { render :xml => @physician, :status => :created, :location => @physician }
       else
         format.html { render :action => "new" }
+        format.html.phone { render :action => "new" }
         format.xml  { render :xml => @physician.errors, :status => :unprocessable_entity }
       end
     end
@@ -64,6 +72,7 @@ class PhysiciansController < ApplicationController
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
+        format.html.phone { render :action => "edit" }
         format.xml  { render :xml => @physician.errors, :status => :unprocessable_entity }
       end
     end
@@ -80,11 +89,11 @@ class PhysiciansController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
   private
-  
+
   def physician_params
     params.require(:physician).permit(:physician_number, :lastname, :firstname, :middlename, :cpso, :gender, :location, :address1, :address2, :city, :province, :postal_code, :phone, :fax, :emergency_number, :email)
   end
-  
+
 end

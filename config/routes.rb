@@ -1,4 +1,9 @@
 Dymo::Application.routes.draw do
+
+  resources :tokens do
+    resources :token_histories
+  end
+
   resources :visits
 
   resources :appointments

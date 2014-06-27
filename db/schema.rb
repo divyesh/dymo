@@ -11,13 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20110717163131) do
+ActiveRecord::Schema.define(version: 20140627063557) do
 
 # Could not dump table "patients" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
 
 # Could not dump table "physicians" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
+
+  create_table "token_histories", force: true do |t|
+    t.integer  "token_id"
+    t.datetime "punch_in_time"
+    t.string   "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tokens", force: true do |t|
+    t.integer  "no"
+    t.integer  "patient_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "visits", force: true do |t|
     t.integer  "patient_id"

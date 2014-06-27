@@ -1,0 +1,15 @@
+<%= simple_form_for(@token) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <div class="input integer optional token_no"><label for="token_no" class="integer optional control-label">Token # <%= @token.no %></label> </div>
+    <br />
+    <%= f.input :patient_id do %>
+      <%= f.collection_select :patient_id, Patient.all, :id, :fullname_with_health_insurance_number , :prompt => 'Select a Patient' %>
+    <% end %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

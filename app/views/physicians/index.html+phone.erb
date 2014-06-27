@@ -1,0 +1,64 @@
+<%= content_for :header do %>
+  <%= link_to 'Add New Physician', new_physician_path %>
+<% end %>
+<%= content_for :title do %>
+  Listing Physicians
+<% end %>
+<div role="main" class="ui-content">
+  <%= form_tag physicians_path, :method => 'get', :id => 'patients_search' do %>
+    <p>
+      <%= text_field_tag :search, params[:search], :class => 'text' %>
+      <%= submit_tag "Search", :name => nil %>
+    </p>
+  <% end %>
+
+  <br />
+
+  <table data-role="table" data-mode="columntoggle" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-btn-text="Columns to display..." data-column-popup-theme="a">
+    <thead>
+      <tr class="ui-bar-d">
+        <th>Physician number</th>
+        <th>Firstname</th>
+        <th>Middlename</th>
+        <th>Lastname</th>
+        <th data-priority="2">CPSO</th>
+        <th data-priority="1">Address</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+  <% @physicians.each do |physician| %>
+    <tr>
+      <td><%= physician.physician_number %></td>
+      <td><%= physician.firstname %></td>
+      <td><%= physician.middlename %></td>
+      <td><%= physician.lastname %></td>
+      <td><%= physician.cpso %></td>
+      <td>
+        <%= physician.location %><br />
+        <%= physician.address1 %><br />
+        <%= physician.address2 %><br />
+        <%= physician.city %><br />
+        <%= physician.province %><br />
+        <%= physician.country %><br />
+        <%= physician.postal_code %><br />
+        <%= physician.phone %><br />
+        <%= physician.fax %><br />
+        <%= physician.emergency_number %><br />
+        <%= physician.email %><br />
+
+      </td>
+      <td><%= link_to 'Show', physician %></td>
+      <td><%= link_to 'Edit', edit_physician_path(physician) %></td>
+      <td><%= link_to 'Destroy', physician, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+  </table>
+
+  <br />
+
+  <%= will_paginate @physicians %>
+
+</div>
