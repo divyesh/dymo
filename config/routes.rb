@@ -2,6 +2,11 @@ Dymo::Application.routes.draw do
 
   resources :tokens do
     resources :token_histories
+    member do
+      post :done
+      post :discard
+      post :reject
+    end
   end
 
   resources :visits

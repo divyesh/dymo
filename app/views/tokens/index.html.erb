@@ -1,7 +1,7 @@
 <h1>Listing tokens</h1> 
-<%= form_tag new_token_path, :method => 'get', :id => 'search_form' do %>
+<%= form_for Token.new do %>
   <p>
-    Enter Health#/Swipe Card: <%= text_field_tag :healthnumber, params[:healthnumber], :class => 'text' %>
+    Enter Health#/Swipe Card: <%= text_field_tag :healthcard, params[:healthcard], :class => 'text' %>
     <%= submit_tag "Generate Token", :name => nil %>
   </p>
 <% end %>
@@ -12,6 +12,7 @@
     <tr>
       <th>Token #</th>
       <th>Time in</th>
+      <th>Current state</th>
       <th></th>
       <th colspan="3"></th>
     </tr>
@@ -22,7 +23,8 @@
       <tr>
         <td><%= token.no %></td>
         <td><%= token.created_at.to_formatted_s(:long) %></td>
-        <td><%= link_to 'Punch in', new_token_token_history_path(token) %></td>
+        <td><%= token.state %></td>
+        <td><%= next_state_link(token) %></td>
         <td><%= link_to 'Show', token %></td>
         <td><%= link_to 'Edit', edit_token_path(token) %></td>
         <td><%= link_to 'Destroy', token, method: :delete, data: { confirm: 'Are you sure?' } %></td>

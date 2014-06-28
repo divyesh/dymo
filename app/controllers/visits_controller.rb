@@ -30,7 +30,8 @@ class VisitsController < ApplicationController
   # GET /visits/new.xml
   def new
     @visit = Visit.new
-    @visit.patient_id = params[:id] || nil
+    @visit.patient_id = params[:patient_id] unless params[:patient_id].nil?
+
     respond_to do |format|
       format.html # new.html.erb
       format.html.phone
@@ -53,8 +54,10 @@ class VisitsController < ApplicationController
 
     respond_to do |format|
       if @visit.save
-        format.html { redirect_to(@visit, :notice => 'Visit was successfully created.') }
-        format.html.phone { redirect_to(@visit, :notice => 'Visit was successfully created.') }
+        token = @visit.patient.time_in_token
+        token.add_visit! if token
+
+        format.html { redirect_to(@visit, :notice => 'Visit was successfully created and token time registered.') }
         format.xml  { render :xml => @visit, :status => :created, :location => @visit }
       else
         format.html { render :action => "new" }
@@ -96,4 +99,5 @@ class VisitsController < ApplicationController
   def visit_params
     params.require(:visit).permit(:patient_id, :physician_id)
   end
+
 end

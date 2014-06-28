@@ -1,26 +1,35 @@
 class TokensController < ApplicationController
-  before_action :set_token, only: [:show, :edit, :update, :destroy]
+  before_action :set_token, only: [:show, :edit, :update, :destroy, :done, :reject, :discard]
 
   def index
     @tokens = Token.all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.html.phone      
+      format.html.phone
+      format.json { render :json => @tokens }
       format.xml  { render :xml => @tokens }
     end
   end
 
   def show
+  end
+
+  def new
+  end
+
+  def edit
     respond_to do |format|
       format.html # index.html.erb
-      format.html.phone      
+      format.html.phone
       format.xml  { render :xml => @tokens }
     end
   end
 
-  def new
-    @patient = Patient.where(healthnumber: params[:healthnumber]).first
+  def create
+    options = parse_healthcard(params[:healthcard])
+
+    @patient = Patient.where(healthnumber: options[:healthnumber]).first
 
     if @patient
       @token = Token.where("date(created_at) = ? AND patient_id = ?", Date.today, @patient.id).first
@@ -35,39 +44,45 @@ class TokensController < ApplicationController
 
         token_history = @token.token_histories.build
         token_history.punch_in_time = @token.created_at
-        token_history.note = "Time in"
+        token_history.note = @token.current_state.name.to_s
         token_history.save!
 
-        redirect_to tokens_path, notice: "Token generated successfully."
+        # TODO: Make request to print the token
+
+        respond_to do |format|
+          format.html { redirect_to tokens_path, notice: 'Token was successfully created.' }
+          format.json { render :show, status: :created, location: @token }
+        end
       else
-        redirect_to tokens_path, notice: "Token already generated for this patient for today. Token number is #{@token.no}."
+        respond_to do |format|
+          format.html { redirect_to tokens_path, notice: "Token already generated for this patient for today. Token number is Token#: #{@token.no}." }
+          format.json { render :show, status: :created, location: @token }
+        end
       end
     else
-      redirect_to tokens_path, notice: "Patient not found."
-    end
-  end
 
-  def edit
-    respond_to do |format|
-      format.html # index.html.erb
-      format.html.phone      
-      format.xml  { render :xml => @tokens }
-    end
-  end
+      # TODO: Create patient, create token and redirec to tokens url
 
-  def create
-    @token = Token.new(token_params)
-
-    respond_to do |format|
-      if @token.save
-        format.html { redirect_to @token, notice: 'Token was successfully created.' }
-        format.json { render :show, status: :created, location: @token }
-      else
-        format.html { render :new }
-        format.html.phone { render :new }
-        format.json { render json: @token.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        format.html { redirect_to tokens_path, notice: 'Patient not Found.' }
+        format.json { render text: 'Patient not Found.' }
       end
     end
+  end
+
+  def done
+    @token.done!
+    redirect_to @token, notice: 'Token was successfully updated.'
+  end
+
+  def reject
+    @token.reject!
+    redirect_to @token, notice: 'Token was successfully updated.'
+  end
+
+  def discard
+    @token.discard!
+    redirect_to @token, notice: 'Token was successfully updated.'
   end
 
   def update
@@ -86,7 +101,7 @@ class TokensController < ApplicationController
   def destroy
     @token.destroy
     respond_to do |format|
-      format.html { redirect_to tokens_url, notice: 'Token was successfully destroyed.' } 
+      format.html { redirect_to tokens_url, notice: 'Token was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

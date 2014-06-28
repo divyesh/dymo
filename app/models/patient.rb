@@ -17,4 +17,8 @@ class Patient < ActiveRecord::Base
   def fullname_with_health_insurance_number
     "#{lastname} #{firstname} #{middlename} - #{healthnumber}"
   end
+  
+  def time_in_token
+    tokens.where("date(created_at) = ? AND state = ?", Date.today, "time_in").first
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140627063557) do
+ActiveRecord::Schema.define(version: 20140628070453) do
 
 # Could not dump table "patients" because of following NoMethodError
 #   undefined method `[]' for nil:NilClass
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20140627063557) do
     t.integer  "patient_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "state"
   end
 
   create_table "visits", force: true do |t|
