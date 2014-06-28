@@ -3,9 +3,7 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.1'
-# Use sqlite3 as the database for Active Record in Development
-gem 'sqlite3', group: :development
-# Use sqlite3 as the database for Active Record in Production
+
 gem 'pg', group: :production
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
@@ -47,3 +45,5 @@ gem 'will_paginate'
 gem 'jquery_mobile_rails'
 
 gem 'workflow'
+
+gem 'rails_12factor', group: :production
