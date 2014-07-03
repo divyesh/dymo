@@ -53,6 +53,8 @@ GEM
     jquery-rails (3.1.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (4.2.1)
+      railties (>= 3.2.16)
     jquery_mobile_rails (1.4.2)
       railties (>= 3.1.0)
     json (1.8.1)
@@ -142,6 +144,7 @@ DEPENDENCIES
   debugger
   jbuilder (~> 2.0)
   jquery-rails
+  jquery-ui-rails
   jquery_mobile_rails
   pg
   rails (= 4.1.1)

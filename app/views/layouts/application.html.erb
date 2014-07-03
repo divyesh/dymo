@@ -12,11 +12,9 @@
 
   <div id="hd">
     <h1 id="logo">
-      MedHealth App
+      Specimen Collection Center - MedHealth Laboratories Ltd.
       <ul class="top-nav">
-        <li><%= link_to 'Visits', visits_path %></li>
-        <li>|</li>
-        <li><%= link_to 'Patients', patients_path %></li>
+        <li><%= link_to 'Patients', root_path %></li>
         <li>|</li>
         <li><%= link_to 'Physicians', physicians_path %></li>
         <li>|</li>
@@ -36,6 +34,31 @@
      <p>
       <%= link_to 'Visits', visits_path %> | <%= link_to 'Patients', patients_path %> | <%= link_to 'Physicians', physicians_path %> | MedHealth App
      </p>
+ 		<div id="dialog-confirm" style="display: none;" title="VERIFY PI INFORMATION ENTERED">
+ 			<div id="patient-details">
+ 			 <h1 id="name">
+ 				 <span id="p_name"></span>
+ 			   <ul>
+ 			     <li>OHIP: <span id="p_ohip"></span>&nbsp;<span id="p_vc"></span></li>
+ 			     <li class="expire">Expires on: <span id="p_hed"></span></li>
+ 			   </ul>
+ 			 </h1>
+ 			 <h2 id="heading">
+ 			   <span id="p_gender"></span><br />
+ 			   Birthdate: <span id="p_bdate"></span>
+ 			 </h2>
+ 			 <div class="address-details">
+ 			   <div id="p_address" class="address">
+ 			   </div>
+ 			   <div id="p_contact" class="contact">
+ 			   </div>
+ 			   <div class="clear">
+ 			   </div>
+ 			 </div>
+ 			 <h3>Physician: <span id="p_physician"></span></h3>	
+ 			 <h4>Visit date: <span id="p_visitdate"></span></h4>
+ 			</div>			
+ 		</div>
   </div>
 
 </body>

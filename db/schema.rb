@@ -11,13 +11,58 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140628070453) do
+ActiveRecord::Schema.define(version: 20140703064206) do
 
-# Could not dump table "patients" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
-# Could not dump table "physicians" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "patients", force: true do |t|
+    t.string   "firstname"
+    t.string   "middlename"
+    t.string   "lastname"
+    t.string   "healthnumber"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "patient_unique_id"
+    t.string   "version_code"
+    t.date     "health_expiry_date"
+    t.date     "birthdate"
+    t.string   "gender"
+    t.string   "marital_status"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "city"
+    t.string   "province"
+    t.string   "postal_code"
+    t.string   "home_phone"
+    t.string   "mobile"
+    t.boolean  "isactive"
+  end
+
+  create_table "physicians", force: true do |t|
+    t.string   "physician_number"
+    t.string   "firstname"
+    t.string   "middlename"
+    t.string   "lastname"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "gender"
+    t.string   "cpso"
+    t.string   "type"
+    t.string   "physician_unique_id"
+    t.string   "location"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "city"
+    t.string   "province"
+    t.string   "country"
+    t.string   "postal_code"
+    t.string   "phone"
+    t.string   "fax"
+    t.string   "emergency_number"
+    t.string   "email"
+    t.boolean  "isactive"
+  end
 
   create_table "token_histories", force: true do |t|
     t.integer  "token_id"
@@ -40,6 +85,7 @@ ActiveRecord::Schema.define(version: 20140628070453) do
     t.integer  "physician_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "visitdate"
   end
 
 end

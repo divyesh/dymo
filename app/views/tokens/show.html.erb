@@ -4,8 +4,7 @@
   <%= @token.patient.fullname_with_health_insurance_number %>
 </p>
 <br />
-<%= link_to 'Punch in', new_token_token_history_path(@token) %> | <%= link_to 'Edit', edit_token_path(@token) %> |
-<%= link_to 'Back', tokens_path %>
+<%= next_state_link(@token) %>
 <br /><br />
 <hr />
 
@@ -27,7 +26,6 @@
         <td><%= token_history.token_id %></td>
         <td><%= token_history.punch_in_time.to_formatted_s(:long) %></td>
         <td><%= token_history.note %></td>
-        <td><%= link_to 'Edit', edit_token_token_history_path(@token, token_history) %></td>
         <td><%= link_to 'Destroy', [@token, token_history], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

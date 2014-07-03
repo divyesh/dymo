@@ -1,13 +1,13 @@
-<h1>Listing physicians</h1>
+<h1>Physicians</h1>
 <%= form_tag physicians_path, :method => 'get', :id => 'patients_search' do %>
   <p>
-    <%= text_field_tag :search, params[:search], :class => 'text' %>
+    <%= text_field_tag :term, params[:term], :class => 'text' %>
     <%= submit_tag "Search", :name => nil %>&nbsp;&nbsp;&nbsp; or &nbsp;&nbsp;&nbsp; <%= link_to 'Add New Physician', new_physician_path %>
   </p>
 <% end %>
 
 <br />
-
+<h2>Total Physicians: <%= @physicians.size %></h2>
 <table>
   <tr>
     <th>Physician number</th>
@@ -16,6 +16,7 @@
     <th>Lastname</th>
     <th>CPSO</th>
     <th>Address</th>
+    <th></th>
     <th></th>
     <th></th>
     <th></th>
@@ -29,22 +30,26 @@
     <td><%= physician.lastname %></td>
     <td><%= physician.cpso %></td>
     <td>
-      <%= physician.location %><br />
-      <%= physician.address1 %><br />
-      <%= physician.address2 %><br />
-      <%= physician.city %><br />
-      <%= physician.province %><br />
-      <%= physician.country %><br />
-      <%= physician.postal_code %><br />
-      <%= physician.phone %><br />
-      <%= physician.fax %><br />
-      <%= physician.emergency_number %><br />
-      <%= physician.email %><br />
+      Loc#<%= physician.location %>
+      <%= physician.address1 %> ,
+      <%= physician.address2 %>,
+      <%= physician.city %>,
+      <%= physician.province %>,
+      <%= physician.postal_code %>,
+      <%= physician.phone %>,
+      <%= physician.fax %>,
+      <%= physician.emergency_number %>
+      <%= physician.email %>,
 
     </td>
     <td><%= link_to 'Show', physician %></td>
     <td><%= link_to 'Edit', edit_physician_path(physician) %></td>
-    <td><%= link_to 'Destroy', physician, :confirm => 'Are you sure?', :method => :delete %></td>
+    
+    <td><%= link_to 'Delete', physician, :confirm => 'Are you sure?', :method => :delete %></td>
+<td>
+<a href="javascript:void(0);" PhysicianNumber="<%= physician.physician_number %>" FirstName="<%= physician.firstname %>" LastName="<%= physician.lastname %>"  address1="<%= physician.address1 %>" address2"<%= physician.address2 %>" city="<%= physician.city  %>" province="<%= physician.province %>" postalcode="<%= physician.postal_code %>" CPSO="<%= physician.cpso %>" 
+phone="<%= physician.phone %>" FAX="<%= physician.fax %>" class="print-physician-label-link">Print Label</a>
+</td>
   </tr>
 <% end %>
 </table>

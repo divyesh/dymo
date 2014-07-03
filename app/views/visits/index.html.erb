@@ -1,22 +1,29 @@
-<h1>Listing visits</h1>
+<h1>Patients</h1>
 <%= form_tag visits_path, :method => 'get', :id => "search_form" do %>
   <p>
     <%= text_field_tag :search, params[:search], :class => 'text' %>
-    <%= submit_tag "Search", :name => nil %>&nbsp;&nbsp;&nbsp; or &nbsp;&nbsp;&nbsp; <%= link_to 'Add Visit', new_visit_path %>
+    <%= submit_tag "Search", :name => nil %>&nbsp;&nbsp;&nbsp; or &nbsp;&nbsp;&nbsp; <%= link_to 'Add Patient', new_patient_path %>
   </p>
 <% end %>
+<i>To search patient, type name OR type Health card and Press Search.</i><br />
+<i>To swipe card, first clear search text box and swipe card.</i>
 <br />
+<h2>Total Visits: <%= @visits.count %>
+</h2>
+
 <table>
   <tr>
     <th>OHIP</th>
     <th>Health Expiry</th>
     <th>Lastname</th>
     <th>Firstname</th>
-    <th>Middlename</th>
+
     <th>Birthdate</th>
     <th>Address</th>
     <th>Physician</th>
     <th>Visited on</th>
+    <th></th>
+    <th></th>
     <th></th>
     <th></th>
   </tr>
@@ -26,24 +33,36 @@
     <td><%= visit.patient.healthnumber %>&nbsp;<%= visit.patient.version_code %></td>
     <td><%= visit.patient.health_expiry_date.nil? ? '' : visit.patient.health_expiry_date.to_formatted_s(:long) %></td>
     <td><%= visit.patient.lastname %></td>
-    <td><%= visit.patient.firstname %></td>
-    <td><%= visit.patient.middlename %></td>
+    <td><%= visit.patient.firstname %> &nbsp;<%= visit.patient.middlename %></td>
+
     <td><%= visit.patient.birthdate.nil? ? '' : visit.patient.birthdate.to_formatted_s(:long) %></td>
     <td>
-      <%= visit.patient.address1 %><br />
-      <%= visit.patient.address2 %><br />
-      <%= visit.patient.city %><br />
-      <%= visit.patient.province %><br />
-      <%= visit.patient.postal_code %><br />
-      <%= visit.patient.home_phone %><br />
-      <%= visit.patient.mobile %>
+      <%= visit.patient.address1 %>,
+      <%= visit.patient.address2 %>,
+      <%= visit.patient.city %>,
+      <%= visit.patient.province %>,
+      <%= visit.patient.postal_code %>
+      <%= visit.patient.home_phone %>(H),
+      <%= visit.patient.mobile %>(M)
     </td>
-    <td><%= visit.physician.lastname %>&nbsp;<%= visit.physician.firstname %>&nbsp;<%= visit.physician.middlename %></td>
-    <td><%= visit.created_at.strftime("%b %d, %Y") %></td>
+    <td><%= visit.physician.nil? ? '': visit.physician.firstname %>&nbsp;<%= visit.physician.nil? ? '': visit.physician.lastname %>&nbsp;<%= visit.physician.nil? ? '':visit.physician.middlename %></td>
+    <td>
+      <%= visit.visitdate.nil? ? '' : visit.visitdate.to_formatted_s(:long) %>
+    </td>
+    <td><%= link_to 'Show', :controller => :patients, :action => :show, :id => visit.patient.id %></td>
+     <td><%= link_to 'Add Physician', edit_patient_path(visit.patient) %>
+</td>
     <td class="actions"><%= link_to 'Remove', visit, :confirm => 'Are you sure?', :method => :delete %></td>
-    <td><a href="javascript:void(0);" healthNumber="<%= visit.patient.healthnumber + ' ' + visit.patient.version_code %>" expiry="<%= visit.patient.health_expiry_date.nil? ? '' : visit.patient.health_expiry_date.to_formatted_s(:long) %>" birthdate="<%= visit.patient.birthdate.nil? ? '' : visit.patient.birthdate.to_formatted_s(:long) %>" sex="<%= visit.patient.gender %>" address1="<%= visit.patient.address1 %>" address2="<%= visit.patient.address2 %>" homephone="<%= visit.patient.home_phone %>" ="<%= visit.patient.mobile %>"  patientName="<%= visit.patient.lastname + ' ' + visit.patient.firstname + ' ' + visit.patient.middlename %>" physician="<%= visit.physician.firstname + ' ' + visit.physician.lastname %>" visiteddate="<%= visit.created_at.strftime("%b %d, %Y") %>" city="<%= visit.patient.city %>" province="<%= visit.patient.province %>" postalcode="<%= visit.patient.postal_code %>" class="print-label-link">Print Label</a></td>
+    <td><a href="javascript:void(0);" healthNumber="<%= visit.patient.healthnumber + ' ' + visit.patient.version_code %>" expiry="<%= visit.patient.health_expiry_date.nil? ? '' : visit.patient.health_expiry_date.to_formatted_s(:db) %>" birthdate="<%= visit.patient.birthdate.nil? ? '' : visit.patient.birthdate.to_formatted_s(:db) %>" sex="<%= visit.patient.gender %>" address1="<%= visit.patient.address1 %>" address2="<%= visit.patient.address2 %>" homephone="<%= visit.patient.home_phone %>" mobile="<%= visit.patient.mobile %>"  patientName="<%= visit.patient.lastname + ' , ' + visit.patient.firstname + ' ' + visit.patient.middlename %>" physician="<%= visit.physician.nil? ? '':visit.physician.firstname + ' ' + visit.physician.lastname+ ' - '+visit.physician.physician_number  %>" visiteddate="<%= visit.visitdate.strftime("%m/%d/%Y") %>" city="<%= visit.patient.city %>" province="<%= visit.patient.province %>" postalcode="<%= visit.patient.postal_code %>" class="print-label-link">Print Label</a></td>
+
   </tr>
 <% end %>
 </table>
 <br />
 <%= will_paginate @visits %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#search').focus();
+  });
+</script>

@@ -1,4 +1,4 @@
-<%= simple_form_for(@patient) do |f| %>
+<%= simple_form_for @patient, :class => 'patient_form' do |f| %>
   <% if @patient.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@patient.errors.count, "error") %> prohibited this patient from being saved:</h2>
@@ -11,27 +11,50 @@
     </div>
   <% end %>
 
-  <%= f.input :healthnumber %>
-  <%= f.input :version_code %>
-  <%= f.input :health_expiry_date, :as => :date, :start_year => Date.today.year, :end_year => Date.today.year + 100 %>
-  <%= f.input :lastname, required: false %>
-  <%= f.input :firstname, required: false %>
-  <%= f.input :middlename %>
-  <%= f.input :gender do %>    
-    <%= f.collection_radio_buttons :gender, [['M','Male'] ,['F', 'Female']], :first, :last %>
-  <% end %>
-  <%= f.input :birthdate , :as => :date, :start_year => Date.today.year, :end_year => Date.today.year - 100 %>
-  <%= f.input :address1 %>
-  <%= f.input :address2 %>
-  <%= f.input :city %>
-  <%= f.input :province %>
-  <%= f.input :postal_code %>
-  <%= f.input :home_phone %>
-  <%= f.input :mobile %>
-  <% if @patient.new_record? %>
-    <%= f.input :physicians do %>
-      <%= f.collection_select :physician_ids, Physician.all, :id, :fullname_with_physician_number, :prompt => "Select a Physician" %>
-    <% end %>
-  <% end %>
-  <div class="actions"><%= f.button :submit %></div>
+  <table class="form-table">
+    <tr>
+      <td width="65%">
+        <%= f.input :healthnumber %>
+        <%= f.input :version_code %>
+				<%= f.input :health_expiry_date, :as => :string, :input_html => { :id => 'hedpicker'}, :hint => '(YYYY/MM/DD)', :wrapper_html => { :class => 'datepicker-swrapper'}  %>
+        <%= f.input :lastname %>
+        <%= f.input :firstname %>
+        <%= f.input :middlename %>
+        <%= f.input :gender do %>
+          <%= f.collection_radio_buttons :gender, [['M','Male'] ,['F', 'Female']], :first, :last, :class => 'radio-collection' %>
+        <% end %>
+        <%= f.input :birthdate , :as => :string, :input_html => { :id => 'birthdaypicker' }, :hint => '(YYYY/MM/DD)', :wrapper_html => { :class => 'datepicker-swrapper'}  %>
+        <%= f.input :address1 %>
+        <%= f.input :address2 %>
+        <%= f.input :city %>
+        <%= f.input :province %>
+        <%= f.input :postal_code %>
+        <%= f.input :home_phone %>
+        <%= f.input :mobile %>
+      </td>
+      <td style="vertical-align: top; padding-left: 100px;">
+        <div class="input string optional">
+          <label for="patient_physician" class="string optional">Enter Physician</label>
+          <%= text_field_tag :physician_id_text1 %>
+          <%= hidden_field_tag :physician_id1 %>
+        </div>
+        <div class="input string optional datepicker-swrapper" style="width: 400px;">
+          <label class="string optional">Visit date</label>
+          <%= text_field_tag :visitdate %><span class="hint">(YYYY/MM/DD)</span>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <%= f.button :submit %>
 <% end %>
+<script type="text/javascript">
+  $(function(){
+    $("#physician_id_text1").autocomplete({
+      source: "/physicians.json",
+      select: function(event, ui){
+        $('#physician_id1').val(ui.item.val);
+      }
+    });
+  });
+</script>

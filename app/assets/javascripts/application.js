@@ -1,4 +1,9 @@
 //= require jquery
 //= require jquery_ujs
+//= require jquery.ui.all
+//= require jquery.validate
+//= require jquery.inputmask.bundle
+//= require jquery.form.min
+//= require patient
 //= require DYMO.Label.Framework.1.0.beta
 //= require Dymo

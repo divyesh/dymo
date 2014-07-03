@@ -4,6 +4,10 @@
     Enter Health#/Swipe Card: <%= text_field_tag :healthcard, params[:healthcard], :class => 'text' %>
     <%= submit_tag "Generate Token", :name => nil %>
   </p>
+  <br />
+  <i>To generate token for patient, type Health # and Generate Token.</i><br />
+  <i>To swipe card, first clear search text box and swipe card.</i>
+  <br />
 <% end %>
 
 <br />
@@ -25,8 +29,7 @@
         <td><%= token.created_at.to_formatted_s(:long) %></td>
         <td><%= token.state %></td>
         <td><%= next_state_link(token) %></td>
-        <td><%= link_to 'Show', token %></td>
-        <td><%= link_to 'Edit', edit_token_path(token) %></td>
+        <td><%= link_to 'View Punch In(s)', token %></td>
         <td><%= link_to 'Destroy', token, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

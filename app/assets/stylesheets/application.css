@@ -1,6 +1,7 @@
 /*
 *= require_self
 *= require simple_form
+*= require jquery.ui.all
 */
 
 /*
@@ -127,8 +128,11 @@ h1{
   font-weight: bold;
   padding: 20px 0;
 }
-table{
+table {
   border: solid 1px #ccc;
+}
+table.form-table > tbody > tr > td {
+  padding-top: 20px;
 }
 table th{
   font-weight: bold;
@@ -177,22 +181,13 @@ table th, table td{
   margin: 0;
 }
 
-.simple_form label.collection_radio_buttons {
-  margin-right: 20px;
-  margin-left: 5px;
-  float: none;
-}
-
-.simple_form .radio_buttons {
-  padding-left: 140px;
+.simple_form label.collection_radio {
+  margin-right: 10px;
+  margin-left: 2px;
 }
 
 .simple_form .error {
-  clear: left;
-  margin-left: 140px;
-  font-size: 12px;
   color: #D00;
-  display: block;
 }
 
 .simple_form .hint {
@@ -272,4 +267,19 @@ td.actions{
 }
 .new-visit a{
   font-size: 12px;
+}
+.simple_form label.collection_radio_buttons {
+  float: none;
+}
+input[type="text"] {
+  width: 40%;
+}
+label.error {
+  float: none !important;
+  width: 40% !important;
+  display: block;
+}
+.inline {
+  display: inline;
+  margin-right: 10px;
 }
