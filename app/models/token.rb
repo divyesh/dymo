@@ -18,7 +18,7 @@ class Token < ActiveRecord::Base
   end
 
   def self.new_time_in_token(patient)
-    Token.new({
+    token = Token.new({
       patient: patient,
       no: Token.where("date(created_at) = ?", Date.today).size + 1
     })
