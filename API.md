@@ -35,6 +35,11 @@ Example request
       -X POST \
       -d '{ "healthcard": "pat001" }'
 
+    $ curl localhost:3000/tokens/:id/discard \
+      -H "Accept: application/json" \
+      -H "Content-type: application/json" \
+      -X POST
+
 Example response
 ----------------
 

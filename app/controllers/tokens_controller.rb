@@ -45,17 +45,18 @@ class TokensController < ApplicationController
 
   def done
     @token.done!
-    redirect_to @token, notice: 'Token was successfully updated.'
-  end
-
-  def reject
-    @token.reject!
-    redirect_to @token, notice: 'Token was successfully updated.'
+    respond_to do |format|
+      format.html { redirect_to @token, notice: "Token was successfully updated." }
+      format.json { render :show, status: :created, location: @token }
+    end
   end
 
   def discard
     @token.discard!
-    redirect_to @token, notice: 'Token was successfully updated.'
+    respond_to do |format|
+      format.html { redirect_to @token, notice: "Token was successfully updated." }
+      format.json { render :show, status: :created, location: @token }
+    end
   end
 
   def update
