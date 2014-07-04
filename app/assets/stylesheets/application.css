@@ -281,5 +281,16 @@ label.error {
 }
 .inline {
   display: inline;
-  margin-right: 10px;
+}
+.tokens-table tr.completed {
+  background-color: #dff0d8;
+}
+.tokens-table tr.completed a {
+  color: green;
+}
+.tokens-table tr.discarded {
+  color: #999;
+}
+.tokens-table tr.discarded a {
+  color: #999;
 }

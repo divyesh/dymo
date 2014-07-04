@@ -8,13 +8,14 @@ class Token < ActiveRecord::Base
   workflow do
     state :time_in do
       event :add_visit, transitions_to: :visit_registered
+      event :discard, transitions_to: :discarded
     end
     state :visit_registered do
       event :done, transitions_to: :completed
-      event :discard, transitions_to: :discared
+      event :discard, transitions_to: :discarded
     end
     state :completed
-    state :discared
+    state :discarded
   end
 
   def self.new_time_in_token(patient)

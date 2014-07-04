@@ -2,7 +2,7 @@ class TokensController < ApplicationController
   before_action :set_token, only: [:show, :edit, :update, :destroy, :done, :reject, :discard]
 
   def index
-    @tokens = Token.all
+    @tokens = Token.where("created_at >= ? OR created_at <= ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day)
   end
 
   def show

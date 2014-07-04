@@ -11,7 +11,7 @@
 <% end %>
 
 <br />
-<table>
+<table class="tokens-table">
   <thead>
     <tr>
       <th>Token #</th>
@@ -24,7 +24,7 @@
 
   <tbody>
     <% @tokens.each do |token| %>
-      <tr>
+      <tr class="<%= token.state %>">
         <td><%= token.no %></td>
         <td><%= token.created_at.to_formatted_s(:long) %></td>
         <td><%= token.state %></td>
