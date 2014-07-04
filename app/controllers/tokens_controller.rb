@@ -24,7 +24,7 @@ class TokensController < ApplicationController
     @patient = Patient.where(healthnumber: options[:healthnumber]).first
     @patient = Patient.create!(options) unless @patient
 
-    @token = Token.where("date(created_at) = ? AND patient_id = ?", Date.today, @patient.id).first
+    @token = Token.where("(created_at >= ? OR created_at <= ?) AND patient_id = ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day, @patient.id).first
 
     unless @token
       @token = Token.new_time_in_token(@patient)

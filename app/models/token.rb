@@ -29,6 +29,7 @@ class Token < ActiveRecord::Base
     token_history.punch_in_time = token.created_at
     token_history.note = "Time in"
     token_history.save!
+    token
   end
 
   private
