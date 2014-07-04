@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
         lastname = name_arr[0].strip
         firstname = name_arr[1].strip
         middlename = name_arr.length > 2 ? name_arr[2].strip : ''
-	  gender = hn_arr[2][7,1]
+        gender = hn_arr[2][7,1] == "1" ? "M" : "F"
 
         # Birthdate
         year = hn_arr[2][8, 4]

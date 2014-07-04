@@ -33,7 +33,7 @@ Example request
       -H "Accept: application/json" \
       -H "Content-type: application/json" \
       -X POST \
-      -d '{ "healthcard": "pat001" }'
+      -d '{ "healthcard": "4545454545" }'
 
     $ curl localhost:3000/tokens/:id/discard \
       -H "Accept: application/json" \
