@@ -18,7 +18,9 @@
         <li>|</li>
         <li><%= link_to 'Physicians', physicians_path %></li>
         <li>|</li>
-        <li class="last"><%= link_to 'Tokens', tokens_path %></li>
+        <li><%= link_to 'Tokens', tokens_path %></li>
+        <li>|</li>
+        <li class="last"><%= link_to 'Reports', reports_index_path %></li>
       </ul>
     </h1>
   </div>
@@ -32,7 +34,7 @@
 
   <div id="ft">
      <p>
-      <%= link_to 'Patients', root_path %> | <%= link_to 'Physicians', physicians_path %> | <%= link_to 'Tokens', tokens_path %> | MedHealth App
+      <%= link_to 'Patients', root_path %> | <%= link_to 'Physicians', physicians_path %> | <%= link_to 'Tokens', tokens_path %> | <%= link_to 'Reports', reports_index_path %> | MedHealth App
      </p>
  		<div id="dialog-confirm" style="display: none;" title="VERIFY PI INFORMATION ENTERED">
  			<div id="patient-details">

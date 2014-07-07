@@ -1,0 +1,41 @@
+<h1>Generate Reports</h1>
+<fieldset class="with-border">
+  
+  <%= form_tag reports_index_path, method: :get do %>
+    <div class="field">
+      Select Date: <%= select_date filter_date.to_date, prefix: :start_date  %>
+    </div>
+    <div style="border-top: solid 1px #ccc; padding-top: 10px; margin-top: 10px; text-align: left;">
+      <%= submit_tag "Generate Report", :name => nil %> | <%= link_to "Reset", reports_index_path %>
+    </div>
+  <% end %>
+  
+</fieldset>
+<br />
+<br />
+<table class="tokens-table" width="100%">
+  <thead>
+    <tr>
+      <th>Token #</th>
+      <th>Time in</th>
+      <th>Visit Registered</th>
+      <th>Waiting period 1</th>
+      <th>Completed</th>
+      <th>Waiting period 2</th>
+      <th>Total Wait time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tokens.each do |token| %>
+      <tr class="<%= token.state %>">
+        <td><%= token.no %></td>
+        <td><%= token.created_at.to_formatted_s(:long) %></td>
+        <td><%= token.visit_registered_time.to_formatted_s(:long)  %></td>
+        <td><%= token.waiting_period_1 %> seconds</td>
+        <td><%= token.completed_time.to_formatted_s(:long) %></td>
+        <td><%= token.waiting_period_2 %> seconds</td>
+        <td><%= token.waiting_period_1 + token.waiting_period_2 %> seconds</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
