@@ -2,7 +2,7 @@ class TokensController < ApplicationController
   before_action :set_token, only: [:show, :edit, :update, :destroy, :done, :reject, :discard]
 
   def index
-    @tokens = Token.where("created_at >= ? OR created_at <= ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day)
+    @tokens = Token.where("created_at >= ? AND created_at <= ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day)
   end
 
   def show
@@ -24,7 +24,7 @@ class TokensController < ApplicationController
     @patient = Patient.where(healthnumber: options[:healthnumber]).first
     @patient = Patient.create!(options) unless @patient
 
-    @token = Token.where("(created_at >= ? OR created_at <= ?) AND patient_id = ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day, @patient.id).first
+    @token = Token.where("(created_at >= ? AND created_at <= ?) AND patient_id = ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day, @patient.id).first
 
     unless @token
       @token = Token.new_time_in_token(@patient)
