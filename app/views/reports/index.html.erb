@@ -30,9 +30,9 @@
       <tr class="<%= token.state %>">
         <td><%= token.no %></td>
         <td><%= token.created_at.to_formatted_s(:long) %></td>
-        <td><%= token.visit_registered_time.to_formatted_s(:long)  %></td>
+        <td><%= token.visit_registered_time.to_formatted_s(:long) unless token.visit_registered_time.nil? %></td>
         <td><%= token.waiting_period_1 %> seconds</td>
-        <td><%= token.completed_time.to_formatted_s(:long) %></td>
+        <td><%= token.completed_time.to_formatted_s(:long) unless token.completed_time.nil? %></td>
         <td><%= token.waiting_period_2 %> seconds</td>
         <td><%= token.waiting_period_1 + token.waiting_period_2 %> seconds</td>
       </tr>

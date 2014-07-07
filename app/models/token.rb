@@ -22,8 +22,6 @@ class Token < ActiveRecord::Base
     th = token_histories.where("note = ?", "visit_registered").first
     if th
       th.punch_in_time
-    else
-      ''
     end
   end
 
@@ -31,8 +29,6 @@ class Token < ActiveRecord::Base
     th = token_histories.where("note = ?", "visit_registered").first
     if th
       (th.punch_in_time.to_time - created_at.to_time).to_i
-    else
-      ''
     end
   end
 
@@ -40,8 +36,6 @@ class Token < ActiveRecord::Base
     th = token_histories.where("note = ?", "completed").first
     if th
       th.punch_in_time
-    else
-      ''
     end
   end
 
