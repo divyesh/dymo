@@ -289,6 +289,10 @@ label.error {
   background-color: #f5f5f5;
   color: #999;
 }
+.tokens-table td.last {
+  background-color: #fff;
+  text-align: center;
+}
 fieldset.with-border {
   border: solid 1px #ddd;
   padding: 10px;
