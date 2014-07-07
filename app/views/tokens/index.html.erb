@@ -25,10 +25,10 @@
       </tr>
     </thead>
     <tbody>
-      <%= render @tokens.where("state = ?", "time_in") %>
-      <%= render @tokens.where("state = ?", "visit_registered") %>
-      <%= render @tokens.where("state = ?", "completed") %>
-      <%= render @tokens.where("state = ?", "discarded") %>
+      <%= render @tokens.where("state = ?", "time_in").order("created_at ASC") %>
+      <%= render @tokens.where("state = ?", "visit_registered").order("created_at ASC") %>
+      <%= render @tokens.where("state = ?", "completed").order("created_at ASC") %>
+      <%= render @tokens.where("state = ?", "discarded").order("created_at ASC") %>
     </tbody>
   </table>
 
