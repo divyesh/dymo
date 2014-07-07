@@ -305,3 +305,11 @@ fieldset.with-border legend {
 div.field {
   padding-bottom: 10px;
 }
+span.completed {
+  background-color: green;
+  color: #fff;
+}
+span.discarded {
+  background-color: red;
+  color: #fff;
+}
