@@ -285,13 +285,8 @@ label.error {
 .tokens-table tr.completed {
   background-color: #dff0d8;
 }
-.tokens-table tr.completed a {
-  color: green;
-}
 .tokens-table tr.discarded {
-  color: #999;
-}
-.tokens-table tr.discarded a {
+  background-color: #f5f5f5;
   color: #999;
 }
 fieldset.with-border {

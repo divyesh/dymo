@@ -11,8 +11,6 @@ module ApplicationHelper
       end) + " / " + (form_for token, url: discard_token_path(token), method: :post, html: { class: 'inline' } do |f|
         f. submit 'Discard'
       end)).html_safe
-    when :completed, :discarded
-      "-"
     end
   end
 end

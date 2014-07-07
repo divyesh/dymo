@@ -1,11 +1,12 @@
 <h1>Token #: <%= @token.no %></h1> 
 <p>
   <strong>Patient:</strong>
-  <%= @token.patient.fullname_with_health_insurance_number %>
+  <%= @token.patient.fullname_with_health_insurance_number %> <%= @token.patient.version_code %>
 </p>
 <br />
 <%= next_state_link(@token) %>
-<br /><br />
+<br />
+<br />
 <hr />
 
 <h1>Token Punch In(s):</h1>
