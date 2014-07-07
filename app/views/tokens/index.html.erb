@@ -1,37 +1,52 @@
-<h1>Listing tokens</h1> 
-<%= form_for Token.new do %>
-  <p>
-    Enter Health#/Swipe Card: <%= text_field_tag :healthcard, params[:healthcard], :class => 'text' %>
-    <%= submit_tag "Generate Token", :name => nil %>
-  </p>
+<h1>Listing tokens</h1>
+<div>
+  <div style="float: left; width: 60%;">
+  <%= form_for Token.new do %>
+      Enter Health#/Swipe Card: <%= text_field_tag :healthcard, params[:healthcard], :class => 'text' %>
+      <%= submit_tag "Generate Token", :name => nil %>
+      <br />
+      <i>To generate token for patient, type Health # and Generate Token.</i><br />
+      <i>To swipe card, first clear search text box and swipe card.</i>
+      <br />
+  <% end %>
+  <hr />
   <br />
-  <i>To generate token for patient, type Health # and Generate Token.</i><br />
-  <i>To swipe card, first clear search text box and swipe card.</i>
-  <br />
-<% end %>
-
-<br />
-<table class="tokens-table">
-  <thead>
-    <tr>
-      <th>Token #</th>
-      <th>Time in</th>
-      <th>Current state</th>
-      <th></th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @tokens.each do |token| %>
-      <tr class="<%= token.state %>">
-        <td><%= token.no %></td>
-        <td><%= token.created_at.to_formatted_s(:long) %></td>
-        <td><%= token.state %></td>
-        <td><%= next_state_link(token) %></td>
-        <td><%= link_to 'View Punch In(s)', token %></td>
-        <td><%= link_to 'Destroy', token, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  <h6 style="color: #102077;"><%= filter_title %></h6>
+  <br />  
+  <table class="tokens-table">
+    <thead>
+      <tr>
+        <th>Token #</th>
+        <th>Time in</th>
+        <th>Current state</th>
+        <th></th>
+        <th colspan="3"></th>
       </tr>
+    </thead>
+    <tbody>
+      <%= render @tokens.where("state = ?", "time_in") %>
+      <%= render @tokens.where("state = ?", "visit_registered") %>
+      <%= render @tokens.where("state = ?", "completed") %>
+      <%= render @tokens.where("state = ?", "discarded") %>
+    </tbody>
+  </table>
+
+  </div>
+  <fieldset class="with-border" style="width: 30%; float: right">
+    <legend>Filter tokens: </legend>
+    <%= form_tag tokens_path, method: :get do %>
+      <div class="field">
+        Token type: <%= select_tag :state, options_for_select([["All", "all"], ["Time in", "time_in"], ["Visit registered", "visit_registered"], ["Completed", "completed"], ["Discarded", "discarded"]], params[:state].nil? ? "all" : params[:state]) %>
+      </div>
+      <div class="field">
+        Select Date: <%= select_date filter_date.to_date, prefix: :start_date  %>
+      </div>
+      <div style="border-top: solid 1px #ccc; padding-top: 10px; margin-top: 10px; text-align: left;">
+        <%= submit_tag "Filter tokens", :name => nil %> | <%= link_to "Reset", tokens_path %>
+        <span style="float: right;"><%= link_to "Display today's tokens", tokens_path(startdate: { year: Date.today.year, month: Date.today.month, day: Date.today.day }) %></span>
+      </div>
     <% end %>
-  </tbody>
-</table>
+
+  </fieldset>
+  <div style="clear: both;"></div>
+</div>

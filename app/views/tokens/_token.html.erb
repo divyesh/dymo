@@ -1,0 +1,8 @@
+<tr class="<%= token.state %>">
+  <td><%= token.no %></td>
+  <td><%= token.created_at.to_formatted_s(:long) %></td>
+  <td><%= token.state.gsub('_', ' ').capitalize %></td>
+  <td><%= next_state_link(token) %></td>
+  <td><%= link_to 'View Punch In(s)', token %></td>
+  <td><%= link_to 'Destroy', token, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+</tr>

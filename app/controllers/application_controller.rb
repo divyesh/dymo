@@ -52,14 +52,19 @@ class ApplicationController < ActionController::Base
   end
   helper_method :parse_healthcard
 
+  def filter_date
+    params[:start_date].nil? ? DateTime.now : DateTime.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, params[:start_date][:day].to_i)
+  end
+  helper_method :filter_date
+
   private
 
-  def detect_device_variant
-    case request.user_agent
-    when /iPad/i
-      request.variant = :tablet
-    when /iPhone/i
-      request.variant = :phone
+    def detect_device_variant
+      case request.user_agent
+      when /iPad/i
+        request.variant = :tablet
+      when /iPhone/i
+        request.variant = :phone
+      end
     end
-  end
 end
