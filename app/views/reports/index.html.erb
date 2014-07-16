@@ -6,7 +6,7 @@
       Select Date: <%= select_date filter_date.to_date, prefix: :start_date  %>
     </div>
     <div style="border-top: solid 1px #ccc; padding-top: 10px; margin-top: 10px; text-align: left;">
-      <%= submit_tag "Generate Report", :name => nil %> | <%= link_to "Reset", reports_index_path %>
+      <%= submit_tag "Generate Report", :name => nil %> | <%= link_to "Reset", reports_index_path %> | <%= link_to "% Served in 30 minutes", reports_index_path(duration: 30) %>
     </div>
   <% end %>
   
