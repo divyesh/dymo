@@ -20,7 +20,13 @@
         <li>|</li>
         <li><%= link_to 'Tokens', tokens_path %></li>
         <li>|</li>
-        <li class="last"><%= link_to 'Reports', reports_index_path %></li>
+        <li><%= link_to 'Reports', reports_index_path %></li>
+        <li>|</li>
+        <li><%= link_to 'Tests', "#" %></li>
+        <% if user_signed_in? %>
+          <li>|</li>
+          <li><%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+        <% end %>  
       </ul>
     </h1>
   </div>

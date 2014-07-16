@@ -50,4 +50,6 @@ gem 'workflow'
 
 gem 'rails_12factor', group: :production
 
+gem 'devise'
+
 ruby "2.0.0"

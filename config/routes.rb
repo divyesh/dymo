@@ -1,7 +1,9 @@
 Dymo::Application.routes.draw do
-  get 'reports/index'
+  devise_for :users
 
   root to: "visits#index"
+
+  get 'reports/index'
 
   resources :tokens, except: [:edit, :update] do
     resources :token_histories, except: [:edit, :update]

@@ -12,3 +12,15 @@ c:/dymo/> rake db:migrate
 c:/dymo/> rails s
 
 visit http://localhost:3000
+
+TODOs
+=====
+1. Auto update on tokens page
+2. Review existing functionality
+3. Reports
+4. Test for patients
+Tests table: ID,LOINC,TestGroup,TestCode, TestName, SpecimenSource, CreatedOn,UpdatedOn
+and Index
+
+5. Authentication
+
