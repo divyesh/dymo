@@ -24,18 +24,15 @@
         <th class="last"></th>
       </tr>
     </thead>
-    <tbody>
-      <%= render @tokens.where("state = ?", "time_in").order("created_at ASC") %>
-      <%= render @tokens.where("state = ?", "visit_registered").order("created_at ASC") %>
-      <%= render @tokens.where("state = ?", "completed").order("created_at ASC") %>
-      <%= render @tokens.where("state = ?", "discarded").order("created_at ASC") %>
+    <tbody id="tokens-table-body">
+      <%= render partial: 'tokens' %>
     </tbody>
   </table>
 
   </div>
   <fieldset class="with-border" style="width: 30%; float: right">
     <legend>Filter tokens: </legend>
-    <%= form_tag tokens_path, method: :get do %>
+    <%= form_tag tokens_path, method: :get, id: 'filter_token', remote: true do %>
       <div class="field">
         Token type: <%= select_tag :state, options_for_select([["All", "all"], ["Time in", "time_in"], ["Visit registered", "visit_registered"], ["Completed", "completed"], ["Discarded", "discarded"]], params[:state].nil? ? "all" : params[:state]) %>
       </div>

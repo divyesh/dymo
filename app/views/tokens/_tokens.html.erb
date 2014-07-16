@@ -1,0 +1,1 @@
+<%= render @tokens.where("state = ?", "time_in").order("created_at ASC") %><%= render @tokens.where("state = ?", "visit_registered").order("created_at ASC") %><%= render @tokens.where("state = ?", "completed").order("created_at ASC") %><%= render @tokens.where("state = ?", "discarded").order("created_at ASC") %>

@@ -1,4 +1,16 @@
 $(document).ready(function () {
+  var ajaxInterval;
+  if($('#tokens-table-body').length > 0) {
+    var ajaxCall = function() {
+      $('#filter_token').submit();
+    }
+    ajaxInterval = setInterval(function() { ajaxCall(); }, (1000 * 60));
+  } else {
+    if(ajaxInterval) {
+      clearInterval(ajaxInterval);
+    }
+  }
+
   $(".print-label-link").click(function(){
     var patientName = $(this).attr("patientName");
     var healthNumber = $(this).attr("healthNumber");
@@ -15,33 +27,33 @@ $(document).ready(function () {
     var city = $(this).attr("city");
     var province = $(this).attr("province");
     var postalcode = $(this).attr("postalcode");
-    
+
     printPatientLabel(patientName, healthNumber, expiry, dob, sex,  address, city, province, postalcode, homephone, mobile, physician, visiteddate);
   });
-  
+
   $(".print-physician-label-link").click(function(){
 
-      var PhysicianNumber= $(this).attr("PhysicianNumber");	
-      var FirstName= $(this).attr("FirstName");	
-      var LastName= $(this).attr("LastName");	
+      var PhysicianNumber= $(this).attr("PhysicianNumber");
+      var FirstName= $(this).attr("FirstName");
+      var LastName= $(this).attr("LastName");
       var address1= $(this).attr("address1");
       var address2= $(this).attr("address2");
       var city= $(this).attr("city");
       var province= $(this).attr("province");
-      var postalcode= $(this).attr("postalcode"); 
-                var CPSO= $(this).attr("cpso"); 
+      var postalcode= $(this).attr("postalcode");
+                var CPSO= $(this).attr("cpso");
       var phone= $(this).attr("phone");
 
       var Fax= $(this).attr("FAX");
 
       physicianLabel(PhysicianNumber,CPSO,FirstName+' '+LastName,address1,address2,city,province,postalcode,phone,Fax);
-      
+
     });
-	
+
   initdatepickers();
   initpatientform();
-  
-  
+
+
 });
 
 function disData(){
@@ -49,12 +61,12 @@ function disData(){
   $('#p_name').html($('#patient_lastname').val() + ' ' + $('#patient_firstname').val() + ' ' + $('#patient_middlename').val());
   $('#p_ohip').html($('#patient_healthnumber').val());
   $('#p_vc').html($('#patient_version_code').val());
-  
+
   if($('#hedpicker').val() != '')
     $('#p_hed').html($.datepicker.formatDate('yy-mm-dd', new Date($('#hedpicker').val())));
   else
     $('#p_hed').html('--');
-    
+
   $('#p_bdate').html($.datepicker.formatDate('yy-mm-dd', new Date($('#birthdaypicker').val())));
 
   $('#p_address').html(
@@ -65,20 +77,20 @@ function disData(){
   $('#patient_postal_code').val() + '<br />'
   );
   $('#p_contact').html( 'Home (ph): ' + $('#patient_home_phone').val() + '<br />' + 'Mobile (ph): ' + $('#patient_mobile').val());
-  
+
   $('#p_gender').html($('input[name=patient[gender]]:checked', $(this)[0]).val() == "M" ? "Male" : "Female");
   $('#p_physician').html($("#physician_id_text1").val());
-  $('#p_visitdate').html($.datepicker.formatDate('yy-mm-dd', new Date($('#visitdate').val()))); 
+  $('#p_visitdate').html($.datepicker.formatDate('yy-mm-dd', new Date($('#visitdate').val())));
   debugger;
 }
 
-function initdatepickers(){  
-  options = { 
+function initdatepickers(){
+  options = {
     dateFormat: 'yy/mm/dd',
     showOn: "button",
     buttonImageOnly: true
-  };  
-  $('.datepicker-swrapper > input').datepicker(options).inputmask("y/m/d"); 
+  };
+  $('.datepicker-swrapper > input').datepicker(options).inputmask("y/m/d");
 
   $('#visitdate').val($.datepicker.formatDate('yy/mm/dd', new Date()));
   //
@@ -92,21 +104,21 @@ function initdatepickers(){
 function initpatientform(){
   $("form.new_patient, form.edit_patient").validate({
      submitHandler: function(form) {
-       
+
        // if birthdate is less than or equal today display error
        if(new Date() <= new Date($('#birthdaypicker').val())){
           alert("Birthdate can't be future date.");
           $("#birthdaypicker").focus();
           return false;
        }
-       
+
        //Physician is required
        if($("#physician_id1").val() == ''){
          alert("Error! Physician not found. To remove error please add new physician from manage physicians page (Link provided in header).");
          $("#physician_id1").focus();
          return false;
        }
-       
+
        // if visitdate is required
        if($('#visitdate').val() == ''){
          alert("Please enter visit date");
@@ -119,7 +131,7 @@ function initpatientform(){
         }
          debugger;
        disData();
-     
+
        $("#dialog-confirm").dialog({
    			resizable: true,
    			width: 800,
@@ -136,7 +148,7 @@ function initpatientform(){
      					$(this).dialog("close");
      				}
      			}
-     		});     
+     		});
      }
-  }); 
+  });
 }
