@@ -1,0 +1,27 @@
+<p>
+  <strong>Loinc:</strong>
+  <%= @test.loinc %>
+</p>
+
+<p>
+  <strong>Test group:</strong>
+  <%= @test.test_group %>
+</p>
+
+<p>
+  <strong>Test code:</strong>
+  <%= @test.test_code %>
+</p>
+
+<p>
+  <strong>Test name:</strong>
+  <%= @test.test_name %>
+</p>
+
+<p>
+  <strong>Specimen source:</strong>
+  <%= @test.specimen_source %>
+</p>
+
+<%= link_to 'Edit', edit_test_path(@test) %> |
+<%= link_to 'Back', tests_path %>

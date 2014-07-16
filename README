@@ -19,7 +19,7 @@ TODOs
 2. Review existing functionality
 3. Reports
 4. Test for patients
-Tests table: ID,LOINC,TestGroup,TestCode, TestName, SpecimenSource, CreatedOn,UpdatedOn
+Tests table: loinc test_group test_code test_name specimen_source
 and Index
 
 5. Authentication

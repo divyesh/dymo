@@ -1,0 +1,15 @@
+<%= simple_form_for(@test) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :loinc %>
+    <%= f.input :test_group %>
+    <%= f.input :test_code %>
+    <%= f.input :test_name %>
+    <%= f.input :specimen_source %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

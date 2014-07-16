@@ -1,4 +1,5 @@
 Dymo::Application.routes.draw do
+
   devise_for :users
 
   root to: "visits#index"
@@ -16,4 +17,5 @@ Dymo::Application.routes.draw do
   resources :visits, only: [:index, :destroy]
   resources :physicians
   resources :patients, except: [:index, :destroy]
+  resources :tests
 end
