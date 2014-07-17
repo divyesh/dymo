@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Token #</Data></Cell>
+        <Cell><Data ss:Type="String">OHIP</Data></Cell>
+        <Cell><Data ss:Type="String">Time in</Data></Cell>
+        <Cell><Data ss:Type="String">Visit Registered</Data></Cell>
+        <Cell><Data ss:Type="String">Waiting period 1</Data></Cell>
+        <Cell><Data ss:Type="String">Completed</Data></Cell>
+        <Cell><Data ss:Type="String">Waiting period 2</Data></Cell>
+        <Cell><Data ss:Type="String">Total Wait time</Data></Cell>
+      </Row>
+    <% @tokens.each do |token| %>
+      <Row>
+        <Cell><Data ss:Type="Number"><%= token.no %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= token.patient.healthnumber %> <%= token.patient.version_code %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= token.created_at.to_formatted_s(:long) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= token.visit_registered_time.to_formatted_s(:long) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= waiting_time(token.waiting_period_1) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= token.completed_time.to_formatted_s(:long) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= waiting_time(token.waiting_period_2) %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= waiting_time(token.waiting_period_1 + token.waiting_period_2) %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

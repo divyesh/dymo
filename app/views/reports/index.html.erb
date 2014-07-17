@@ -49,6 +49,11 @@
     </div>
     <div style="border-top: solid 1px #ccc; padding-top: 10px; margin-top: 10px; text-align: left;">
       <%= submit_tag "Generate Report", :name => nil %> | <%= link_to "Reset", reports_index_path %>
+      <p style="float: right;">
+        Download:
+        <%= link_to "CSV", reports_index_path(params.merge({ format: :csv })) %> |
+        <%= link_to "Excel", reports_index_path(params.merge({ format: :xls })) %>
+      </p>
     </div>
   <% end %>
   
@@ -74,9 +79,9 @@
         <td><%= token.no %></td>
         <td><%= token.patient.healthnumber %> <%= token.patient.version_code %></td>
         <td><%= token.created_at.to_formatted_s(:long) %></td>
-        <td><%= token.visit_registered_time.to_formatted_s(:long) unless token.visit_registered_time.nil? %></td>
+        <td><%= token.visit_registered_time.to_formatted_s(:long) %></td>
         <td><span class="item-icon <%= waiting_icon(token.waiting_period_1) %>" title="<%= waiting_time(token.waiting_period_1) %>"></span></td>
-        <td><%= token.completed_time.to_formatted_s(:long) unless token.completed_time.nil? %></td>
+        <td><%= token.completed_time.to_formatted_s(:long) %></td>
         <td><span class="item-icon <%= waiting_icon(token.waiting_period_2) %>" title="<%= waiting_time(token.waiting_period_2) %>"></span></td>
         <td><span class="item-icon <%= waiting_icon(token.waiting_period_1 + token.waiting_period_2) %>" title="<%= waiting_time(token.waiting_period_1 + token.waiting_period_2) %>"></span>
       </tr>

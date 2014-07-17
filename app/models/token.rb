@@ -56,6 +56,33 @@ class Token < ActiveRecord::Base
     token
   end
 
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << ["Token #", "OHIP", "Time in", "Visit Registered", "Waiting Period 1", "Completed", "Waiting Period 2", "Total Wait Time"]
+      all.each do |token|
+        csv << [token.no, "#{token.patient.healthnumber} #{token.patient.version_code}", token.created_at.to_formatted_s(:long), token.visit_registered_time.to_formatted_s(:long), waiting_time(token.waiting_period_1), token.completed_time.to_formatted_s(:long), waiting_time(token.waiting_period_2), waiting_time(token.waiting_period_1 + token.waiting_period_2)]
+      end
+    end
+  end
+
+  def self.waiting_time(time_in_seconds)
+    text = "#{time_in_seconds} seconds"
+    if time_in_seconds >= 3600
+      hours = (time_in_seconds/3600).to_i
+      text = "#{hours} hours"
+      minutes = ((time_in_seconds%3600).to_i/60).to_i
+      text = text + " #{minutes} minutes" if minutes > 0
+      seconds = ((time_in_seconds%3600).to_i%60).to_i
+      text = text + " #{seconds} seconds" if seconds > 0
+    elsif time_in_seconds >= 60
+      minutes = (time_in_seconds/60).to_i
+      text = "#{minutes} minutes"
+      seconds = (time_in_seconds%60).to_i
+      text = text + " #{seconds} seconds" if seconds > 0
+    end
+    text
+  end
+
   private
     def add_visit
       token_history = self.token_histories.build

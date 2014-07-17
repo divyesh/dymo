@@ -14,6 +14,12 @@ class ReportsController < ApplicationController
     elsif params[:duration] == "61"
       @tokens.to_a.select! { |t| (t.completed_at - t.created_at) > 3600 }
     end
+
+    respond_to do |format|
+        format.html
+        format.csv { send_data @tokens.to_csv }
+        format.xls
+      end
   end
 
   private
