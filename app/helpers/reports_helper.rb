@@ -22,16 +22,14 @@ module ReportsHelper
       "red-item-icon"
     elsif time_in_seconds >= 60
       minutes = (time_in_seconds/60).to_i
-      if minutes >= 30
-        "gray-item-icon"
+      if minutes <= 30
+        "green-item-icon"
       elsif minutes > 30 && minutes <= 40
-        "darkgray-item-icon"
+        "gray-item-icon"
       elsif minutes > 40 && minutes <= 60
         "black-item-icon"
-      elsif minutes > 40 && minutes <= 60
+      elsif minutes > 61
         "red-item-icon"
-      else
-        "green-item-icon"
       end
     else
       "green-item-icon"

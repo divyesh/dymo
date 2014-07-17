@@ -359,10 +359,7 @@ table.no-border, table.no-border td {
   background-color: #6cc644;
 }
 .gray-item-icon {
-  background-color: #888;
-}
-.gray-item-icon {
-  background-color: #555;
+  background-color: #ccc;
 }
 .black-item-icon {
   background-color: #000;

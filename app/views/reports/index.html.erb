@@ -3,50 +3,97 @@
 <fieldset class="with-border">
   
   <%= form_tag reports_index_path, method: :get do %>
-    <table class="no-border">
+    <table class="no-border" width="100%">
       <tr>
         <td>
-          <strong style="font-weight: bold;">Date <small class="hint">(yyyy/mm/dd)</small>:</strong>
+          <table class="no-border">
+            <tr>
+              <tr>
+                <td>
+                  <strong style="font-weight: bold;">Date <small class="hint">(yyyy/mm/dd)</small>:</strong>
+                </td>
+                <td class="datepicker-swrapper">
+                  From: <%= text_field_tag :start_date, (params[:start_date].blank? ? Date.today : params[:start_date]), class: 'input-sm' %>
+                </td>
+                <td class="datepicker-swrapper">
+                  To: <%= text_field_tag :end_date, (params[:end_date].blank? ? Date.today : params[:end_date]), class: 'input-sm' %>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong style="font-weight: bold;">Time <small class="hint">(hh:mm)</small>:</strong>
+                </td>
+                <td class="time">
+                  From: <%= text_field_tag :start_time, (params[:start_time].blank? ? DateTime.now.beginning_of_day.strftime("%I:%M %p") : params[:start_time]), class: 'input-sm' %>
+                </td>
+                <td class="time">
+                  To: <%= text_field_tag :end_time, (params[:end_time].blank? ? DateTime.now.end_of_day.strftime("%I:%M %p") : params[:end_time]), class: 'input-sm' %>
+                </td>
+              </tr>
+            </tr>
+          </table>
+          <br />
+          <div>
+            <ul class="test-group">
+              <li>
+                <%= radio_button_tag 'duration', '', params[:duration].nil? || params[:duration] == '', id: 'duration_all' %> <label for="duration_all">&nbsp;&nbsp;All</label>
+              </li>
+              <li>
+                <%= radio_button_tag 'duration', '30', params[:duration] == "30", id: 'duration_30' %> <label for="duration_30">&nbsp;&nbsp;Seen in <30 minutes</label>
+              </li>
+              <li>
+                <%= radio_button_tag 'duration', '40', params[:duration] == "40", id: 'duration_40' %> <label for="duration_40">&nbsp;&nbsp;Seen in 31-40 minutes</label>
+              </li>
+              <li>
+                <%= radio_button_tag 'duration', '60', params[:duration] == "60", id: 'duration_60' %> <label for="duration_60">&nbsp;&nbsp;Seen in 41-60 minutes</label>
+              </li>
+              <li>
+                <%= radio_button_tag 'duration', '61', params[:duration] == "61", id: 'duration_61' %> <label for="duration_61">&nbsp;&nbsp;Seen in >60 minutes</label>
+              </li>
+            </ul>
+          </div>
         </td>
-        <td class="datepicker-swrapper">
-          From: <%= text_field_tag :start_date, (params[:start_date].blank? ? Date.today : params[:start_date]), class: 'input-sm' %>
-        </td>
-        <td class="datepicker-swrapper">
-          To: <%= text_field_tag :end_date, (params[:end_date].blank? ? Date.today : params[:end_date]), class: 'input-sm' %>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <strong style="font-weight: bold;">Time <small class="hint">(hh:mm)</small>:</strong>
-        </td>
-        <td class="time">
-          From: <%= text_field_tag :start_time, (params[:start_time].blank? ? DateTime.now.beginning_of_day.strftime("%I:%M %p") : params[:start_time]), class: 'input-sm' %>
-        </td>
-        <td class="time">
-          To: <%= text_field_tag :end_time, (params[:end_time].blank? ? DateTime.now.end_of_day.strftime("%I:%M %p") : params[:end_time]), class: 'input-sm' %>
+        <td style="vertical-align: top;">
+          <div style="float: right;">
+            <table class="no-border" >
+              <tr>
+                <td>
+                  <span class="item-icon green-item-icon"></span>
+                </td>
+                <td>
+                  Seen in <= 30 minutes
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="item-icon gray-item-icon"></span>
+                </td>
+                <td>
+                  Seen in 31-40 minutes
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="item-icon black-item-icon"></span>
+                </td>
+                <td>
+                  Seen in 41-60 minutes
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="item-icon red-item-icon"></span>
+                </td>
+                <td>
+                  Seen in >60 minutes
+                </td>
+              </tr>
+            </table>
+          </div>
+          
         </td>
       </tr>
     </table>
-    <br />
-    <div>
-      <ul class="test-group">
-        <li>
-          <%= radio_button_tag 'duration', '', params[:duration].nil? || params[:duration] == '', id: 'duration_all' %> <label for="duration_all">&nbsp;&nbsp;All</label>
-        </li>
-        <li>
-          <%= radio_button_tag 'duration', '30', params[:duration] == "30", id: 'duration_30' %> <label for="duration_30">&nbsp;&nbsp;Seen in <30 minutes</label>
-        </li>
-        <li>
-          <%= radio_button_tag 'duration', '40', params[:duration] == "40", id: 'duration_40' %> <label for="duration_40">&nbsp;&nbsp;Seen in 31-40 minutes</label>
-        </li>
-        <li>
-          <%= radio_button_tag 'duration', '60', params[:duration] == "60", id: 'duration_60' %> <label for="duration_60">&nbsp;&nbsp;Seen in 41-60 minutes</label>
-        </li>
-        <li>
-          <%= radio_button_tag 'duration', '61', params[:duration] == "61", id: 'duration_61' %> <label for="duration_61">&nbsp;&nbsp;Seen in >60 minutes</label>
-        </li>
-      </ul>
-    </div>
     <div style="border-top: solid 1px #ccc; padding-top: 10px; margin-top: 10px; text-align: left;">
       <%= submit_tag "Generate Report", :name => nil %> | <%= link_to "Reset", reports_index_path %>
       <p style="float: right;">
@@ -80,9 +127,9 @@
         <td><%= token.patient.healthnumber %> <%= token.patient.version_code %></td>
         <td><%= token.created_at.to_formatted_s(:long) %></td>
         <td><%= token.visit_registered_time.to_formatted_s(:long) %></td>
-        <td><span class="item-icon <%= waiting_icon(token.waiting_period_1) %>" title="<%= waiting_time(token.waiting_period_1) %>"></span></td>
+        <td><%= waiting_time(token.waiting_period_1) %></td>
         <td><%= token.completed_time.to_formatted_s(:long) %></td>
-        <td><span class="item-icon <%= waiting_icon(token.waiting_period_2) %>" title="<%= waiting_time(token.waiting_period_2) %>"></span></td>
+        <td><%= waiting_time(token.waiting_period_2) %></td>
         <td><span class="item-icon <%= waiting_icon(token.waiting_period_1 + token.waiting_period_2) %>" title="<%= waiting_time(token.waiting_period_1 + token.waiting_period_2) %>"></span>
       </tr>
     <% end %>
