@@ -32,7 +32,7 @@
         <%= f.input :home_phone %>
         <%= f.input :mobile %>
       </td>
-      <td style="vertical-align: top; padding-left: 100px;">
+      <td style="vertical-align: top; padding-left: 20px;">
         <div class="input string optional">
           <label for="patient_physician" class="string optional">Enter Physician</label>
           <%= text_field_tag :physician_id_text1 %>
@@ -41,6 +41,24 @@
         <div class="input string optional datepicker-swrapper" style="width: 400px;">
           <label class="string optional">Visit date</label>
           <%= text_field_tag :visitdate %><span class="hint">(YYYY/MM/DD)</span>
+        </div>
+        <div class="input string optional" style="width: 400px;">
+          <label class="string optional">Payment Program</label>
+          <%= select_tag :payment_program, options_for_select([["RMB", "RMB"], ["HCP", "HCP"], ["WSIB", "WSIB"], ["Paid Patient", "Paid Patient"], ["Bill Patient", "Bill Patient"], ["IFH", "IFH"], ["Clinical Trials", "Clinical Trials"]], params[:payment_program].nil? ? "RMB" : params[:payment_program]) %>
+        </div>
+        <br />
+        <div id="test_groups" title="SELECT TESTS">
+          <h3>SELECT TESTS</h3>
+          <% @test_groups.sort.each do |group, tests| %>
+            <div class="test-groups" >
+              <h4><%= group %></h4>
+              <ul class="test-group" >
+                <% tests.each do |test| %>
+                  <li><%= check_box_tag "test_ids[]", test.id, false, id: dom_id(test), data: { code: test.test_code, name: test.test_name } %> &nbsp;<%= label_tag dom_id(test), "#{test.test_name}-#{test.test_code}" %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
         </div>
       </td>
     </tr>

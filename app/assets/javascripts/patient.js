@@ -67,6 +67,8 @@ function disData(){
   else
     $('#p_hed').html('--');
 
+    $('#p_payment_program').html($('#payment_program').val());
+
   $('#p_bdate').html($.datepicker.formatDate('yy-mm-dd', new Date($('#birthdaypicker').val())));
 
   $('#p_address').html(
@@ -81,7 +83,11 @@ function disData(){
   $('#p_gender').html($('input[name=patient[gender]]:checked', $(this)[0]).val() == "M" ? "Male" : "Female");
   $('#p_physician').html($("#physician_id_text1").val());
   $('#p_visitdate').html($.datepicker.formatDate('yy-mm-dd', new Date($('#visitdate').val())));
-  debugger;
+  $("#test_groups").find('input[type="checkbox"]').each(function(){
+    if ($(this).prop('checked')==true){ 
+      $('#selected_tests').append('<tr><td>' + $(this).data('name') + '-' + $(this).data('code') + '<br />' + '</td></tr>');
+    }
+  });
 }
 
 function initdatepickers(){
@@ -102,6 +108,27 @@ function initdatepickers(){
 }
 
 function initpatientform(){
+  $('#add_tests').on('click', function() {
+    $("#test_dialog").dialog({
+      resizable: true,
+      width: 800,
+      modal: true,
+      close: function(event,ui){
+        $('#patient_healthnumber').focus();
+      },
+      buttons: {
+        "Save": function() {
+          $(this).dialog("close");
+          $("form.new_patient, form.edit_patient").submit();
+        },
+        "Cancel": function() {
+          $(this).dialog("close");
+        }
+      }
+    });
+  });
+  
+  
   $("form.new_patient, form.edit_patient").validate({
      submitHandler: function(form) {
 
@@ -129,26 +156,26 @@ function initpatientform(){
            $("#visitdate").focus();
            return false;
         }
-         debugger;
+
        disData();
 
        $("#dialog-confirm").dialog({
-   			resizable: true,
-   			width: 800,
-   			modal: true,
-   			close: function(event,ui){
-   			  $('#patient_healthnumber').focus();
-   			},
-   			buttons: {
-   			  	"Yes, Save it!": function() {
-     					$(this).dialog("close");
-              form.submit();
-     				},
-     				"No": function() {
-     					$(this).dialog("close");
-     				}
-     			}
-     		});
+         resizable: true,
+         width: 800,
+         modal: true,
+         close: function(event,ui){
+           $('#patient_healthnumber').focus();
+         },
+         buttons: {
+           "Yes, Save it!": function() {
+             $(this).dialog("close");
+             form.submit();
+           },
+           "No": function() {
+             $(this).dialog("close");
+           }
+         }
+       });
      }
   });
 }

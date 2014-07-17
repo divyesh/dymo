@@ -26,7 +26,7 @@
         <% if user_signed_in? %>
           <li>|</li>
           <li><%= link_to('Logout', destroy_user_session_path, method: :delete) %>
-        <% end %>  
+        <% end %>
       </ul>
     </h1>
   </div>
@@ -40,8 +40,9 @@
 
   <div id="ft">
     <p>
-    <%= link_to 'Patients', root_path %> | <%= link_to 'Physicians', physicians_path %> | <%= link_to 'Tokens', tokens_path %> | <%= link_to 'Reports', reports_index_path %> | MedHealth App
+    <%= link_to 'Patients', root_path %> | <%= link_to 'Physicians', physicians_path %> | <%= link_to 'Tokens', tokens_path %> | <%= link_to 'Reports', reports_index_path %>  | <%= link_to 'Tests', tests_path %> | MedHealth App
     </p>
+
     <div id="dialog-confirm" style="display: none;" title="VERIFY PI INFORMATION ENTERED">
     <div id="patient-details">
       <h1 id="name">
@@ -63,8 +64,12 @@
         <div class="clear">
         </div>
       </div>
-      <h3>Physician: <span id="p_physician"></span></h3>	
+      <h3>Physician: <span id="p_physician"></span></h3>
       <h4>Visit date: <span id="p_visitdate"></span></h4>
+      <h4>Payment program: <span id="p_payment_program"></span></h4>
+      <hr />
+      <h4>Test Codes:</h4>
+      <table id="selected_tests"></table>
     </div>
     </div>
   </div>

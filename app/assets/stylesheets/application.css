@@ -78,7 +78,7 @@ div.field input{
 #hd{
 }
 #logo{
-  font-size: 25px;
+  font-size: 24px;
   font-weight: bold;
   padding-top: 20px;
   padding-left: 40px;
@@ -207,7 +207,7 @@ table th, table td{
 #name ul li{
   margin-bottom: 10px;
 }
-#name ul li.expire{
+#name ul li.expire {
   color: #000;
   font-size: 13px;
   font-weight: normal;
@@ -312,4 +312,22 @@ span.completed {
 span.discarded {
   background-color: red;
   color: #fff;
+}
+.test-groups {
+  margin-bottom: 20px;
+}
+.test-groups h4 {
+  background-color: #ccc; padding-left: 10px; margin-bottom: 10px;
+}
+.test-group {
+  margin-left: 10px;
+}
+.test-group li {
+  margin-bottom: 8px;
+}
+.test-group li label {
+  float: none;
+  width: auto;
+  text-align: left;
+  margin: 0;
 }

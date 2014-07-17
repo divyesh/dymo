@@ -10,9 +10,13 @@ class PatientsController < ApplicationController
 
   def new
     @patient = Patient.new
+    @tests = Test.all.to_a
+    @test_groups = @tests.group_by { |t| t.test_group }
   end
 
   def edit
+    @tests = Test.all.to_a
+    @test_groups = @tests.group_by { |t| t.test_group }
   end
 
   def create
@@ -20,7 +24,7 @@ class PatientsController < ApplicationController
 
     respond_to do |format|
       if @patient.save
-        Visit.create({ physician_id: params[:physician_id1], patient_id: @patient.id, visitdate: params[:visitdate] })
+        Visit.create({ physician_id: params[:physician_id1], patient_id: @patient.id, visitdate: params[:visitdate], payment_program: params[:payment_program], test_ids: params[:test_ids] })
 
         format.html { redirect_to(@patient, notice: 'Patient was successfully created.') }
         format.json  { render json: @patient, status: :created, location: @patient }
@@ -38,7 +42,7 @@ class PatientsController < ApplicationController
 
     respond_to do |format|
       if @patient.update_attributes(patient_params)
-        visit = Visit.new({ physician_id: params[:physician_id1], patient_id: @patient.id, visitdate: params[:visitdate] })
+        visit = Visit.new({ physician_id: params[:physician_id1], patient_id: @patient.id, visitdate: params[:visitdate], payment_program: params[:payment_program], test_ids: params[:test_ids] })
         if visit.save
           token = @patient.time_in_token
           token.add_visit! if token
