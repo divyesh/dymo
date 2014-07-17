@@ -1,12 +1,54 @@
 <h1>Generate Reports</h1>
+
 <fieldset class="with-border">
   
   <%= form_tag reports_index_path, method: :get do %>
-    <div class="field">
-      Select Date: <%= select_date filter_date.to_date, prefix: :start_date  %>
+    <table class="no-border">
+      <tr>
+        <td>
+          <strong style="font-weight: bold;">Date <small class="hint">(yyyy/mm/dd)</small>:</strong>
+        </td>
+        <td class="datepicker-swrapper">
+          From: <%= text_field_tag :start_date, (params[:start_date].blank? ? Date.today : params[:start_date]), class: 'input-sm' %>
+        </td>
+        <td class="datepicker-swrapper">
+          To: <%= text_field_tag :end_date, (params[:end_date].blank? ? Date.today : params[:end_date]), class: 'input-sm' %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong style="font-weight: bold;">Time <small class="hint">(hh:mm)</small>:</strong>
+        </td>
+        <td class="time">
+          From: <%= text_field_tag :start_time, (params[:start_time].blank? ? DateTime.now.beginning_of_day.strftime("%I:%M %p") : params[:start_time]), class: 'input-sm' %>
+        </td>
+        <td class="time">
+          To: <%= text_field_tag :end_time, (params[:end_time].blank? ? DateTime.now.end_of_day.strftime("%I:%M %p") : params[:end_time]), class: 'input-sm' %>
+        </td>
+      </tr>
+    </table>
+    <br />
+    <div>
+      <ul class="test-group">
+        <li>
+          <%= radio_button_tag 'duration', '', params[:duration].nil? || params[:duration] == '', id: 'duration_all' %> <label for="duration_all">&nbsp;&nbsp;All</label>
+        </li>
+        <li>
+          <%= radio_button_tag 'duration', '30', params[:duration] == "30", id: 'duration_30' %> <label for="duration_30">&nbsp;&nbsp;Seen in <30 minutes</label>
+        </li>
+        <li>
+          <%= radio_button_tag 'duration', '40', params[:duration] == "40", id: 'duration_40' %> <label for="duration_40">&nbsp;&nbsp;Seen in 31-40 minutes</label>
+        </li>
+        <li>
+          <%= radio_button_tag 'duration', '60', params[:duration] == "60", id: 'duration_60' %> <label for="duration_60">&nbsp;&nbsp;Seen in 41-60 minutes</label>
+        </li>
+        <li>
+          <%= radio_button_tag 'duration', '61', params[:duration] == "61", id: 'duration_61' %> <label for="duration_61">&nbsp;&nbsp;Seen in >60 minutes</label>
+        </li>
+      </ul>
     </div>
     <div style="border-top: solid 1px #ccc; padding-top: 10px; margin-top: 10px; text-align: left;">
-      <%= submit_tag "Generate Report", :name => nil %> | <%= link_to "Reset", reports_index_path %> | <%= link_to "% Served in 30 minutes", reports_index_path(duration: 30) %>
+      <%= submit_tag "Generate Report", :name => nil %> | <%= link_to "Reset", reports_index_path %>
     </div>
   <% end %>
   
@@ -17,6 +59,7 @@
   <thead>
     <tr>
       <th>Token #</th>
+      <th>OHIP</th>
       <th>Time in</th>
       <th>Visit Registered</th>
       <th>Waiting period 1</th>
@@ -27,14 +70,15 @@
   </thead>
   <tbody>
     <% @tokens.each do |token| %>
-      <tr class="<%= token.state %>">
+      <tr>
         <td><%= token.no %></td>
+        <td><%= token.patient.healthnumber %> <%= token.patient.version_code %></td>
         <td><%= token.created_at.to_formatted_s(:long) %></td>
         <td><%= token.visit_registered_time.to_formatted_s(:long) unless token.visit_registered_time.nil? %></td>
-        <td><%= waiting_time(token.waiting_period_1) %></td>
+        <td><span class="item-icon <%= waiting_icon(token.waiting_period_1) %>" title="<%= waiting_time(token.waiting_period_1) %>"></span></td>
         <td><%= token.completed_time.to_formatted_s(:long) unless token.completed_time.nil? %></td>
-        <td><%= waiting_time(token.waiting_period_2) %></td>
-        <td><%= waiting_time(token.waiting_period_1 + token.waiting_period_2) %></td>
+        <td><span class="item-icon <%= waiting_icon(token.waiting_period_2) %>" title="<%= waiting_time(token.waiting_period_2) %>"></span></td>
+        <td><span class="item-icon <%= waiting_icon(token.waiting_period_1 + token.waiting_period_2) %>" title="<%= waiting_time(token.waiting_period_1 + token.waiting_period_2) %>"></span>
       </tr>
     <% end %>
   </tbody>

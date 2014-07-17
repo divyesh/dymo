@@ -24,3 +24,6 @@ and Index
 
 5. Authentication
 
+
+6. User can generate token for same heathnumber after 30 minutes
+7. What if no healthnumber in database

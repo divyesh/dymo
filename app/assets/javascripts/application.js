@@ -7,3 +7,4 @@
 //= require patient
 //= require DYMO.Label.Framework.1.0.beta
 //= require Dymo
+//= require jquery.ui.timepicker

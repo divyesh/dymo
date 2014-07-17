@@ -2,6 +2,7 @@
 *= require_self
 *= require simple_form
 *= require jquery.ui.all
+*= require jquery.ui.timepicker
 */
 
 /*
@@ -176,7 +177,7 @@ table th, table td{
   margin-left: 140px;
 }
 
-.simple_form div.boolean label, .simple_form label.collection_radio {
+.simple_form div.boolean label, .simple_form label.collection_radio, label.float-none {
   float: none;
   margin: 0;
 }
@@ -330,4 +331,39 @@ span.discarded {
   width: auto;
   text-align: left;
   margin: 0;
+}
+input[type="text"].input-sm {
+  width: 100px;
+}
+table.no-border, table.no-border td {
+  border: 0 none;
+}
+
+.item-icon {
+  background-color: #f3f3f3;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  color: #666666;
+  height: 24px;
+  line-height: 22px;
+  text-align: center;
+  width: 24px;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+}
+.red-item-icon {
+  background-color: #bd2c00;
+}
+.green-item-icon {
+  background-color: #6cc644;
+}
+.gray-item-icon {
+  background-color: #888;
+}
+.gray-item-icon {
+  background-color: #555;
+}
+.black-item-icon {
+  background-color: #000;
 }

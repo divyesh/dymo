@@ -27,26 +27,18 @@ class Token < ActiveRecord::Base
 
   def waiting_period_1
     th = token_histories.where("note = ?", "visit_registered").first
-    if th
-      (th.punch_in_time.to_time - created_at.to_time).to_i
-    end
+    (th.punch_in_time.to_time - created_at.to_time).to_i
   end
 
   def completed_time
     th = token_histories.where("note = ?", "completed").first
-    if th
-      th.punch_in_time
-    end
+    th.punch_in_time
   end
 
   def waiting_period_2
     th1 = token_histories.where("note = ?", "visit_registered").first
-    if th1
-      th2 = token_histories.where("note = ?", "completed").first
-      (th2.punch_in_time.to_time - th1.punch_in_time.to_time).to_i
-    else
-      ''
-    end
+    th2 = token_histories.where("note = ?", "completed").first
+    (th2.punch_in_time.to_time - th1.punch_in_time.to_time).to_i
   end
 
   def self.new_time_in_token(patient)
@@ -77,6 +69,8 @@ class Token < ActiveRecord::Base
       token_history.punch_in_time = DateTime.now
       token_history.note = "completed"
       token_history.save!
+      self.completed_at = DateTime.now
+      self.save!
     end
 
     def discard

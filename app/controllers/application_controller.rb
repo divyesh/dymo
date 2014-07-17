@@ -54,8 +54,8 @@ class ApplicationController < ActionController::Base
   end
   helper_method :parse_healthcard
 
-  def filter_date
-    params[:start_date].nil? ? DateTime.now : DateTime.civil(params[:start_date][:year].to_i, params[:start_date][:month].to_i, params[:start_date][:day].to_i)
+  def filter_date(sym_name)
+    params[sym_name].nil? ? DateTime.now : DateTime.civil(params[sym_name][:year].to_i, params[sym_name][:month].to_i, params[sym_name][:day].to_i)
   end
   helper_method :filter_date
 

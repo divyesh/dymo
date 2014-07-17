@@ -37,7 +37,7 @@
         Token type: <%= select_tag :state, options_for_select([["All", "all"], ["Time in", "time_in"], ["Visit registered", "visit_registered"], ["Completed", "completed"], ["Discarded", "discarded"]], params[:state].nil? ? "all" : params[:state]) %>
       </div>
       <div class="field">
-        Select Date: <%= select_date filter_date.to_date, prefix: :start_date  %>
+        Select Date: <%= select_date filter_date(:start_date).to_date, prefix: :start_date  %>
       </div>
       <div style="border-top: solid 1px #ccc; padding-top: 10px; margin-top: 10px; text-align: left;">
         <%= submit_tag "Filter tokens", :name => nil %> | <%= link_to "Reset", tokens_path %>

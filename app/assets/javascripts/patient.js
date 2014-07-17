@@ -97,6 +97,10 @@ function initdatepickers(){
     buttonImageOnly: true
   };
   $('.datepicker-swrapper > input').datepicker(options).inputmask("y/m/d");
+  $('.time > input').timepicker({
+    showPeriod: true,
+    showLeadingZero: true
+  });
 
   $('#visitdate').val($.datepicker.formatDate('yy/mm/dd', new Date()));
   //
