@@ -52,4 +52,6 @@ gem 'rails_12factor', group: :production
 
 gem 'devise'
 
+gem 'chartkick'
+
 ruby "2.0.0"
