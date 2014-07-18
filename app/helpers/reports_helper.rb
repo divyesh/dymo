@@ -19,17 +19,17 @@ module ReportsHelper
 
   def waiting_icon(time_in_seconds)
     if time_in_seconds >= 3600
-      "red-item-icon"
+      "black-item-icon"
     elsif time_in_seconds >= 60
       minutes = (time_in_seconds/60).to_i
       if minutes <= 30
         "green-item-icon"
       elsif minutes > 30 && minutes <= 40
-        "gray-item-icon"
+        "yellow-item-icon"
       elsif minutes > 40 && minutes <= 60
-        "black-item-icon"
-      elsif minutes > 61
         "red-item-icon"
+      elsif minutes > 61
+        "black-item-icon"
       end
     else
       "green-item-icon"
