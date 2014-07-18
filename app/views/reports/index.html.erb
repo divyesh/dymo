@@ -127,9 +127,9 @@
         <td><%= token.patient.healthnumber %> <%= token.patient.version_code %></td>
         <td><%= token.created_at.to_formatted_s(:long) %></td>
         <td><%= token.visit_registered_time.to_formatted_s(:long) %></td>
-        <td><%= waiting_time(token.waiting_period_1) %></td>
+        <td><%= waiting_icon(token.waiting_period_1) %></td>
         <td><%= token.completed_time.to_formatted_s(:long) %></td>
-        <td><%= waiting_time(token.waiting_period_2) %></td>
+        <td><%= waiting_icon(token.waiting_period_2) %></td>
         <td><span class="item-icon <%= waiting_icon(token.waiting_period_1 + token.waiting_period_2) %>" title="<%= waiting_time(token.waiting_period_1 + token.waiting_period_2) %>"></span>
       </tr>
     <% end %>
