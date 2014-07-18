@@ -1,9 +1,10 @@
 <tr class="<%= token.state %>">
   <td><%= token.no %></td>
-  <td><%= token.patient.healthnumber %> <%= token.patient.version_code %></td>
+  <td><%= token.patient.healthnumber %></td>
+  <td><%= token.patient.lastname %> <%= token.patient.firstname %> </td>
   <td><%= token.created_at.to_formatted_s(:long) %></td>
   <td><%= token.state.gsub('_', ' ').capitalize %></td>
   <td><%= next_state_link(token) %></td>
-  <td class="last"><small><%= link_to 'Punch In(s)', token %></small> | 
+  <td class="last"><small><%= link_to 'Punch In(s)', token %></small> |
   <small><%= link_to 'Destroy', token, method: :delete, data: { confirm: 'Are you sure?' } %></small></td>
 </tr>
