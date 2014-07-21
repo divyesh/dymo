@@ -44,7 +44,12 @@
         </div>
         <div class="input string optional" style="width: 400px;">
           <label class="string optional">Payment Program</label>
-          <%= select_tag :payment_program, options_for_select([["RMB", "RMB"], ["HCP", "HCP"], ["WSIB", "WSIB"], ["Paid Patient", "Paid Patient"], ["Bill Patient", "Bill Patient"], ["IFH", "IFH"], ["Clinical Trials", "Clinical Trials"]], params[:payment_program].nil? ? "RMB" : params[:payment_program]) %>
+          <%= select_tag :payment_program, options_for_select([["HCP", "HCP"],["RMB", "RMB"],  ["WSIB", "WSIB"], ["Paid Patient", "Paid Patient"], ["Bill Patient", "Bill Patient"], ["IFH", "IFH"], ["Clinical Trials", "Clinical Trials"]], params[:payment_program].nil? ? "HCP" : params[:payment_program]) %>
+        </div>
+        <br />
+        <div class="input string optional" style="width: 400px;">
+          <label class="string optional">Specimen Priority</label>
+          <%= select_tag :specimen_priority, options_for_select([["Stat", "Stat"],["Routine", "Routine"]], params[:specimen_priority].nil? ? "Routine" : params[:specimen_priority]) %>
         </div>
         <br />
         <div id="test_groups" title="SELECT TESTS">
