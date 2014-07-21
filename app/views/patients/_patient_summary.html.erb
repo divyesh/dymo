@@ -1,0 +1,37 @@
+<table width="100%" class="no-border">
+  <tr>
+    <td colspan="2">
+      <h1 id="name" class="name">
+        <%= @patient.firstname %>&nbsp;<%= @patient.middlename %>&nbsp;<%= @patient.lastname %>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <%= patient.gender == 'M' ? 'Male' : 'Female' %><br />
+      Birthdate: <%= patient.birthdate.nil? ? '' : patient.birthdate.to_formatted_s(:long) %>
+    </td>
+    <td style="text-align: right;">
+      <ul>
+        <li style="font-size: 16px; font-weight: bold;">OHIP: <%= patient.healthnumber %>&nbsp;<%= patient.version_code %></li>
+        <li class="expire">Expires on: <%= patient.health_expiry_date.nil? ? '' : patient.health_expiry_date.to_formatted_s(:long) %></li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td style="border-top: solid 1px #ccc;">
+      <div class="address" >
+        <%= patient.address1 %><br />
+        <%= patient.address2 %><br />
+        <%= patient.city %><br />
+        <%= patient.province %><br />
+        <%= patient.postal_code %><br />
+      </div>
+    </td>
+    <td style="border-top: solid 1px #ccc;">
+      <div class="contact" style="border: 0 none;">
+        Home (Ph):&nbsp; <%= patient.home_phone %><br />
+        Mobile (Ph):&nbsp;<%= patient.mobile %><br />
+      </div>
+    </td>
+  </tr>
+</table>

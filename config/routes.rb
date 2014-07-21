@@ -16,6 +16,8 @@ Dymo::Application.routes.draw do
 
   resources :visits, only: [:index, :destroy]
   resources :physicians
-  resources :patients, except: [:index, :destroy]
+  resources :patients, except: [:index, :destroy] do
+    resources :visits, only: [:new, :create, :edit, :update]
+  end
   resources :tests
 end

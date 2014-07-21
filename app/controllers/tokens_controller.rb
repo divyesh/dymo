@@ -1,3 +1,5 @@
+require 'net/http'
+
 class TokensController < ApplicationController
   before_action :set_token, only: [:show, :edit, :update, :destroy, :done, :reject, :discard]
 
@@ -36,7 +38,7 @@ class TokensController < ApplicationController
     unless @token
       @token = Token.new_time_in_token(@patient)
 
-      # TODO: Make request to print the token
+      print_token
 
       respond_to do |format|
         format.html { redirect_to tokens_path, notice: 'Token was successfully created.' }
@@ -93,5 +95,10 @@ class TokensController < ApplicationController
 
     def token_params
       params.require(:token).permit(:no, :patient_id)
+    end
+
+    def print_token
+      uri = URI.parse("#{AppConfig.print_token_url}#{@token.id}/#{@token.patient.healthnumber}")
+      res = Net::HTTP.get_response(uri)      
     end
 end

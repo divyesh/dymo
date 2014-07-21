@@ -133,7 +133,7 @@ function initpatientform(){
   });
   
   
-  $("form.new_patient, form.edit_patient").validate({
+  $("form.new_patient1, form.edit_patient1").validate({
      submitHandler: function(form) {
 
        // if birthdate is less than or equal today display error
@@ -181,5 +181,17 @@ function initpatientform(){
          }
        });
      }
+  });
+
+
+  $('#edit-patient-link').on('click', function() {
+    $("#dialog-patient-edit").dialog({
+      resizable: true,
+      width: 800,
+      modal: true,
+      close: function(event,ui){
+        
+      }
+    });
   });
 }

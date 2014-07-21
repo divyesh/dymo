@@ -2,14 +2,14 @@
   <legend>Patient Info.</legend>
 </fieldset>
 <div id="patient-details">
-  <h1 id="name">
+  <h1 id="name" class="name">
     <%= @patient.firstname %>&nbsp;<%= @patient.middlename %>&nbsp;<%= @patient.lastname %>
     <ul>
       <li>OHIP: <%= @patient.healthnumber %>&nbsp;<%= @patient.version_code %></li>
       <li class="expire">Expires on: <%= @patient.health_expiry_date.nil? ? '' : @patient.health_expiry_date.to_formatted_s(:long) %></li>
     </ul>
   </h1>
-  <h2 id="heading">
+  <h2 id="heading" class="heading">
     <%= @patient.gender == 'M' ? 'Male' : 'Female' %><br />
     Birthdate: <%= @patient.birthdate.nil? ? '' : @patient.birthdate.to_formatted_s(:long) %>
   </h2>

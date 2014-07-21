@@ -1,0 +1,7 @@
+<% if @patient.errors.any? %>
+$('#patient-edit-form').html('<%=j render "form" %>');
+<% else %>
+$('#patient_summary').html('<%=j render partial: "patients/patient_summary", locals: { patient: @patient } %>');
+$('#dialog-patient-edit').dialog("close");
+
+<% end %>

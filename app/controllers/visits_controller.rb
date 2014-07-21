@@ -1,5 +1,7 @@
 class VisitsController < ApplicationController
   before_action :set_visit, only: [:show, :edit, :update, :destroy]
+  before_action :set_patient, only: [:new, :create, :edit, :update]
+  before_action :set_tests, only: [:new, :create, :edit, :update]
 
   def index
     if params[:healthcard] && params[:healthcard].length >= 50
@@ -30,21 +32,23 @@ class VisitsController < ApplicationController
   end
 
   def new
-    @visit = Visit.new
+    @visit = @patient.visits.new
+    @tests = Test.all.to_a
+    @test_groups = @tests.group_by { |t| t.test_group }
   end
 
-  def edit    
+  def edit
   end
 
   def create
-    @visit = Visit.new(visit_params)
+    @visit = @patient.visits.new(visit_params)
 
     respond_to do |format|
       if @visit.save
         token = @visit.patient.time_in_token
         token.add_visit! if token
 
-        format.html { redirect_to(@visit, notice: 'Visit was successfully created and token time registered.') }
+        format.html { redirect_to(@patient, notice: 'Visit was successfully created and token time registered.') }
         format.json  { render json: @visit, status: :created, location: @visit }
         format.xml  { render xml: @visit, status: :created, location: @visit }
       else
@@ -60,7 +64,7 @@ class VisitsController < ApplicationController
 
     respond_to do |format|
       if @visit.update_attributes(visit_params)
-        format.html { redirect_to(@visit, notice: 'Visit was successfully updated.') }
+        format.html { redirect_to(@patient, notice: 'Visit was successfully updated.') }
         format.json  { head :no_content }
         format.xml  { head :no_content }
       else
@@ -86,8 +90,16 @@ class VisitsController < ApplicationController
       @visit = Visit.find(params[:id])
     end
 
-    def visit_params
-      params.require(:visit).permit(:patient_id, :physician_id, :visitdate)
+    def set_patient
+      @patient = Patient.find(params[:patient_id])
     end
 
+    def visit_params
+      params.require(:visit).permit(:patient_id, :physician_id, :visitdate, :payment_program, :specimen_priority, test_ids: [])
+    end
+
+    def set_tests
+      @tests = Test.all.to_a
+      @test_groups = @tests.group_by { |t| t.test_group }
+    end
 end

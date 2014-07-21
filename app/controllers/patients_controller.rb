@@ -15,8 +15,6 @@ class PatientsController < ApplicationController
   end
 
   def edit
-    @tests = Test.all.to_a
-    @test_groups = @tests.group_by { |t| t.test_group }
   end
 
   def create
@@ -42,18 +40,14 @@ class PatientsController < ApplicationController
 
     respond_to do |format|
       if @patient.update_attributes(patient_params)
-        visit = Visit.new({ physician_id: params[:physician_id1], patient_id: @patient.id, visitdate: params[:visitdate], payment_program: params[:payment_program], test_ids: params[:test_ids] })
-        if visit.save
-          token = @patient.time_in_token
-          token.add_visit! if token
-        end
-
         format.html { redirect_to(@patient, notice => 'Patient was successfully updated.') }
         format.json  { head :no_content }
+        format.js
         format.xml  { head :no_content }
       else
         format.html { render action: "edit" }
         format.json  { render json: @patient.errors, status: :unprocessable_entity }
+        format.js
         format.xml  { render xml: @patient.errors, status: :unprocessable_entity }
       end
     end

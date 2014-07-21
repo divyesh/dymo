@@ -26,6 +26,7 @@
     <th></th>
     <th></th>
     <th></th>
+    <th></th>
   </tr>
 
 <% @visits.each do |visit| %>
@@ -49,9 +50,10 @@
     <td>
       <%= visit.visitdate.nil? ? '' : visit.visitdate.to_formatted_s(:long) %>
     </td>
-    <td><%= link_to 'Show', :controller => :patients, :action => :show, :id => visit.patient.id %></td>
-     <td><%= link_to 'Add Physician', edit_patient_path(visit.patient) %>
+    <td><%= link_to 'Show', patient_path(visit.patient) %></td>
+     <td><%= link_to 'Add Physician', new_patient_visit_path(visit.patient) %>
 </td>
+  <td><%= link_to 'Edit', edit_patient_visit_path(visit.patient, visit) %></td>
     <td class="actions"><%= link_to 'Remove', visit, :confirm => 'Are you sure?', :method => :delete %></td>
     <td><a href="javascript:void(0);" healthNumber="<%= visit.patient.healthnumber + ' ' + visit.patient.version_code %>" expiry="<%= visit.patient.health_expiry_date.nil? ? '' : visit.patient.health_expiry_date.to_formatted_s(:db) %>" birthdate="<%= visit.patient.birthdate.nil? ? '' : visit.patient.birthdate.to_formatted_s(:db) %>" sex="<%= visit.patient.gender %>" address1="<%= visit.patient.address1 %>" address2="<%= visit.patient.address2 %>" homephone="<%= visit.patient.home_phone %>" mobile="<%= visit.patient.mobile %>"  patientName="<%= visit.patient.lastname + ' , ' + visit.patient.firstname + ' ' + visit.patient.middlename %>" physician="<%= visit.physician.nil? ? '':visit.physician.firstname + ' ' + visit.physician.lastname+ ' - '+visit.physician.physician_number  %>" visiteddate="<%= visit.visitdate.nil? ? "" : visit.visitdate.strftime("%m/%d/%Y") %>" city="<%= visit.patient.city %>" province="<%= visit.patient.province %>" postalcode="<%= visit.patient.postal_code %>" class="print-label-link">Print Label</a></td>
 

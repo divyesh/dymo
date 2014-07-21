@@ -1,16 +1,63 @@
-<%= simple_form_for(@visit) do |f| %>
+<%= simple_form_for [@patient, @visit] do |f| %>
   <%= f.error_notification %>
+  <table width="100%">
+    <tr>
+      <td width="50%" style="vertical-align: top; padding-top: 20px;">
+        <div class="input string optional visit_physician">
+          <label for="visit_physician" class="string optional control-label">Physician</label>
+          <%= text_field_tag :physician_name, @visit.physician ? @visit.physician.fullname_with_physician_number : '' %>
+        </div>
+        
+        <%= f.hidden_field :physician_id %>
+        <%= f.input :visitdate, as: :string, hint: '(YYYY/MM/DD)', wrapper_html: { class: 'datepicker-swrapper' } %>
+        <%= f.input :payment_program, collection: [["HCP", "HCP"],["RMB", "RMB"],  ["WSIB", "WSIB"], ["Paid Patient", "Paid Patient"], ["Bill Patient", "Bill Patient"], ["IFH", "IFH"], ["Clinical Trials", "Clinical Trials"]], include_blank: false %>
+        <%= f.input :specimen_priority, collection: [["Stat", "Stat"],["Routine", "Routine"]], include_blank: false %>
+      </td>
+      <td width="50%">
+        <div id="patient-details" style="margin: 0 10px;">
+          <a id="edit-patient-link" href="javascript:void(0);" style="float: right;">Edit patient</a>
+          <div id="patient_summary" >
+            <%= render partial: 'patients/patient_summary', locals: { patient: @patient } %>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <div id="test_groups" title="SELECT TESTS">
+          <h2 style="margin-left: 20px;">SELECT TESTS</h2>
+          <% @test_groups.sort.each do |group, tests| %>
+            <div class="test-groups" style="float: left; margin-left: 20px; border: solid 1px #ccc; ">
+              <h4><%= group %></h4>
+              <div class="test-group" >
+                <%= f.collection_check_boxes(:test_ids, tests, :id, :test_name) %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </td>
+    </tr>
+  </table>
 
-  <div class="inputs">
-    <%= f.input :patient_id do %>
-      <%= f.collection_select :patient_id, Patient.all, :id, :fullname_with_health_insurance_number , :prompt => 'Select a Patient' %>
-    <% end %>
-    <%= f.input :physician_id do %>
-      <%= f.collection_select :physician_id, Physician.all, :id, :fullname_with_physician_number, :prompt => 'Select a Physician' %>
-    <% end %>
-  </div>
 
   <div class="actions">
     <%= f.button :submit %>
   </div>
 <% end %>
+
+<script type="text/javascript">
+  $(function(){
+    $("#physician_name").autocomplete({
+      source: "/physicians.json",
+      select: function(event, ui){
+        $('#visit_physician_id').val(ui.item.val);
+      }
+    });
+  });
+</script>
+
+<div id="dialog-patient-edit" style="display: none;" title="EDIT PATIENT">
+  <div id="patient-edit-form">
+    <%= render 'patients/form' %>
+  </div>
+</div>
