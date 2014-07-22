@@ -11,7 +11,7 @@
         <%= f.hidden_field :physician_id %>
         <%= f.input :visitdate, as: :string, hint: '(YYYY/MM/DD)', wrapper_html: { class: 'datepicker-swrapper' } %>
         <%= f.input :payment_program, collection: [["HCP", "HCP"],["RMB", "RMB"],  ["WSIB", "WSIB"], ["Paid Patient", "Paid Patient"], ["Bill Patient", "Bill Patient"], ["IFH", "IFH"], ["Clinical Trials", "Clinical Trials"]], include_blank: false %>
-        <%= f.input :specimen_priority, collection: [["Stat", "Stat"],["Routine", "Routine"]], include_blank: false %>
+        <%= f.input :specimen_priority, collection: [["Routine", "Routine"],["Stat", "Stat"]], include_blank: false %>
       </td>
       <td width="50%">
         <div id="patient-details" style="margin: 0 10px;">
