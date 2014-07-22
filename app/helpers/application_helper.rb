@@ -7,7 +7,7 @@ module ApplicationHelper
       end)).html_safe
     when :visit_registered
       ((form_for token, url: done_token_path(token), method: :post, html: { class: 'inline' } do |f|
-        f. submit 'Done'
+        f. submit 'Process'
       end) + " / " + (form_for token, url: discard_token_path(token), method: :post, html: { class: 'inline' } do |f|
         f. submit 'Discard'
       end)).html_safe
