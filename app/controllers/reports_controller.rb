@@ -5,6 +5,8 @@ class ReportsController < ApplicationController
 
     @tokens = Token.where("(created_at >= ? AND created_at <= ?) AND (state = ?)", from_date, to_date, "completed")
 
+    pie_chart_tokens
+
     if params[:duration] == "30"
       @tokens.to_a.select! { |t| (t.completed_at - t.created_at) <= 1800 }
     elsif params[:duration] == "40"
@@ -23,6 +25,23 @@ class ReportsController < ApplicationController
   end
 
   private
+
+    def pie_chart_tokens
+      @tokens_30 = @tokens.to_a.select { |t| (t.completed_at - t.created_at) <= 1800 }
+      @tokens_30 = [] if @tokens_30.nil?
+
+      @tokens_40 = @tokens.to_a.select { |t| (((t.completed_at - t.created_at) > 1800) && ((t.completed_at - t.created_at) <= 2400)) }
+      @tokens_40 = [] if @tokens_40.nil?
+      
+      @tokens_60 = @tokens.to_a.select! { |t| (((t.completed_at - t.created_at) > 2400) && ((t.completed_at - t.created_at) <= 3600)) }
+      @tokens_60 = [] if @tokens_60.nil?
+      
+      @tokens_61 = @tokens.to_a.select { |t| (t.completed_at - t.created_at) > 3600 }
+      @tokens_61 = [] if @tokens_61.nil?
+
+      @pie_tokens = { "Seen in <= 30 minutes" => @tokens_30.size, "Seen in 31-40 minutes" => @tokens_40.size, "Seen in 41-60 minutes" => @tokens_60.size, " Seen in >60 minutes" => @tokens_61.size}
+    end
+
     def formatted_date(date, options)
       time = options[:time]
       time = (options[:type] == 'start_time' ? DateTime.now.beginning_of_day.strftime("%H:%M") : DateTime.now.end_of_day.strftime("%H:%M")) if time.blank?

@@ -5,7 +5,7 @@
   <%= form_tag reports_index_path, method: :get do %>
     <table class="no-border" width="100%">
       <tr>
-        <td>
+        <td width="34%" style="vertical-align: top;">
           <table class="no-border">
             <tr>
               <tr>
@@ -53,6 +53,11 @@
             </ul>
           </div>
         </td>
+        
+        <td width="50%" style="vertical-align: top;">
+          <%= pie_chart @pie_tokens %>
+        </td>
+        
         <td style="vertical-align: top;">
           <div style="float: right;">
             <table class="no-border" >
@@ -61,7 +66,7 @@
                   <span class="item-icon green-item-icon"></span>
                 </td>
                 <td>
-                  Seen in <= 30 minutes
+                  <small>Seen in <= 30 minutes</small>
                 </td>
               </tr>
               <tr>
@@ -69,7 +74,7 @@
                   <span class="item-icon yellow-item-icon"></span>
                 </td>
                 <td>
-                  Seen in 31-40 minutes
+                  <small>Seen in 31-40 minutes</small>
                 </td>
               </tr>
               <tr>
@@ -77,7 +82,7 @@
                   <span class="item-icon red-item-icon"></span>
                 </td>
                 <td>
-                  Seen in 41-60 minutes
+                  <small>Seen in 41-60 minutes</small>
                 </td>
               </tr>
               <tr>
@@ -85,7 +90,7 @@
                   <span class="item-icon black-item-icon"></span>
                 </td>
                 <td>
-                  Seen in >60 minutes
+                  <small>Seen in >60 minutes</small>
                 </td>
               </tr>
             </table>

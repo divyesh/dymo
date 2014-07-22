@@ -1,6 +1,6 @@
 <h1>Listing tokens</h1>
 <div>
-  <div style="float: left; width: 65%;">
+  <div style="float: left; width: 50%;">
   <%= form_for Token.new do %>
       Enter Health#/Swipe Card: <%= text_field_tag :healthcard, params[:healthcard], :class => 'text' %>
       <%= submit_tag "Generate Token", :name => nil %>
@@ -10,28 +10,8 @@
       <br />
   <% end %>
   <hr />
-  <br />
-  <h6 style="color: #102077;"><%= filter_title %></h6>
-  <br />  
-  <table class="tokens-table" width="100%">
-    <thead>
-      <tr>
-        <th>Token #</th>
-        <th>OHIP</th>
-        <th>Name</th>
-        <th>Time in</th>
-        <th>Current state</th>
-        <th></th>
-        <th class="last"></th>
-      </tr>
-    </thead>
-    <tbody id="tokens-table-body">
-      <%= render partial: 'tokens' %>
-    </tbody>
-  </table>
-
   </div>
-  <fieldset class="with-border" style="width: 30%; float: right">
+  <fieldset class="with-border" style="width: 40%; float: right">
     <legend>Filter tokens: </legend>
     <%= form_tag tokens_path, method: :get, id: 'filter_token', remote: true do %>
       <div class="field">
@@ -48,4 +28,24 @@
 
   </fieldset>
   <div style="clear: both;"></div>
+  <br />
+  <h6 style="color: #102077;"><%= filter_title %></h6>
+  <br />  
+  <table class="tokens-table" width="100%">
+    <thead>
+      <tr>
+        <th>Token #</th>
+        <th>OHIP</th>
+        <th>Name</th>
+        <th>Time in</th>
+        <th>Current state</th>
+        <th></th>
+        <th></th>
+        <th class="last"></th>
+      </tr>
+    </thead>
+    <tbody id="tokens-table-body">
+      <%= render partial: 'tokens' %>
+    </tbody>
+  </table>
 </div>

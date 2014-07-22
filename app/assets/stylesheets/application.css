@@ -369,3 +369,6 @@ table.no-border, table.no-border td {
 .black-item-icon {
   background-color: #000;
 }
+.text-center {
+  text-align: center;
+}

@@ -40,7 +40,7 @@
     <th></th>
   </tr>
 
-<% @patient.visits.reverse_each do |visit| %>
+<% @patient.visits.order("created_at DESC").each do |visit| %>
   <tr>
     <td><%= visit.physician.nil? ? '' : visit.physician.physician_number %></td>
     <td><%= visit.physician.nil? ? '': visit.physician.firstname + ' ' + visit.physician.lastname+ ' '+visit.physician.physician_number  %></td>

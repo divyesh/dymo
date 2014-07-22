@@ -1,5 +1,7 @@
 Dymo::Application.routes.draw do
 
+  resources :app_configs
+
   devise_for :users
 
   root to: "visits#index"

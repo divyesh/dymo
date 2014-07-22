@@ -18,6 +18,10 @@ class Token < ActiveRecord::Base
     state :discarded
   end
 
+  def generatable?
+    (((DateTime.now.to_time - self.created_at.to_time).to_i)/AppConfig.token_generation_interval) > 0
+  end
+
   def visit_registered_time
     th = token_histories.where("note = ?", "visit_registered").first
     if th

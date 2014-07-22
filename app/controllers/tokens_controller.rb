@@ -35,7 +35,7 @@ class TokensController < ApplicationController
 
     @token = Token.where("(created_at >= ? AND created_at <= ?) AND patient_id = ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day, @patient.id).first
 
-    unless @token
+    if @token.nil? || @token.generatable?
       @token = Token.new_time_in_token(@patient)
 
       print_token
@@ -44,7 +44,7 @@ class TokensController < ApplicationController
         format.html { redirect_to tokens_path, notice: 'Token was successfully created.' }
         format.json { render :show, status: :created, location: @token }
       end
-    else
+    else      
       respond_to do |format|
         format.html { redirect_to tokens_path, notice: "Token already generated for this patient for today. Token number is Token#: #{@token.no}." }
         format.json { render :show, status: :created, location: @token }
@@ -99,6 +99,6 @@ class TokensController < ApplicationController
 
     def print_token
       uri = URI.parse("#{AppConfig.print_token_url}#{@token.id}/#{@token.patient.healthnumber}")
-      res = Net::HTTP.get_response(uri)      
+      # res = Net::HTTP.get_response(uri)
     end
 end
