@@ -18,10 +18,23 @@ class ReportsController < ApplicationController
     end
 
     respond_to do |format|
-        format.html
-        format.csv { send_data @tokens.to_csv }
-        format.xls
-      end
+      format.html
+      format.csv { send_data @tokens.to_csv }
+      format.xls
+    end
+  end
+
+  def test_statistic
+    from_date = formatted_date(params[:start_date], { time: params[:start_time], type: 'start_time' })
+    to_date = formatted_date(params[:end_date], { time: params[:end_time], type: 'end_time' })
+
+    str = params[:test]
+
+    if params[:test].blank?
+      @tests = Test.joins(:visit_tests).where("(visit_tests.created_at >= ? AND visit_tests.created_at <= ?)", from_date, to_date).group("tests.test_code").count
+    else
+      @tests = Test.joins(:visit_tests).where("(visit_tests.created_at >= ? AND visit_tests.created_at <= ?) AND tests.test_code ~ any(array[?])", from_date, to_date, str.split(/\s*,\s*/)).group("tests.test_code").count
+    end
   end
 
   private
@@ -32,10 +45,10 @@ class ReportsController < ApplicationController
 
       @tokens_40 = @tokens.to_a.select { |t| (((t.completed_at - t.created_at) > 1800) && ((t.completed_at - t.created_at) <= 2400)) }
       @tokens_40 = [] if @tokens_40.nil?
-      
+
       @tokens_60 = @tokens.to_a.select! { |t| (((t.completed_at - t.created_at) > 2400) && ((t.completed_at - t.created_at) <= 3600)) }
       @tokens_60 = [] if @tokens_60.nil?
-      
+
       @tokens_61 = @tokens.to_a.select { |t| (t.completed_at - t.created_at) > 3600 }
       @tokens_61 = [] if @tokens_61.nil?
 

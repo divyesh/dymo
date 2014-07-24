@@ -7,6 +7,7 @@ Dymo::Application.routes.draw do
   root to: "visits#index"
 
   get 'reports/index'
+  get 'reports/test_statistic'
 
   resources :tokens, except: [:edit, :update] do
     resources :token_histories, except: [:edit, :update]
