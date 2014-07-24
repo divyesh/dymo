@@ -358,16 +358,16 @@ table.no-border, table.no-border td {
   cursor: pointer;
 }
 .red-item-icon {
-  background-color: #bd2c00;
+  background-color: #FEBFC1;
 }
 .green-item-icon {
-  background-color: #6cc644;
+  background-color: #B3E3B2;
 }
 .yellow-item-icon {
   background-color: #F0E66E;
 }
 .black-item-icon {
-  background-color: #000;
+  background-color: #999;
 }
 
 .red-bg {

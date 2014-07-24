@@ -39,7 +39,7 @@ class ReportsController < ApplicationController
       @tokens_40 = @tokens.to_a.select { |t| (((t.completed_at - t.created_at) > 1800) && ((t.completed_at - t.created_at) <= 2400)) }
       @tokens_40 = [] if @tokens_40.nil?
 
-      @tokens_60 = @tokens.to_a.select! { |t| (((t.completed_at - t.created_at) > 2400) && ((t.completed_at - t.created_at) <= 3600)) }
+      @tokens_60 = @tokens.to_a.select { |t| (((t.completed_at - t.created_at) > 2400) && ((t.completed_at - t.created_at) <= 3600)) }
       @tokens_60 = [] if @tokens_60.nil?
 
       @tokens_61 = @tokens.to_a.select { |t| (t.completed_at - t.created_at) > 3600 }
