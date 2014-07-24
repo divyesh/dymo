@@ -5,8 +5,6 @@ class ReportsController < ApplicationController
 
     @tokens = Token.where("(created_at >= ? AND created_at <= ?) AND (state = ?)", from_date, to_date, "completed")
 
-    pie_chart_tokens
-
     if params[:duration] == "30"
       @tokens.to_a.select! { |t| (t.completed_at - t.created_at) <= 1800 }
     elsif params[:duration] == "40"
@@ -16,6 +14,8 @@ class ReportsController < ApplicationController
     elsif params[:duration] == "61"
       @tokens.to_a.select! { |t| (t.completed_at - t.created_at) > 3600 }
     end
+
+    pie_chart_tokens
 
     respond_to do |format|
       format.html
