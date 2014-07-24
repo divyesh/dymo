@@ -33,6 +33,7 @@ class VisitsController < ApplicationController
 
   def new
     @visit = @patient.visits.new
+    @visit.visitdate = DateTime.now
     @tests = Test.all.to_a
     @test_groups = @tests.group_by { |t| t.test_group }
   end

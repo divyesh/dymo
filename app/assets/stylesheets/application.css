@@ -371,19 +371,16 @@ table.no-border, table.no-border td {
 }
 
 .red-bg {
-  background-color: #bd2c00;
-  color: #fff;
+  background-color: #FEBFC1;
 }
 .green-bg {
-  background-color: #6cc644;
-  color: #fff;
+  background-color: #B3E3B2;
 }
 .yellow-bg {
   background-color: #F0E66E;
 }
 .black-bg {
-  background-color: #000;
-  color: #fff;
+  background-color: #999;
 }
 
 .text-center {
