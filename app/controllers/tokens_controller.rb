@@ -63,7 +63,7 @@ class TokensController < ApplicationController
   def done
     @token.done!
     respond_to do |format|
-      format.html { redirect_to @token, notice: "Token was successfully updated." }
+      format.html { redirect_to tokens_path, notice: "Token was successfully updated." }
       format.json { render :show, status: :created, location: @token }
     end
   end
@@ -71,7 +71,7 @@ class TokensController < ApplicationController
   def discard
     @token.discard!
     respond_to do |format|
-      format.html { redirect_to @token, notice: "Token was successfully updated." }
+      format.html { redirect_to tokens_path, notice: "Token was successfully updated." }
       format.json { render :show, status: :created, location: @token }
     end
   end

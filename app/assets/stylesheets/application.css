@@ -372,15 +372,18 @@ table.no-border, table.no-border td {
 
 .red-bg {
   background-color: #bd2c00;
+  color: #fff;
 }
 .green-bg {
   background-color: #6cc644;
+  color: #fff;
 }
 .yellow-bg {
   background-color: #F0E66E;
 }
 .black-bg {
   background-color: #000;
+  color: #fff;
 }
 
 .text-center {

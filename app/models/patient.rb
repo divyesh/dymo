@@ -19,6 +19,6 @@ class Patient < ActiveRecord::Base
   end
   
   def time_in_token
-    tokens.where("(created_at >= ? OR created_at <= ?) AND state = ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day, "time_in").first
+    tokens.where("(created_at >= ? AND created_at <= ?) AND state = ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day, "time_in").first
   end
 end
