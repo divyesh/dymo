@@ -194,4 +194,15 @@ function initpatientform(){
       }
     });
   });
+  
+  $('#add-patient-link').on('click', function() {
+    $("#dialog-patient-add").dialog({
+      resizable: true,
+      width: 800,
+      modal: true,
+      close: function(event,ui){
+        
+      }
+    });
+  });
 }

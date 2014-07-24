@@ -1,0 +1,49 @@
+<%= simple_form_for @patient, :class => 'patient_form' do |f| %>
+  <% if @patient.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@patient.errors.count, "error") %> prohibited this patient from being saved:</h2>
+
+      <ul>
+      <% @patient.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table class="form-table" width="100%">
+    <tr>
+      <td width="100%">
+        <%= f.input :healthnumber %>
+        <%= f.input :version_code %>
+				<%= f.input :health_expiry_date, :as => :string, :input_html => { :id => 'hedpicker'}, :hint => '(YYYY/MM/DD)', :wrapper_html => { :class => 'datepicker-swrapper'}  %>
+        <%= f.input :lastname %>
+        <%= f.input :firstname %>
+        <%= f.input :middlename %>
+        <%= f.input :gender do %>
+          <%= f.collection_radio_buttons :gender, [['M','Male'] ,['F', 'Female']], :first, :last, :class => 'radio-collection' %>
+        <% end %>
+        <%= f.input :birthdate , :as => :string, :input_html => { :id => 'birthdaypicker' }, :hint => '(YYYY/MM/DD)', :wrapper_html => { :class => 'datepicker-swrapper'}  %>
+        <%= f.input :address1 %>
+        <%= f.input :address2 %>
+        <%= f.input :city %>
+        <%= f.input :province %>
+        <%= f.input :postal_code %>
+        <%= f.input :home_phone %>
+        <%= f.input :mobile %>
+      </td>
+    </tr>
+  </table>
+
+  <%= f.button :submit %>
+<% end %>
+<script type="text/javascript">
+  $(function(){
+    $("#physician_id_text1").autocomplete({
+      source: "/physicians.json",
+      select: function(event, ui){
+        $('#physician_id1').val(ui.item.val);
+      }
+    });
+  });
+</script>

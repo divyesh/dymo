@@ -1,3 +1,4 @@
+<a id="add-patient-link" href="javascript:void(0);" style="float: right;">Add Patient</a>
 <h1>Listing tokens</h1>
 <div>
   <div style="float: left; width: 50%;">
@@ -48,4 +49,9 @@
       <%= render partial: 'tokens' %>
     </tbody>
   </table>
+</div>
+<div id="dialog-patient-add" style="display: none;" title="ADD PATIENT">
+  <div id="patient-add-form">
+    <%= render 'patients/new_form' %>
+  </div>
 </div>
