@@ -369,6 +369,20 @@ table.no-border, table.no-border td {
 .black-item-icon {
   background-color: #000;
 }
+
+.red-bg {
+  background-color: #bd2c00;
+}
+.green-bg {
+  background-color: #6cc644;
+}
+.yellow-bg {
+  background-color: #F0E66E;
+}
+.black-bg {
+  background-color: #000;
+}
+
 .text-center {
   text-align: center;
 }
