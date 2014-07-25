@@ -56,30 +56,29 @@
 <br />
 <br />
 <table class="tokens-table" >
-  <tbody>
-    <% @physicians.each do |ph| %>
-      <tr>
-        <td>
-          <h4><%= ph.fullname_with_physician_number %></h4>
-          <hr />
-          <table width="100%">
-            <thead>
+<thead>
               <tr>
                 <th>Test</th>
                 <th>Count</th>
               </tr>
             </thead>
-            <tbody>              
+  <tbody>
+    <% @physicians.each do |ph| %>
+      <tr>
+        <td colspan="2">
+          <h4><%= ph.fullname_with_physician_number %></h4>
+          </td>
+          <tr />
+          
+        
                 <% ph.tests(@from_date, @to_date, params[:test]).each do |test| %>
                 <tr>
                   <td><%= test[0] %></td>
                   <td><%= test[1] %></td>
                 </tr>
                 <% end %>
-            </tbody>
-          </table>
-        </td>
-      </tr>
+        
+      
       
     <% end %>
   </tbody>
