@@ -51,7 +51,7 @@
       <%= visit.visitdate.nil? ? '' : visit.visitdate.to_formatted_s(:long) %>
     </td>
     <td><%= link_to 'Show', patient_path(visit.patient) %></td>
-     <td><%= link_to 'Add Physician', new_patient_visit_path(visit.patient) %>
+     <td><%= link_to 'Add New Visit', new_patient_visit_path(visit.patient) %>
 </td>
   <td><%= link_to 'Edit', edit_patient_visit_path(visit.patient, visit) %></td>
     <td class="actions"><%= link_to 'Remove', visit, :confirm => 'Are you sure?', :method => :delete %></td>
