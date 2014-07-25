@@ -9,7 +9,7 @@ class PatientsController < ApplicationController
   end
 
   def new
-    @patient = Patient.new
+    @patient = params[:patient].nil? ? Patient.new : Patient.new(patient_params)
     @tests = Test.all.to_a
     @test_groups = @tests.group_by { |t| t.test_group }
   end
@@ -24,7 +24,7 @@ class PatientsController < ApplicationController
       if @patient.save
         Visit.create({ physician_id: params[:physician_id1], patient_id: @patient.id, visitdate: params[:visitdate], payment_program: params[:payment_program], test_ids: params[:test_ids] })
 
-        format.html { redirect_to(@patient, notice: 'Patient was successfully created.') }
+        format.html { redirect_to(new_patient_visit_path(@patient), notice: 'Patient was successfully created.') }
         format.json  { render json: @patient, status: :created, location: @patient }
         format.xml  { render xml: @patient, status: :created, location: @patient }
       else

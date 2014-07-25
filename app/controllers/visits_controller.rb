@@ -10,12 +10,17 @@ class VisitsController < ApplicationController
       patient = Patient.find_by_healthnumber(options[:healthnumber])
 
       if patient
-        patient.health_expiry_date = health_expiry_date
-        patient.version_code = version_code
+        patient.health_expiry_date = options[:health_expiry_date]
+        patient.version_code = options[:version_code]
         patient.save
-        redirect_to edit_patient_path(patient)
+        redirect_to new_patient_visit_path(patient)
       else
-        redirect_to new_patient_path(options)
+        patient = Patient.create(options)
+        if patient.errors.any?
+          redirect_to new_patient_path(patient)
+        else
+          redirect_to new_patient_visit_path(patient)
+        end
       end
     else
       @visits = Visit.search(params[:search]).order("created_at desc").paginate(:per_page => 25, :page => params[:page])
