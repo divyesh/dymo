@@ -23,7 +23,7 @@ class VisitsController < ApplicationController
         end
       end
     else
-      @visits = Visit.search(params[:search]).order("created_at desc").paginate(:per_page => 25, :page => params[:page])
+      @visits = Visit.search(params[:healthcard]).order("created_at desc").paginate(:per_page => 25, :page => params[:page])
 
       respond_to do |format|
         format.html
