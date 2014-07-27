@@ -11,6 +11,13 @@
 <body>
 
   <div id="hd">
+    <div style="text-align: right; padding: 10px 50px 0px 50px;;">
+      <% if user_signed_in? %>
+        Welcome, <%= current_user.firstname %>, <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+      <% else %>
+        Welcome Guest, <%= link_to('Login', new_user_session_path) %>
+      <% end %>
+    </div>
     <h1 id="logo">
       Specimen Collection Center - MedHealth Laboratories Ltd.
       <ul class="top-nav">
@@ -25,17 +32,15 @@
         <li><%= link_to 'Test Stats', reports_test_statistic_path %></li>
         <li>|</li>
         <li><%= link_to 'Tests', tests_path %></li>
-        <% if user_signed_in? %>
-          <li>|</li>
-          <li><%= link_to('Logout', destroy_user_session_path, method: :delete) %>
-        <% end %>
+        
       </ul>
     </h1>
   </div>
 
   <div id="pg">
    <div id="bd">
-       <p id="notice"><%= notice %></p>
+      <p id="notice"><%= notice %></p>
+      <p id="notice"><%= alert %></p>
       <%= yield %>
     </div>
   </div>

@@ -1,10 +1,8 @@
 Dymo::Application.routes.draw do
 
-  resources :app_configs
+  root to: "visits#index"
 
   devise_for :users
-
-  root to: "visits#index"
 
   get 'reports/index'
   get 'reports/test_statistic'
@@ -19,8 +17,11 @@ Dymo::Application.routes.draw do
 
   resources :visits, only: [:index, :destroy]
   resources :physicians
+  resources :tests
+  resources :app_configs
+
   resources :patients, except: [:index, :destroy] do
     resources :visits, only: [:new, :create, :edit, :update]
   end
-  resources :tests
+
 end

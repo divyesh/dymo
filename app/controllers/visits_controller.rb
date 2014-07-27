@@ -1,4 +1,5 @@
 class VisitsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_visit, only: [:show, :edit, :update, :destroy]
   before_action :set_patient, only: [:new, :create, :edit, :update]
   before_action :set_tests, only: [:new, :create, :edit, :update]

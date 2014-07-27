@@ -19,9 +19,11 @@ class TokensController < ApplicationController
   end
 
   def new
+    authorize! :new, @token
   end
 
   def edit
+    authorize! :edit, @token
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @tokens }
@@ -29,6 +31,7 @@ class TokensController < ApplicationController
   end
 
   def create
+    authorize! :create, @token
     options = parse_healthcard(params[:healthcard])
 
     @patient = Patient.where(healthnumber: options[:healthnumber]).first
@@ -38,7 +41,7 @@ class TokensController < ApplicationController
       @token = Token.where("(created_at >= ? AND created_at <= ?) AND patient_id = ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day, @patient.id).first
 
       if @token.nil? || @token.generatable?
-        @token = Token.new_time_in_token(@patient)
+        @token = @patient.new_time_in_token
 
         print_token
 
@@ -61,6 +64,7 @@ class TokensController < ApplicationController
   end
 
   def done
+    authorize! :done, @token
     @token.done!
     respond_to do |format|
       format.html { redirect_to tokens_path, notice: "Token was successfully updated." }
@@ -69,6 +73,7 @@ class TokensController < ApplicationController
   end
 
   def discard
+    authorize! :discard, @token
     @token.discard!
     respond_to do |format|
       format.html { redirect_to tokens_path, notice: "Token was successfully updated." }
@@ -77,6 +82,7 @@ class TokensController < ApplicationController
   end
 
   def update
+    authorize! :update, @token
     respond_to do |format|
       if @token.update(token_params)
         format.html { redirect_to @token, notice: 'Token was successfully updated.' }
@@ -89,6 +95,7 @@ class TokensController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, @token
     @token.destroy
     respond_to do |format|
       format.html { redirect_to tokens_url, notice: 'Token was successfully destroyed.' }

@@ -1,7 +1,6 @@
 <h1>Test Statistics</h1>
 
-<fieldset class="with-border">
-  
+<fieldset class="with-border" style="float: left;">
   <%= form_tag reports_test_statistic_path, method: :get do %>
     <table class="no-border" width="100%">
       <tr>
@@ -51,35 +50,31 @@
       </p>
     </div>
   <% end %>
-  
+
 </fieldset>
+<br style="clear: left;" />
 <br />
 <br />
-<table class="tokens-table" >
-<thead>
-              <tr>
-                <th>Test</th>
-                <th>Count</th>
-              </tr>
-            </thead>
+<table class="tokens-table">
+  <thead>
+    <tr>
+      <th>Test</th>
+      <th>Count</th>
+    </tr>
+  </thead>
   <tbody>
     <% @physicians.each do |ph| %>
       <tr>
         <td colspan="2">
           <h4><%= ph.fullname_with_physician_number %></h4>
-          </td>
-          <tr />
-          
-        
-                <% ph.tests(@from_date, @to_date, params[:test]).each do |test| %>
-                <tr>
-                  <td><%= test[0] %></td>
-                  <td><%= test[1] %></td>
-                </tr>
-                <% end %>
-        
-      
-      
+        </td>
+        <tr />
+        <% ph.tests(@from_date, @to_date, params[:test]).each do |test| %>
+          <tr>
+            <td><%= test[0] %></td>
+            <td><%= test[1] %></td>
+          </tr>
+        <% end %>
     <% end %>
   </tbody>
 </table>

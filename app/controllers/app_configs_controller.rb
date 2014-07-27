@@ -1,4 +1,5 @@
 class AppConfigsController < ApplicationController
+  load_and_authorize_resource
   before_action :set_app_config, only: [:show, :edit, :update, :destroy]
 
   # GET /app_configs

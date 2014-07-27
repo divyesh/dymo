@@ -2,7 +2,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
   # before_action :detect_device_variant
 
-  # before_action :authenticate_user!
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to new_user_session_path
+  end
 
   def mobile?
     request.user_agent.downcase =~ /|android|touch|webos|hpwos/
