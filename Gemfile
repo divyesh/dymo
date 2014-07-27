@@ -52,7 +52,9 @@ gem 'rails_12factor', group: :production
 
 gem 'devise'
 
-gem 'cancancan', '~> 1.9'
+gem 'cancan'
+
+gem 'rails_admin'
 
 gem 'chartkick'
 

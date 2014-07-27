@@ -3,7 +3,11 @@ class ApplicationController < ActionController::Base
   # before_action :detect_device_variant
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to new_user_session_path
+    if current_user && !current_user.admin?
+      redirect_to main_app.root_path
+    else
+      redirect_to new_user_session_path
+    end
   end
 
   def mobile?

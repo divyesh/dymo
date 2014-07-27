@@ -13,7 +13,7 @@
   <div id="hd">
     <div style="text-align: right; padding: 10px 50px 0px 50px;;">
       <% if user_signed_in? %>
-        Welcome, <%= current_user.firstname %>, <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+        Welcome <%= current_user.firstname %> <%= current_user.lastname %>, <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
       <% else %>
         Welcome Guest, <%= link_to('Login', new_user_session_path) %>
       <% end %>
