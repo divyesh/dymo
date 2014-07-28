@@ -1,5 +1,5 @@
 class PatientsController < ApplicationController
-  load_and_authorize_resource
+  # load_and_authorize_resource, except: [:create, :update]
   before_action :set_patient, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -11,6 +11,7 @@ class PatientsController < ApplicationController
 
   def new
     @patient = params[:patient].nil? ? Patient.new : Patient.new(patient_params)
+    authorize! :new, @patient
     @tests = Test.all.to_a
     @test_groups = @tests.group_by { |t| t.test_group }
   end
@@ -20,6 +21,7 @@ class PatientsController < ApplicationController
 
   def create
     @patient = Patient.new(patient_params)
+    authorize! :create, @patient
 
     respond_to do |format|
       if @patient.save
@@ -38,6 +40,7 @@ class PatientsController < ApplicationController
 
   def update
     @patient = Patient.find(params[:id])
+    authorize! :create, @patient
 
     respond_to do |format|
       if @patient.update_attributes(patient_params)
@@ -55,6 +58,7 @@ class PatientsController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, @patient
     @patient.destroy
 
     respond_to do |format|
