@@ -37,6 +37,7 @@
     <th> Phyisican Name </th>
     <th>Visited on</th>
     <th>Payment program</th>
+	<th>Specimen Priority</th>
     <th>Tests</th>
     <th></th>
   </tr>
@@ -47,6 +48,7 @@
     <td><%= visit.physician.nil? ? '': visit.physician.firstname + ' ' + visit.physician.lastname+ ' '+visit.physician.physician_number  %></td>
     <td><%= visit.visitdate.nil? ? '' : visit.visitdate.to_formatted_s(:long) %></td>
     <td><%= visit.payment_program %></td>
+	<td><%= visit.specimen_priority %></td>
     <td>
       <% visit.tests.each_with_index do |test, index| %>
         <%= "#{test.test_code}" %><%= ", " unless visit.tests.size == (index + 1) %>
