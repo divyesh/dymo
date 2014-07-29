@@ -1,5 +1,4 @@
 class VisitsController < ApplicationController
-  load_and_authorize_resource
   before_action :set_visit, only: [:show, :edit, :update, :destroy]
   before_action :set_patient, only: [:new, :create, :edit, :update]
   before_action :set_tests, only: [:new, :create, :edit, :update]
@@ -39,16 +38,19 @@ class VisitsController < ApplicationController
 
   def new
     @visit = @patient.visits.new
+    authorize! :new, @visit
     @visit.visitdate = DateTime.now
     @tests = Test.all.to_a
     @test_groups = @tests.group_by { |t| t.test_group }
   end
 
   def edit
+    authorize! :edit, @visit
   end
 
   def create
     @visit = @patient.visits.new(visit_params)
+    authorize! :create, @visit
 
     respond_to do |format|
       if @visit.save
@@ -67,7 +69,7 @@ class VisitsController < ApplicationController
   end
 
   def update
-    @visit = Visit.find(params[:id])
+    authorize! :update, @visit
 
     respond_to do |format|
       if @visit.update_attributes(visit_params)
@@ -83,11 +85,11 @@ class VisitsController < ApplicationController
   end
 
   def destroy
-    @visit = Visit.find(params[:id])
+    authorize! :destroy, @visit
     @visit.destroy
 
     respond_to do |format|
-      format.html { redirect_to(visits_url) }
+      format.html { redirect_to(visits_url, notice: 'Visit was successfully destroyed.') }
       format.xml  { head :ok }
     end
   end
@@ -102,7 +104,7 @@ class VisitsController < ApplicationController
     end
 
     def visit_params
-      params.require(:visit).permit(:patient_id, :physician_id, :visitdate, :payment_program, :specimen_priority, test_ids: [])
+      params.require(:visit).permit(:patient_id, :physician_id, :visitdate, :payment_program, :specimen_priority, :amount, test_ids: [])
     end
 
     def set_tests

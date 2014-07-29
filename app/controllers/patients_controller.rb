@@ -1,5 +1,4 @@
 class PatientsController < ApplicationController
-  # load_and_authorize_resource, except: [:create, :update]
   before_action :set_patient, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -62,7 +61,7 @@ class PatientsController < ApplicationController
     @patient.destroy
 
     respond_to do |format|
-      format.html { redirect_to(patients_url) }
+      format.html { redirect_to(patients_url, notice: 'Patient was successfully destroyed.') }
       format.json  { head :no_content }
       format.xml  { head :no_content }
     end

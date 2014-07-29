@@ -1,5 +1,4 @@
 class TestsController < ApplicationController
-  load_and_authorize_resource
   before_action :set_test, only: [:show, :edit, :update, :destroy]
 
   # GET /tests
@@ -16,16 +15,19 @@ class TestsController < ApplicationController
   # GET /tests/new
   def new
     @test = Test.new
+    authorize! :new, @test
   end
 
   # GET /tests/1/edit
   def edit
+    authorize! :edit, @test
   end
 
   # POST /tests
   # POST /tests.json
   def create
     @test = Test.new(test_params)
+    authorize! :create, @test
 
     respond_to do |format|
       if @test.save
@@ -41,6 +43,7 @@ class TestsController < ApplicationController
   # PATCH/PUT /tests/1
   # PATCH/PUT /tests/1.json
   def update
+    authorize! :update, @test
     respond_to do |format|
       if @test.update(test_params)
         format.html { redirect_to tests_path, notice: 'Test was successfully updated.' }
@@ -55,6 +58,7 @@ class TestsController < ApplicationController
   # DELETE /tests/1
   # DELETE /tests/1.json
   def destroy
+    authorize! :destroy, @test
     @test.destroy
     respond_to do |format|
       format.html { redirect_to tests_url, notice: 'Test was successfully destroyed.' }

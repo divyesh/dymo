@@ -1,5 +1,4 @@
 class PhysiciansController < ApplicationController
-  load_and_authorize_resource
   before_action :set_physician, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -11,13 +10,16 @@ class PhysiciansController < ApplicationController
 
   def new
     @physician = Physician.new
+    authorize! :new, @physician
   end
 
   def edit
+    authorize! :edit, @physician
   end
 
   def create
     @physician = Physician.new(physician_params)
+    authorize! :create, @physician
 
     respond_to do |format|
       if @physician.save
@@ -33,7 +35,7 @@ class PhysiciansController < ApplicationController
   end
 
   def update
-    @physician = Physician.find(params[:id])
+    authorize! :update, @physician
 
     respond_to do |format|
       if @physician.update_attributes(physician_params)
@@ -49,10 +51,11 @@ class PhysiciansController < ApplicationController
   end
 
   def destroy
+    authorize! :destroy, @physician
     @physician.destroy
 
     respond_to do |format|
-      format.html { redirect_to(physicians_url) }
+      format.html { redirect_to(physicians_url, notice: 'Physician was successfully destroyed.') }
       format.json  { head :no_content }
       format.xml  { head :no_content }
     end
