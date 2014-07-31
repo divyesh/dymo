@@ -54,11 +54,13 @@ function printPatientLabel(PatientName, healthNumber, expiry, dob, sex, address,
             var num = window.prompt('How many Labels you wants to print?', '1');
             if (null == num)
                 num = 0;
-	    if(num!=0)
+	    if(num!=0 ){
+		num=num>=20?20:num;
             for (var i = 0; i < num; i++)
 	    {
             	label.print(printerName);
             }
+			}
 	    num=0;
 
     } catch (e) {
