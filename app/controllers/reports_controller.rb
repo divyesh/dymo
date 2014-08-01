@@ -25,9 +25,26 @@ class ReportsController < ApplicationController
   end
 
   def test_statistic
+    params[:group_by] ||= "by_physician"
+    
     @from_date = formatted_date(params[:start_date], { time: params[:start_time], type: 'start_time' })
     @to_date = formatted_date(params[:end_date], { time: params[:end_time], type: 'end_time' })
-    @physicians = Physician.joins(:visits).where("(visits.created_at >= ? AND visits.created_at <= ?)", @from_date, @to_date).distinct
+    
+    if params[:group_by] == "by_physician"
+      @physicians = Physician.joins(:visits).where("(visits.created_at >= ? AND visits.created_at <= ?)", @from_date, @to_date).distinct
+    else
+      @visit_tests = VisitTest.where("visit_tests.created_at >= ? AND visit_tests.created_at <= ?", @from_date, @to_date)
+      @visit_tests = @visit_tests.to_a.group_by { |t| t.created_at.to_date }
+    end
+  end
+
+  def peak_time
+    from_date = Date.civil(2014,1,1)
+    to_date = from_date + (Time::days_in_month(1) - 1).days
+
+    @tokens = Token.where("(created_at >= ? AND created_at <= ?)", from_date, to_date)
+
+    to_date = from_date + 6.days
   end
 
   private

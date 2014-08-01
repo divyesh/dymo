@@ -155,8 +155,6 @@ table th, table td{
   padding-top: 7px;
 }
 .top-nav li{
-  float: left;
-  margin-right: 10px;
 }
 .top-nav li.last{
   margin-right: 0px;
@@ -385,4 +383,65 @@ table.no-border, table.no-border td {
 
 .text-center {
   text-align: center;
+}
+
+ul#top-nav {
+  text-align: left;
+  display: inline;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+ul#top-nav li {
+  display: inline-block;
+  position: relative;
+  padding: 5px 10px;
+  cursor: pointer;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -ms-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+}
+ul#top-nav li.dropdown {
+  border: solid 1px transparent;
+}
+ul#top-nav li.divider {
+  border: 0 none;
+  padding: 0;
+}
+ul#top-nav li.dropdown:hover {
+  background: #fff;
+  border: solid 1px #ccc;
+}
+ul#top-nav li ul {
+  padding: 0;
+  position: absolute;
+  top: 25px;
+  right: -1px;
+  width: 150px;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transiton: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  -ms-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  -transition: opacity 0.2s;
+  border: solid 1px #ccc;
+  border-top: 0 none;
+}
+ul#top-nav li ul li { 
+  background: #fff; 
+  display: block;
+  border-top: solid 1px #eee;
+}
+ul#top-nav li ul li:hover { background: #fff; }
+ul#top-nav li:hover ul {
+  display: block;
+  opacity: 1;
+  visibility: visible;
 }

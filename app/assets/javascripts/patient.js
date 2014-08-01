@@ -112,6 +112,7 @@ function initdatepickers(){
 }
 
 function initpatientform(){
+  $( "#menu" ).menu();
   $('#add_tests').on('click', function() {
     $("#test_dialog").dialog({
       resizable: true,

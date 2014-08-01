@@ -7,35 +7,44 @@
         <td width="34%" style="vertical-align: top;">
           <table class="no-border">
             <tr>
-              <tr>
-                <td>
-                  <strong style="font-weight: bold;">Date <small class="hint">(yyyy/mm/dd)</small>:</strong>
-                </td>
-                <td class="datepicker-swrapper">
-                  From: <%= text_field_tag :start_date, (params[:start_date].blank? ? Date.today : params[:start_date]), class: 'input-sm' %>
-                </td>
-                <td class="datepicker-swrapper">
-                  To: <%= text_field_tag :end_date, (params[:end_date].blank? ? Date.today : params[:end_date]), class: 'input-sm' %>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong style="font-weight: bold;">Time <small class="hint">(hh:mm)</small>:</strong>
-                </td>
-                <td class="time">
-                  From: <%= text_field_tag :start_time, (params[:start_time].blank? ? DateTime.now.beginning_of_day.strftime("%I:%M %p") : params[:start_time]), class: 'input-sm' %>
-                </td>
-                <td class="time">
-                  To: <%= text_field_tag :end_time, (params[:end_time].blank? ? DateTime.now.end_of_day.strftime("%I:%M %p") : params[:end_time]), class: 'input-sm' %>
-                </td>
-              </tr>
+              <td>
+                <strong style="font-weight: bold;">Date <small class="hint">(yyyy/mm/dd)</small>:</strong>
+              </td>
+              <td class="datepicker-swrapper">
+                From: <%= text_field_tag :start_date, (params[:start_date].blank? ? Date.today : params[:start_date]), class: 'input-sm' %>
+              </td>
+              <td class="datepicker-swrapper">
+                To: <%= text_field_tag :end_date, (params[:end_date].blank? ? Date.today : params[:end_date]), class: 'input-sm' %>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong style="font-weight: bold;">Time <small class="hint">(hh:mm)</small>:</strong>
+              </td>
+              <td class="time">
+                From: <%= text_field_tag :start_time, (params[:start_time].blank? ? DateTime.now.beginning_of_day.strftime("%I:%M %p") : params[:start_time]), class: 'input-sm' %>
+              </td>
+              <td class="time">
+                To: <%= text_field_tag :end_time, (params[:end_time].blank? ? DateTime.now.end_of_day.strftime("%I:%M %p") : params[:end_time]), class: 'input-sm' %>
+              </td>
+            </tr>
+            <tr>
+              <td style="vertical-align:top;">
+                <br />
+                <strong style="font-weight: bold;">Group By</strong>
+              </td>
+              <td colspan="2">
+                <br />
+                <div><%= radio_button_tag 'group_by', 'by_physician', params[:group_by] == 'by_physician' %> By Physician</div><br />
+                <div><%= radio_button_tag 'group_by', 'by_date', params[:group_by] == 'by_date' %> By Date</div>
+              </td>
             </tr>
           </table>
           <br />
           <div>
             <div>Enter test codes: (<small class="hint">Comma separated test codes</small>)</div>
             <div>
-              <%= text_field_tag :test %>
+              <%= text_field_tag :test, params[:test] %>
             </div>
           </div>
         </td>
@@ -63,18 +72,38 @@
     </tr>
   </thead>
   <tbody>
-    <% @physicians.each do |ph| %>
-      <tr>
-        <td colspan="2">
-          <h4><%= ph.fullname_with_physician_number %></h4>
-        </td>
-        <tr />
+    <% if params[:group_by] == "by_physician" %>
+      <% @physicians.each do |ph| %>
+        <tr>
+          <td colspan="2">
+            <h4><%= ph.fullname_with_physician_number %></h4>
+          </td>
+        </tr>
         <% ph.tests(@from_date, @to_date, params[:test]).each do |test| %>
           <tr>
             <td><%= test[0] %></td>
             <td><%= test[1] %></td>
           </tr>
         <% end %>
+      <% end %>
+    <% else %>
+      <% @visit_tests.each do |month, visit_tests| %>
+        <tr>
+          <td colspan="2">
+            <h4><%= month %></h4>
+          </td>
+        </tr>
+        <% visit_tests.group_by(&:test_id).each do |test_id, tests| %>
+          <% test = Test.find(test_id) %>
+
+          <% if params[:test].split(',').include?(test.test_code) %>
+            <tr>
+              <td><%= test.test_code %></td>
+              <td><%= tests.count %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      <% end %>
     <% end %>
   </tbody>
 </table>

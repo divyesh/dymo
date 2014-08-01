@@ -51,6 +51,7 @@ class VisitsController < ApplicationController
   def create
     @visit = @patient.visits.new(visit_params)
     authorize! :create, @visit
+    @visit.visitdate = DateTime.now
 
     respond_to do |format|
       if @visit.save
