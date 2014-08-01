@@ -13,7 +13,7 @@ class Physician < ActiveRecord::Base
   end
 
   def fullname_with_physician_number
-    "#{firstname} #{lastname}"
+    "#{physician_number} #{firstname} #{lastname}"
   end
   
   def tests(from_date, to_date, str)
