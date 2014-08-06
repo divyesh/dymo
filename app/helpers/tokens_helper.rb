@@ -6,6 +6,8 @@ module TokensHelper
   end
 
   def token_state_bgcolor(token)
+    return "white-bg" if token.discarded?
+
     if token.completed?
       time_in_seconds = (token.completed_at.to_time - token.created_at.to_time).to_i
     else
