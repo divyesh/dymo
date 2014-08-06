@@ -1,5 +1,10 @@
 <%= simple_form_for [@patient, @visit] do |f| %>
   <%= f.error_notification %>
+
+  <h3>
+    Last VisitDate: <%= @patient.last_visit_date %>
+  </h3>
+
   <table width="100%">
     <tr>
       <td width="50%" style="vertical-align: top; padding-top: 20px;">
@@ -7,12 +12,12 @@
           <label for="visit_physician" class="string optional control-label">Physician</label>
           <%= text_field_tag :physician_name, @visit.physician ? @visit.physician.fullname_with_physician_number : '' %>
         </div>
-        
+
         <%= f.hidden_field :physician_id %>
         <%#= f.input :visitdate, as: :string, hint: '(YYYY/MM/DD)', wrapper_html: { class: 'datepicker-swrapper' } %>
         <%= f.hidden_field :visitdate %>
         <%= f.input :payment_program, collection: [["HCP", "HCP"],["RMB", "RMB"],  ["WSIB", "WSIB"], ["Paid Patient", "Paid Patient"], ["Bill Patient", "Bill Patient"], ["IFH", "IFH"], ["Clinical Trials", "Clinical Trials"]], include_blank: false %>
-		
+
           <%= f.input :amount %>
         <%= f.input :specimen_priority, collection: [["Routine", "Routine"],["Stat", "Stat"]], include_blank: false %>
       </td>

@@ -33,8 +33,12 @@ class Patient < ActiveRecord::Base
   def fullname_with_health_insurance_number
     "#{lastname} #{firstname} #{middlename} - #{healthnumber}"
   end
-  
+
   def time_in_token
     tokens.where("(created_at >= ? AND created_at <= ?) AND state = ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day, "time_in").first
+  end
+
+  def last_visit_date
+    visits.size > 0 ? visits.order("created_at DESC").first.visitdate.to_formatted_s(:long) : ""
   end
 end
