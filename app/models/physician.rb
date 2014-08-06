@@ -25,7 +25,7 @@ class Physician < ActiveRecord::Base
     if str.blank?
       @tests = self.visits.joins(visit_tests: :test).where("(visit_tests.created_at >= ? AND visit_tests.created_at <= ?)", from_date, to_date).group("tests.test_code").count
     else
-      @tests = self.visits.joins(visit_tests: :test).where("(visit_tests.created_at >= ? AND visit_tests.created_at <= ?) AND tests.test_code ~ any(array[?])", from_date, to_date, str.split(/\s*,\s*/)).group("tests.test_code").count
+      @tests = self.visits.joins(visit_tests: :test).where("(visit_tests.created_at >= ? AND visit_tests.created_at <= ?) AND tests.test_code IN (?)", from_date, to_date, str.split(/\s*,\s*/)).group("tests.test_code").count
     end
   end
 end
