@@ -11,7 +11,7 @@
         <li style="font-size: 16px; font-weight: bold;">OHIP: <%= patient.healthnumber %>&nbsp;<%= patient.version_code %></li>
         <li class="expire">Expires on: <%= patient.health_expiry_date.nil? ? '' : patient.health_expiry_date.to_formatted_s(:long) %></li>
       </ul>
-      
+
     </td>
     <td style="text-align: left;">
       <%= patient.gender == 'M' ? 'Male' : 'Female' %><br />
@@ -29,7 +29,7 @@
       </div>
     </td>
     <td style="border-top: solid 1px #ccc;">
-      <div class="contact" style="border: 0 none;">
+      <div class="contact" style="border: 0 none; font-size: 16px;">
         Home (Ph):&nbsp; <%= patient.home_phone %><br />
         Mobile (Ph):&nbsp;<%= patient.mobile %><br />
       </div>
