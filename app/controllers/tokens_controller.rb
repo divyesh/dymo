@@ -49,7 +49,7 @@ class TokensController < ApplicationController
           format.html { redirect_to tokens_path, notice: 'Token was successfully created.' }
           format.json { render :show, status: :created, location: @token }
         end
-      else      
+      else
         respond_to do |format|
           format.html { redirect_to tokens_path, notice: "Token already generated for this patient for today. Token number is Token#: #{@token.no}." }
           format.json { render :show, status: :created, location: @token }
@@ -114,6 +114,6 @@ class TokensController < ApplicationController
 
     def print_token
       uri = URI.parse("#{AppConfig.print_token_url}#{@token.id}/#{@token.patient.healthnumber}")
-      # res = Net::HTTP.get_response(uri)
+      #res = Net::HTTP.get_response(uri)
     end
 end

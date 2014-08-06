@@ -24,9 +24,13 @@ class PatientsController < ApplicationController
 
     respond_to do |format|
       if @patient.save
-        Visit.create({ physician_id: params[:physician_id1], patient_id: @patient.id, visitdate: params[:visitdate], payment_program: params[:payment_program], test_ids: params[:test_ids] })
+        @token = @patient.new_time_in_token
 
-        format.html { redirect_to(new_patient_visit_path(@patient), notice: 'Patient was successfully created.') }
+        print_token
+
+        #Visit.create({ physician_id: params[:physician_id1], patient_id: @patient.id, visitdate: params[:visitdate], payment_program: params[:payment_program], test_ids: params[:test_ids] })
+
+        format.html { redirect_to(tokens_path, notice: 'Patient and Token were successfully created.') }
         format.json  { render json: @patient, status: :created, location: @patient }
         format.xml  { render xml: @patient, status: :created, location: @patient }
       else
@@ -74,6 +78,11 @@ class PatientsController < ApplicationController
 
     def patient_params
       params.require(:patient).permit(:healthnumber, :version_code, :health_expiry_date, :lastname, :firstname, :middlename, :gender, :birthdate, :address1, :address2, :city, :province, :postal_code, :home_phone, :mobile, physician_ids: [])
+    end
+
+    def print_token
+      uri = URI.parse("#{AppConfig.print_token_url}#{@token.id}/#{@token.patient.healthnumber}")
+      #res = Net::HTTP.get_response(uri)
     end
 
 end
