@@ -4,7 +4,9 @@
   <td><%= token.patient.lastname %> <%= token.patient.firstname %> </td>
   <td><%= token.created_at.to_formatted_s(:long) %></td>
   <td><%= token.state.gsub('_', ' ').capitalize %></td>
-  <td class="text-center"><%= next_state_link(token) %></td>
+  <td class="text-center"><%= next_state_link(token) %>
+  <%= token.token_histories.last.comment if token.discarded? %>
+  </td>
   <td class="text-center"><%= link_to "Print Token", "#{AppConfig.print_token_url}#{token.no}/#{token.patient.healthnumber}", target: "_BLANK" %></td>
   <td class="last"><small><%= link_to 'Punch In(s)', token %></small> |
   <small><%= link_to 'Destroy', token, method: :delete, data: { confirm: 'Are you sure?' } %></small></td>

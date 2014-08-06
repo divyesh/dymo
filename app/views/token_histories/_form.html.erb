@@ -7,6 +7,10 @@
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <% if params[:note] == "discarded" %>
+      <%= f.button :submit, "Discard token" %>
+    <% else %>
+      <%= f.button :submit %>
+    <% end %>
   </div>
 <% end %>
