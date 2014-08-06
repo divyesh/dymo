@@ -1,4 +1,4 @@
-<h1 style="float: left;">Listing tests&nbsp;&nbsp;<span style="font-size: 13px;"><%= link_to 'Add new Test', new_test_path %></span></h1> 
+<h1 style="float: left;">Listing tests&nbsp;&nbsp;<span style="font-size: 13px;"><%= link_to 'Add new Test', new_test_path %></span></h1>
 
 <div class="clear"></div>
 
@@ -27,12 +27,10 @@
         <td><%= test.group_index %></td>
         <td><%= test.index %></td>
         <td><%= link_to 'Edit', edit_test_path(test) %></td>
-        <td><%= link_to 'Destroy', test, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= destroy_link test %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-

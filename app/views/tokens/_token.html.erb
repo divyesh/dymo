@@ -14,6 +14,6 @@
   <%= token.token_histories.last.comment if token.discarded? %>
   </td>
   <td class="text-center"><%= link_to "Print Token", "#{AppConfig.print_token_url}#{token.no}/#{token.patient.healthnumber}", target: "_BLANK" %></td>
-  <td class="last"><small><%= link_to 'Punch In(s)', token %></small> |
-  <small><%= link_to 'Destroy', token, method: :delete, data: { confirm: 'Are you sure?' } %></small></td>
+  <td class="last"><small><%= link_to 'Punch In(s)', token %></small><%= " | " if can?(:destroy, token) %>
+  <small><%= destroy_link token %></small></td>
 </tr>

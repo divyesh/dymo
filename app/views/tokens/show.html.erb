@@ -29,7 +29,7 @@
         <td><%= token_history.punch_in_time.to_formatted_s(:long) %></td>
         <td><%= token_history.note %></td>
         <td><%= token_history.comment %></td>
-        <td><%= link_to 'Destroy', [@token, token_history], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= destroy_link [@token, token_history] %></td>
       </tr>
     <% end %>
   </tbody>

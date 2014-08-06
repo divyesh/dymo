@@ -41,10 +41,10 @@
     </td>
     <td><%= link_to 'Show', physician %></td>
     <td><%= link_to 'Edit', edit_physician_path(physician) %></td>
-    
-    <td><%= link_to 'Delete', physician, :confirm => 'Are you sure?', :method => :delete %></td>
+
+    <td><%= destroy_link physician %></td>
 <td>
-<a href="javascript:void(0);" PhysicianNumber="<%= physician.physician_number %>" FirstName="<%= physician.firstname %>" LastName="<%= physician.lastname %>"  address1="<%= physician.address1 %>" address2"<%= physician.address2 %>" city="<%= physician.city  %>" province="<%= physician.province %>" postalcode="<%= physician.postal_code %>" CPSO="<%= physician.cpso %>" 
+<a href="javascript:void(0);" PhysicianNumber="<%= physician.physician_number %>" FirstName="<%= physician.firstname %>" LastName="<%= physician.lastname %>"  address1="<%= physician.address1 %>" address2"<%= physician.address2 %>" city="<%= physician.city  %>" province="<%= physician.province %>" postalcode="<%= physician.postal_code %>" CPSO="<%= physician.cpso %>"
 phone="<%= physician.phone %>" FAX="<%= physician.fax %>" class="print-physician-label-link">Print Label</a>
 </td>
   </tr>

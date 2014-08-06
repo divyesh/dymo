@@ -9,4 +9,10 @@ module ApplicationHelper
       end) + " / " + (link_to "Discard", new_token_token_history_path(token, {note: "discarded"}))).html_safe
     end
   end
+
+  def destroy_link(model)
+    if can? :destroy, model
+      (link_to "Destroy", model, method: :delete, data: { confirm: 'Are you sure?' }).html_safe
+    end
+  end
 end
