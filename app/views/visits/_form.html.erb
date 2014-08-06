@@ -1,5 +1,15 @@
 <%= simple_form_for [@patient, @visit] do |f| %>
-  <%= f.error_notification %>
+  <% if @visit.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@visit.errors.count, "error") %> prohibited this visit from being saved:</h2>
+
+      <ul>
+      <% @visit.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
 
   <h3>
     Last VisitDate: <%= @patient.last_visit_date %>
@@ -9,13 +19,14 @@
     <tr>
       <td width="50%" style="vertical-align: top; padding-top: 20px;">
         <div class="input string optional visit_physician">
-          <label for="visit_physician" class="string optional control-label">Physician</label>
-          <%= text_field_tag :physician_name, @visit.physician ? @visit.physician.fullname_with_physician_number : '' %>
+          <label for="visit_physician" class="string optional control-label">Select Physicians</label>
+          <%= f.collection_select :physician_ids, Physician.all, :id, :fullname_with_physician_number, { selected: @visit.physician_ids, include_blank: false }, { multiple: true } %>
         </div>
 
-        <%= f.hidden_field :physician_id %>
+        <%#= f.hidden_field :physician_id %>
         <%#= f.input :visitdate, as: :string, hint: '(YYYY/MM/DD)', wrapper_html: { class: 'datepicker-swrapper' } %>
         <%= f.hidden_field :visitdate %>
+        <br style="clear:left;" /><br />
         <%= f.input :payment_program, collection: [["HCP", "HCP"],["RMB", "RMB"],  ["WSIB", "WSIB"], ["Paid Patient", "Paid Patient"], ["Bill Patient", "Bill Patient"], ["IFH", "IFH"], ["Clinical Trials", "Clinical Trials"]], include_blank: false %>
 
           <%= f.input :amount %>

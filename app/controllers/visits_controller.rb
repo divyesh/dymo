@@ -62,6 +62,7 @@ class VisitsController < ApplicationController
         format.json  { render json: @visit, status: :created, location: @visit }
         format.xml  { render xml: @visit, status: :created, location: @visit }
       else
+        debugger
         format.html { render action: "new" }
         format.json  { render json: @visit.errors, status: :unprocessable_entity }
         format.xml  { render xml: @visit.errors, status: :unprocessable_entity }
@@ -105,7 +106,7 @@ class VisitsController < ApplicationController
     end
 
     def visit_params
-      params.require(:visit).permit(:patient_id, :physician_id, :visitdate, :payment_program, :specimen_priority, :amount, test_ids: [])
+      params.require(:visit).permit(:patient_id, :visitdate, :payment_program, :specimen_priority, :amount, test_ids: [], physician_ids: [])
     end
 
     def set_tests

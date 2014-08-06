@@ -3,6 +3,8 @@
 *= require simple_form
 *= require jquery.ui.all
 *= require jquery.ui.timepicker
+*= require selectize
+*= require selectize.default
 */
 
 /*
@@ -434,8 +436,8 @@ ul#top-nav li ul {
   border: solid 1px #ccc;
   border-top: 0 none;
 }
-ul#top-nav li ul li { 
-  background: #fff; 
+ul#top-nav li ul li {
+  background: #fff;
   display: block;
   border-top: solid 1px #eee;
 }
@@ -444,4 +446,8 @@ ul#top-nav li:hover ul {
   display: block;
   opacity: 1;
   visibility: visible;
+}
+.selectize-control {
+  float: left;
+  min-width: 350px;
 }

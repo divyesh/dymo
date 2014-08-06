@@ -1,4 +1,6 @@
 $(document).ready(function () {
+  $("#visit_physician_ids").selectize();
+
   var ajaxInterval;
   if($('#tokens-table-body').length > 0) {
     var ajaxCall = function() {
@@ -84,7 +86,7 @@ function disData(){
   $('#p_physician').html($("#physician_id_text1").val());
   $('#p_visitdate').html($.datepicker.formatDate('yy-mm-dd', new Date($('#visitdate').val())));
   $("#test_groups").find('input[type="checkbox"]').each(function(){
-    if ($(this).prop('checked')==true){ 
+    if ($(this).prop('checked')==true){
       $('#selected_tests').append('<tr><td>' + $(this).data('name') + '-' + $(this).data('code') + '<br />' + '</td></tr>');
     }
   });
@@ -132,8 +134,8 @@ function initpatientform(){
       }
     });
   });
-  
-  
+
+
   $("form.new_patient1, form.edit_patient1").validate({
      submitHandler: function(form) {
 
@@ -191,18 +193,18 @@ function initpatientform(){
       width: 800,
       modal: true,
       close: function(event,ui){
-        
+
       }
     });
   });
-  
+
   $('#add-patient-link').on('click', function() {
     $("#dialog-patient-add").dialog({
       resizable: true,
       width: 800,
       modal: true,
       close: function(event,ui){
-        
+
       }
     });
   });

@@ -1,5 +1,6 @@
 class Physician < ActiveRecord::Base
-  has_many :visits
+  has_many :physician_visits
+  has_many :visits, through: :physician_visits
   has_many :patients, :through => :visits
   validates_presence_of :firstname, :lastname
 
@@ -15,7 +16,11 @@ class Physician < ActiveRecord::Base
   def fullname_with_physician_number
     "#{physician_number} #{firstname} #{lastname}"
   end
-  
+
+  def firstname_last_name_with_physician_number
+    "#{firstname} #{lastname} #{physician_number}"
+  end
+
   def tests(from_date, to_date, str)
     if str.blank?
       @tests = self.visits.joins(visit_tests: :test).where("(visit_tests.created_at >= ? AND visit_tests.created_at <= ?)", from_date, to_date).group("tests.test_code").count

@@ -4,6 +4,7 @@
 //= require jquery.validate
 //= require jquery.inputmask.bundle
 //= require jquery.form.min
+//= require selectize
 //= require patient
 //= require DYMO.Label.Framework.1.0.beta
 //= require Dymo

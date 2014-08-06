@@ -58,4 +58,6 @@ gem 'rails_admin'
 
 gem 'chartkick'
 
+gem "selectize-rails"
+
 ruby "2.0.0"
