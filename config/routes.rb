@@ -7,6 +7,8 @@ Dymo::Application.routes.draw do
 
   get 'reports/index'
   get 'reports/test_statistic'
+  get 'reports/summary'
+
   # get 'reports/peak_time'
 
   resources :tokens, except: [:edit, :update] do

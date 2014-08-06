@@ -1,0 +1,87 @@
+<h1>Summary</h1>
+
+<fieldset class="with-border" style="float: left;">
+  <%= form_tag reports_summary_path, method: :get do %>
+    <table class="no-border" width="100%">
+      <tr>
+        <td width="34%" style="vertical-align: top;">
+          <table class="no-border">
+            <tr>
+              <td>
+                <strong style="font-weight: bold;">Date <small class="hint">(yyyy/mm/dd)</small>:</strong>
+              </td>
+              <td class="datepicker-swrapper">
+                From: <%= text_field_tag :start_date, (params[:start_date].blank? ? Date.today : params[:start_date]), class: 'input-sm' %>
+              </td>
+              <td class="datepicker-swrapper">
+                To: <%= text_field_tag :end_date, (params[:end_date].blank? ? Date.today : params[:end_date]), class: 'input-sm' %>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong style="font-weight: bold;">Time <small class="hint">(hh:mm)</small>:</strong>
+              </td>
+              <td class="time">
+                From: <%= text_field_tag :start_time, (params[:start_time].blank? ? DateTime.now.beginning_of_day.strftime("%I:%M %p") : params[:start_time]), class: 'input-sm' %>
+              </td>
+              <td class="time">
+                To: <%= text_field_tag :end_time, (params[:end_time].blank? ? DateTime.now.end_of_day.strftime("%I:%M %p") : params[:end_time]), class: 'input-sm' %>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <div style="border-top: solid 1px #ccc; padding-top: 10px; margin-top: 10px; text-align: left;">
+      <%= submit_tag "Generate", :name => nil %> | <%= link_to "Reset", reports_summary_path %>
+      <p style="float: right; display: none;">
+        Download:
+        <%= link_to "Excel", reports_summary_path(params.merge({ format: :xls })) %>
+      </p>
+    </div>
+  <% end %>
+
+</fieldset>
+<br style="clear: left;" />
+<br />
+<br />
+<table>
+  <tr>
+    <td>
+      <h3># of Patients:</h3>
+    </td>
+    <td>
+      <h3><%= @visits.size %></h3>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <h3># of Tokens:</h3>
+    </td>
+    <td>
+      <h3><%= @tokens.size %></h3>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <h3>Total $ amount:</h3>
+    </td>
+    <td>
+      <h3><%= @paid_visits.size %></h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <h3># of tests with count:</h3>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <h4>
+        <% @tests.each_with_index do |test, index| %>
+          <%= test.test_code %>(<%= test.count_all %>)<%= ", " unless index == @tests.size - 1 %>
+        <% end %>
+      </h4>
+    </td>
+  </tr>
+</table>

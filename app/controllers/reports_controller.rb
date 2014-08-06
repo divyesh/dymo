@@ -26,16 +26,25 @@ class ReportsController < ApplicationController
 
   def test_statistic
     params[:group_by] ||= "by_physician"
-    
+
     @from_date = formatted_date(params[:start_date], { time: params[:start_time], type: 'start_time' })
     @to_date = formatted_date(params[:end_date], { time: params[:end_time], type: 'end_time' })
-    
+
     if params[:group_by] == "by_physician"
       @physicians = Physician.joins(:visits).where("(visits.created_at >= ? AND visits.created_at <= ?)", @from_date, @to_date).distinct
     else
       @visit_tests = VisitTest.where("visit_tests.created_at >= ? AND visit_tests.created_at <= ?", @from_date, @to_date)
       @visit_tests = @visit_tests.to_a.group_by { |t| t.created_at.to_date }
     end
+  end
+
+  def summary
+    @from_date = formatted_date(params[:start_date], { time: params[:start_time], type: 'start_time' })
+    @to_date = formatted_date(params[:end_date], { time: params[:end_time], type: 'end_time' })
+    @visits = Visit.where("(created_at >= ? AND created_at <= ?)", @from_date, @to_date)
+    @tokens = Token.where("(created_at >= ? AND created_at <= ?)", @from_date, @to_date)
+    @paid_visits = Visit.where("(created_at >= ? AND created_at <= ? AND payment_program = ?)", @from_date, @to_date, "Paid Patient")
+    @tests = Test.joins(:visit_tests).where("visit_tests.created_at >= ? AND visit_tests.created_at <= ?", @from_date, @to_date).select("tests.test_code, COUNT(tests.test_code) AS count_all").group(:test_code)
   end
 
   def peak_time
