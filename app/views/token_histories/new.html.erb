@@ -1,7 +1,14 @@
 <fieldset class="f-set f-patient">
-  <legend>Punch token</legend>
+  <legend><%= params[:note] == "discarded" ? "Discard token" : "Punch token" %></legend>
 </fieldset>
 
+<h1>Token #: <%= @token.no %> <span class="<%= @token.state %>">(<%= @token.state.gsub('_', ' ').capitalize %>)</span></h1>
+<p>
+  <strong>Patient:</strong>
+  <%= @token.patient.fullname_with_health_insurance_number %> <%= @token.patient.version_code %>
+</p>
+<br />
+<br />
 <%= render 'form' %>
 
 <%= link_to 'Back', tokens_path %>

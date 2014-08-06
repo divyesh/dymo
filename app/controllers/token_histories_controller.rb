@@ -16,7 +16,11 @@ class TokenHistoriesController < ApplicationController
 
   # GET /token_histories/new
   def new
-    @token_history = @token.token_histories.new
+    if @token.discarded?
+      redirect_to tokens_path
+    else
+      @token_history = @token.token_histories.new({ note: params[:note] })
+    end
   end
 
   # GET /token_histories/1/edit
@@ -27,9 +31,14 @@ class TokenHistoriesController < ApplicationController
   # POST /token_histories.json
   def create
     @token_history = @token.token_histories.new(token_history_params)
+    authorize! :create, @token_history
+    @token_history.punch_in_time = DateTime.now
 
     respond_to do |format|
       if @token_history.save
+        if @token_history.note == "discarded"
+          @token.discard!
+        end
         format.html { redirect_to @token, notice: 'Token punched successfully created.' }
         format.json { render :show, status: :created, location: @token_history }
       else
@@ -75,6 +84,6 @@ class TokenHistoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def token_history_params
-      params.require(:token_history).permit(:token_id, :punch_in_time, :note)
+      params.require(:token_history).permit(:token_id, :punch_in_time, :note, :comment)
     end
 end

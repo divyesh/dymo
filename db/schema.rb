@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140806112724) do
+ActiveRecord::Schema.define(version: 20140806135015) do
 
   create_table "app_configs", force: true do |t|
     t.string   "name"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20140806112724) do
     t.string   "note"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "comment"
   end
 
   create_table "tokens", force: true do |t|

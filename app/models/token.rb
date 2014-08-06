@@ -89,10 +89,4 @@ class Token < ActiveRecord::Base
       self.save!
     end
 
-    def discard
-      token_history = self.token_histories.build
-      token_history.punch_in_time = DateTime.now
-      token_history.note = "discarded"
-      token_history.save!
-    end
 end
