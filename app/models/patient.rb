@@ -39,6 +39,11 @@ class Patient < ActiveRecord::Base
   end
 
   def last_visit_date
-    visits.size > 0 ? visits.order("created_at DESC").first.visitdate.to_formatted_s(:long) : ""
+    visit = visits.order("created_at DESC").first
+    if visit && !visit.new_record?
+      visit.visitdate.to_formatted_s(:long)
+    else
+      "First visit"
+    end
   end
 end
