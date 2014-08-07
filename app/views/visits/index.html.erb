@@ -43,7 +43,7 @@
       <%= visit.patient.mobile %>(M)
     </td>
     <td>
-      <%= visit.physicians.map(&:firstname).join(", ") %>
+      <%= visit.physicians.map(&:physician_full_name).join(", ") %>
     </td>
     <td>
       <%= visit.visitdate.nil? ? '' : visit.visitdate.to_formatted_s(:long) %>
