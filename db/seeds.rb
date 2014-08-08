@@ -5,3 +5,8 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
+
+Visit.where("physician_id IS NOT NULL").each do |visit|
+  PhysicianVisit.create(visit_id: visit.id, physician_id: visit.physician_id)
+end
+puts "Migrated successfully. Total #{PhysicianVisit.count}"
