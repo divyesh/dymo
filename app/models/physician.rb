@@ -16,7 +16,9 @@ class Physician < ActiveRecord::Base
   def fullname_with_physician_number
     "#{physician_number} #{firstname} #{lastname}"
   end
-
+def physician_full_name
+    "#{firstname} #{lastname}"
+  end
   def firstname_last_name_with_physician_number
     "#{firstname} #{lastname} #{physician_number}"
   end
