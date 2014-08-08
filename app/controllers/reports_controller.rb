@@ -24,6 +24,13 @@ class ReportsController < ApplicationController
     end
   end
 
+  def migrate_physicians
+    Visit.all.each do |visit|
+      PhysicianVisit.create(visit_id: visit.id, physician_id: visit.physician_id) unless visit.physician_id.nil?
+    end
+    redirect_to root_path, notice: "Migrated successfully. Total #{PhysicianVisit.count}"
+  end
+
   def test_statistic
     params[:group_by] ||= "by_physician"
 
