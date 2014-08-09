@@ -130,7 +130,7 @@
     <% @visits.each do |visit| %>
       <tr>
         <td>
-          <%= visit.visitdate.to_formatted_s(:long) %>
+          <%= visit.visitdate.nil? ? "" : visit.visitdate.to_formatted_s(:long) %>
         </td>
         <td>
           <%= visit.patient.fullname_with_health_insurance_number %>

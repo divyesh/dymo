@@ -40,7 +40,7 @@ class PhysicianPatientsPdf < Prawn::Document
   def physician_patients_rows
     [["Date", "Patient Name", "ECG (Yes/No)", ""]] +
     @visits.map do |visit|
-      [visit.visitdate.to_date.to_formatted_s(:long), visit.patient.fullname_with_health_insurance_number, (visit.tests.where("test_code = ?", "ECG").count > 0 ? "Yes" : "No"), ""]
+      [visit.visitdate.nil? ? "" : visit.visitdate.to_date.to_formatted_s(:long), visit.patient.fullname_with_health_insurance_number, (visit.tests.where("test_code = ?", "ECG").count > 0 ? "Yes" : "No"), ""]
     end
   end
 end
