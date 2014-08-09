@@ -421,7 +421,7 @@ ul#top-nav li ul {
   position: absolute;
   top: 25px;
   right: -1px;
-  width: 150px;
+  width: 180px;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
@@ -446,6 +446,10 @@ ul#top-nav li:hover ul {
   display: block;
   opacity: 1;
   visibility: visible;
+}
+ul#top-nav li ul li a {
+  display: block;
+  padding: 5px;
 }
 .selectize-control {
   float: left;
