@@ -29,3 +29,9 @@ and Index
 Visit.all.each do |visit|
   PhysicianVisit.create(visit_id: visit.id, physician_id: visit.physician_id) unless visit.physician_id.nil?
 end
+
+[DONE] 1. last generated token should be displayed at top in big font
+[DONE] 2. physician name should print label individually
+[DONE] 3. generate report of patient physician wise
+4. click on patient should open it in edit form
+5. peak of the time report
