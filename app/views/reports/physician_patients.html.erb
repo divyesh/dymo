@@ -123,7 +123,7 @@
     <tr>
       <th>Date</th>
       <th>Patient Name</th>
-      <th>ECG (yes/no)</th>
+      <th style="text-align: center;">ECG (yes/no)</th>
     </tr>
   </thead>
   <tbody>
@@ -135,7 +135,7 @@
         <td>
           <%= visit.patient.fullname_with_health_insurance_number %>
         </td>
-        <td>
+        <td style="text-align: center;">
           <%= visit.tests.where("test_code = ?", "ECG").count > 0 ? "Yes" : "No" %>
         </td>
       </tr>
