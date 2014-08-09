@@ -52,12 +52,17 @@ class PhysiciansController < ApplicationController
 
   def destroy
     authorize! :destroy, @physician
-    @physician.destroy
 
     respond_to do |format|
-      format.html { redirect_to(physicians_url, notice: 'Physician was successfully destroyed.') }
-      format.json  { head :no_content }
-      format.xml  { head :no_content }
+      if @physician.destroy
+        format.html { redirect_to(physicians_url, notice: 'Physician was successfully destroyed.') }
+        format.json  { head :no_content }
+        format.xml  { head :no_content }
+      else
+        format.html { redirect_to(physicians_url, alert: "Failed: #{@physician.errors.full_messages.first}") }
+        format.json  { head :no_content }
+        format.xml  { head :no_content }
+      end
     end
   end
 

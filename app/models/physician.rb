@@ -1,5 +1,5 @@
 class Physician < ActiveRecord::Base
-  has_many :physician_visits
+  has_many :physician_visits, dependent: :restrict_with_error
   has_many :visits, through: :physician_visits
   has_many :patients, :through => :visits
   validates_presence_of :firstname, :lastname
