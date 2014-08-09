@@ -25,8 +25,8 @@ class ReportsController < ApplicationController
   end
 
   def migrate_physicians
-    Visit.all.each do |visit|
-      PhysicianVisit.create(visit_id: visit.id, physician_id: visit.physician_id) unless visit.physician_id.nil?
+    Visit.where("physician_id IS NOT NULL").each do |visit|
+      PhysicianVisit.create(visit_id: visit.id, physician_id: visit.physician_id)
     end
     redirect_to root_path, notice: "Migrated successfully. Total #{PhysicianVisit.count}"
   end

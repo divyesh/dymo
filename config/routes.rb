@@ -8,7 +8,7 @@ Dymo::Application.routes.draw do
   get 'reports/index'
   get 'reports/test_statistic'
   get 'reports/summary'
-  get 'reports/migrate_physicians'
+  #get 'reports/migrate_physicians'
 
   # get 'reports/peak_time'
 
