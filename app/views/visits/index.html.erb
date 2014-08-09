@@ -11,7 +11,7 @@
 <h2>Total Visits: <%= @visits.count %>
 </h2>
 
-<table>
+<table width="100%">
   <tr>
     <th>OHIP</th>
     <th>Health Expiry</th>
@@ -20,9 +20,9 @@
 
     <th>Birthdate</th>
     <th>Address</th>
-    <th>Physician</th>
+    <th>Physician <small>(<u>click to print label</u>)</small></th>
     <th>Visited on</th>
-    <th colspan="5"></th>
+    <th colspan="4"></th>
   </tr>
 
 <% @visits.each do |visit| %>
@@ -43,7 +43,9 @@
       <%= visit.patient.mobile %>(M)
     </td>
     <td>
-      <%= visit.physicians.map(&:physician_full_name).join(", ") %>
+      <% visit.physicians.each do |physician| %>
+        <%= print_physician_label_link(visit, physician) %><br />
+      <% end %>
     </td>
     <td>
       <%= visit.visitdate.nil? ? '' : visit.visitdate.to_formatted_s(:long) %>
@@ -55,7 +57,6 @@
     <td class="actions">
       <%= destroy_link(visit) %>
     </td>
-    <td><a href="javascript:void(0);" healthNumber="<%= visit.patient.healthnumber + ' ' + visit.patient.version_code %>" expiry="<%= visit.patient.health_expiry_date.nil? ? '' : visit.patient.health_expiry_date.to_formatted_s(:db) %>" birthdate="<%= visit.patient.birthdate.nil? ? '' : visit.patient.birthdate.to_formatted_s(:db) %>" sex="<%= visit.patient.gender %>" address1="<%= visit.patient.address1 %>" address2="<%= visit.patient.address2 %>" homephone="<%= visit.patient.home_phone %>" mobile="<%= visit.patient.mobile %>"  patientName="<%= "#{visit.patient.lastname} , #{visit.patient.firstname} #{visit.patient.middlename}" %>" physician="<%= visit.physicians.map(&:firstname_last_name_with_physician_number).join(", ") %>" visiteddate="<%= visit.visitdate.nil? ? "" : visit.visitdate.strftime("%m/%d/%Y") %>" city="<%= visit.patient.city %>" province="<%= visit.patient.province %>" postalcode="<%= visit.patient.postal_code %>" class="print-label-link">Print Label</a></td>
 
   </tr>
 <% end %>

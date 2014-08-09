@@ -7,7 +7,10 @@
     <%= token.state.gsub('_', ' ').capitalize %>
     <% if token.visit_registered? || token.completed? %>
       <% visit = token.patient.visits.order("created_at DESC").first %>
-      &nbsp;<a href="javascript:void(0);" healthNumber="<%= token.patient.healthnumber + ' ' + token.patient.version_code %>" expiry="<%= token.patient.health_expiry_date.nil? ? '' : token.patient.health_expiry_date.to_formatted_s(:db) %>" birthdate="<%= token.patient.birthdate.nil? ? '' : token.patient.birthdate.to_formatted_s(:db) %>" sex="<%= token.patient.gender %>" address1="<%= token.patient.address1 %>" address2="<%= token.patient.address2 %>" homephone="<%= token.patient.home_phone %>" mobile="<%= token.patient.mobile %>"  patientName="<%= "#{token.patient.lastname} , #{token.patient.firstname} #{token.patient.middlename}" %>" physician="<%= visit.physicians.map(&:firstname_last_name_with_physician_number).join(", ") %>" visiteddate="<%= visit.visitdate.nil? ? "" : visit.visitdate.strftime(" %m/%d/%Y") %>" city="<%= token.patient.city %>" province="<%= token.patient.province %>" postalcode="<%= token.patient.postal_code %>" class="print-label-link">Print Label</a>
+      <br />
+      <% visit.physicians.each do |physician| %>
+        <small><%= print_physician_label_link(visit, physician, "Print ") %></small><br />
+      <% end %>
     <% end %>
   </td>
   <td class="text-center"><%= next_state_link(token) %>

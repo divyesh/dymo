@@ -15,4 +15,33 @@ module ApplicationHelper
       (link_to "Destroy", model, method: :delete, data: { confirm: 'Are you sure?' }).html_safe
     end
   end
+
+  def print_physician_label_link(visit, physician, text='')
+    raw "<a href=\"javascript:void(0);\" " +
+    "healthnumber=\"#{visit.patient.healthnumber} #{visit.patient.version_code}\" " +
+    "expiry=\"#{formatted_date(visit.patient.health_expiry_date)}\" " +
+    "birthdate=\"#{formatted_date(visit.patient.birthdate)}\" " +
+    "sex=\"#{visit.patient.gender}\" " +
+    "address1=\"#{visit.patient.address1}\" " +
+    "address2=\"#{visit.patient.address2}\" " +
+    "homephone=\"#{visit.patient.home_phone}\" " +
+    "mobile=\"#{visit.patient.mobile}\" " +
+    "patientName=\"#{visit.patient.lastname} , #{visit.patient.firstname} #{visit.patient.middlename}\" " +
+    "physician=\"#{physician.firstname_last_name_with_physician_number}\" " +
+    "visitdate=\"#{strftime_date(visit.visitdate)}\" " +
+    "city=\"#{visit.patient.city}\" " +
+    "province=\"#{visit.patient.province}\" " +
+    "postalcode=\"#{visit.patient.postal_code}\" " +
+    "class=\"print-label-link\"> " +
+    "#{text}#{physician.firstname_last_name_with_physician_number}</a>"
+  end
+
+  private
+    def formatted_date(date)
+      date.nil? ? '' : date.to_formatted_s(:db)
+    end
+
+    def strftime_date(date)
+      date.nil? ? "" : date.strftime("%m/%d/%Y")
+    end
 end
