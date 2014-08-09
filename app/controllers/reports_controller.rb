@@ -46,6 +46,16 @@ class ReportsController < ApplicationController
     else
       @visits = []
     end
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = PhysicianPatientsPdf.new(@physician, @visits)
+        send_data pdf.render, filename: "#{@physician.physician_full_name}",
+                              type: "application/pdf",
+                              disposition: "inline"
+      end
+    end
   end
 
   def test_statistic

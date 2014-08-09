@@ -54,13 +54,14 @@
         </td>
       </tr>
     </table>
-    <div style="border-top: solid 1px #ccc; padding-top: 10px; margin-top: 10px; text-align: left;">
-      <%= submit_tag "Generate", :name => nil %> | <%= link_to "Reset", reports_physician_patients_path %>
-      <p style="float: right; display: none;">
+    <div style="border-top: solid 1px #ccc; padding-top: 10px; margin-top: 10px; text-align: left; vertical-align: middle;">
+      <div style="float: left;">
+        <%= submit_tag "Generate", :name => nil %> | <%= link_to "Reset", reports_physician_patients_path %>
+      </div>
+      <div style="float: right;">
         Download:
-        <%= link_to "CSV", reports_physician_patients_path(params.merge({ format: :csv })) %> |
-        <%= link_to "Excel", reports_physician_patients_path(params.merge({ format: :xls })) %>
-      </p>
+        <%= link_to "Printable Report (PDF)", reports_physician_patients_path(params.merge({ format: :pdf })) %>
+      </div>
     </div>
   <% end %>
 

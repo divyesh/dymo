@@ -62,4 +62,8 @@ gem 'chartkick'
 
 gem "selectize-rails"
 
+gem "prawn"
+
+gem "prawn-table"
+
 ruby "2.0.0"
