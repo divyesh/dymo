@@ -1,0 +1,143 @@
+<h1>Test Statistics</h1>
+
+<fieldset class="with-border" style="float: left;">
+  <%= form_tag reports_physician_patients_path, method: :get do %>
+    <table class="no-border" width="100%">
+      <tr>
+        <td width="34%" style="vertical-align: top;">
+          <table class="no-border">
+            <tr class="datefilter" style="<%= 'visibility: hidden;' if params[:all_patients] == 'yes' %>" >
+              <td>
+                <strong style="font-weight: bold;">Date <small class="hint">(yyyy/mm/dd)</small>:</strong>
+              </td>
+              <td class="datepicker-swrapper">
+                From: <%= text_field_tag :start_date, (params[:start_date].blank? ? Date.today : params[:start_date]), class: 'input-sm' %>
+              </td>
+              <td class="datepicker-swrapper">
+                To: <%= text_field_tag :end_date, (params[:end_date].blank? ? Date.today : params[:end_date]), class: 'input-sm' %>
+              </td>
+            </tr>
+            <tr class="datefilter" style="<%= 'visibility: hidden;' if params[:all_patients] == 'yes' %>">
+              <td>
+                <strong style="font-weight: bold;">Time <small class="hint">(hh:mm)</small>:</strong>
+              </td>
+              <td class="time">
+                From: <%= text_field_tag :start_time, (params[:start_time].blank? ? DateTime.now.beginning_of_day.strftime("%I:%M %p") : params[:start_time]), class: 'input-sm' %>
+              </td>
+              <td class="time">
+                To: <%= text_field_tag :end_time, (params[:end_time].blank? ? DateTime.now.end_of_day.strftime("%I:%M %p") : params[:end_time]), class: 'input-sm' %>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3" style="vertical-align: bottom;">
+                <br />
+                <div id="all_patients_cb_cont">
+                  <%= check_box_tag :all_patients, 'yes', params[:all_patients] == 'yes' %>&nbsp; <label for="all_patients">Display all patients irrespective of dates.</label>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <div style="display: none;">
+            <br />
+            <div>Enter test codes: (<small class="hint">Comma separated test codes</small>)</div>
+            <div>
+              <%= text_field_tag :test, params[:test] %>
+            </div>
+          </div>
+          <br />
+          <div>
+            <div>Physician</div>
+            <div>
+              <%= select_tag :filter_physician_id, options_from_collection_for_select(Physician.all, :id, :fullname_with_physician_number, params[:filter_physician_id]), prompt: "Enter physician" %>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <div style="border-top: solid 1px #ccc; padding-top: 10px; margin-top: 10px; text-align: left;">
+      <%= submit_tag "Generate", :name => nil %> | <%= link_to "Reset", reports_physician_patients_path %>
+      <p style="float: right; display: none;">
+        Download:
+        <%= link_to "CSV", reports_physician_patients_path(params.merge({ format: :csv })) %> |
+        <%= link_to "Excel", reports_physician_patients_path(params.merge({ format: :xls })) %>
+      </p>
+    </div>
+  <% end %>
+
+</fieldset>
+<br style="clear: left;" />
+<br />
+
+<% if @physician %>
+
+<table class="no-border">
+  <tr>
+    <td colspan="@">
+      <h2>
+        <%= @physician.physician_full_name %> Medical Clinic
+      </h2>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p>
+        <%= @physician.address1 %>
+      </p>
+      <p>
+        <%= @physician.address2 %>
+      </p>
+      <p>
+        <%= @physician.city %>
+      </p>
+      <p>
+        <%= @physician.province %>
+      </p>
+      <p>
+        <%= @physician.country %>
+      </p>
+      <p>
+        <%= @physician.postal_code %>
+      </p>
+    </td>
+    <td>
+      <p>
+        Phone:&nbsp; <%= @physician.phone %>
+      </p>
+      <p>
+        Emergency Number:&nbsp;<%= @physician.emergency_number %>
+      </p>
+      <p>
+        Email:&nbsp;<%= @physician.email %>
+      </p>
+    </td>
+  </tr>
+</table>
+
+<% end %>
+
+<br />
+
+<table class="tokens-table">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Patient Name</th>
+      <th>ECG (yes/no)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @visits.each do |visit| %>
+      <tr>
+        <td>
+          <%= visit.visitdate.to_formatted_s(:long) %>
+        </td>
+        <td>
+          <%= visit.patient.fullname_with_health_insurance_number %>
+        </td>
+        <td>
+          <%= visit.tests.where("test_code = ?", "ECG").count > 0 ? "Yes" : "No" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

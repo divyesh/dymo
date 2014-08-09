@@ -31,6 +31,23 @@ class ReportsController < ApplicationController
     redirect_to root_path, notice: "Migrated successfully. Total #{PhysicianVisit.count}"
   end
 
+  def physician_patients
+    if params[:filter_physician_id]
+      @physician = Physician.find(params[:filter_physician_id])
+
+      if params[:all_patients] == 'yes'
+        @visits = @physician.visits
+      else
+        from_date = formatted_date(params[:start_date], { time: params[:start_time], type: 'start_time' })
+        to_date = formatted_date(params[:end_date], { time: params[:end_time], type: 'end_time' })
+
+        @visits = @physician.visits.where("(physician_visits.created_at >= ? AND physician_visits.created_at <= ?)", from_date, to_date)
+      end
+    else
+      @visits = []
+    end
+  end
+
   def test_statistic
     params[:group_by] ||= "by_physician"
 

@@ -1,5 +1,13 @@
 $(document).ready(function () {
-  $("#visit_physician_ids").selectize();
+  $("#visit_physician_ids, #filter_physician_id").selectize();
+
+  $("#all_patients_cb_cont :checkbox").on("click", function () {
+    if ($(this).is(":checked")) {
+      $('.datefilter').css('visibility', 'hidden');
+    } else {
+      $('.datefilter').css('visibility', 'visible');
+    }
+  });
 
   var ajaxInterval;
   if($('#tokens-table-body').length > 0) {
