@@ -72,6 +72,11 @@ class Token < ActiveRecord::Base
     text
   end
 
+  def discard_msg
+    discard_history = token_histories.last
+    discard_history.nil? ? "" : discard_history.comment
+  end
+
   private
     def add_visit
       token_history = self.token_histories.build
