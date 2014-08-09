@@ -72,6 +72,12 @@ class Token < ActiveRecord::Base
     text
   end
 
+  def self.latest_token
+    date = DateTime.now
+    token = where("(created_at >= ? AND created_at <= ?)", date.beginning_of_day, date.end_of_day).order("created_at DESC").first
+    token ? "Latest generated token today: #{token.no}" : "Tokens are not generated today yet."
+  end
+
   def discard_msg
     discard_history = token_histories.last
     discard_history.nil? ? "" : discard_history.comment

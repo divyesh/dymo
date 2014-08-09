@@ -8,6 +8,18 @@
       <i>To generate token for patient, type Health # and Generate Token.</i><br />
       <i>To swipe card, first clear search text box and swipe card.</i>
       <br />
+      <br />
+      <table width="100%" class="no-border">
+        <tr>
+          <td>
+            <h2><%= Token.latest_token %></h2>
+          </td>
+          <td style="text-align: right;">
+            <h4><span style="color: #999; font-size: 12px;">Today:</span> <%= Date.today.to_formatted_s(:long) %></h4>
+          </td>
+        </tr>
+      </table>
+
   <% end %>
   <hr />
   </div>
@@ -30,7 +42,7 @@
   <div style="clear: both;"></div>
   <br />
   <h6 style="color: #102077;"><%= filter_title %></h6>
-  <br />  
+  <br />
   <table class="tokens-table" width="100%">
     <thead>
       <tr>
