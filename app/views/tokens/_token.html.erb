@@ -14,7 +14,7 @@
   <td class="text-center"><%= next_state_link(token) %>
   <%= token.discard_msg if token.discarded? %>
   </td>
-  <td class="text-center"><%= link_to "Print Token", "#{AppConfig.print_token_url}#{token.no}/#{token.patient.healthnumber}", target: "_BLANK" %></td>
+  
   <td class="last"><small><%= link_to 'Punch In(s)', token %></small><%= " | " if can?(:destroy, token) %>
   <small><%= destroy_link token %></small></td>
 </tr>
