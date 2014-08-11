@@ -67,7 +67,7 @@
       <h3>Total $ amount:</h3>
     </td>
     <td>
-      <h3><%= @paid_visits.size %></h3>
+      <h3><%= @paid_visits.sum(:amount) %></h3>
     </td>
   </tr>
   <tr>
