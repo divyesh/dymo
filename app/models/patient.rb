@@ -29,6 +29,9 @@ class Patient < ActiveRecord::Base
     token
   end
 
+def patient_full_name
+    "#{lastname} #{firstname} "
+  end
 
   def fullname_with_health_insurance_number
     "#{lastname} #{firstname} #{middlename} - #{healthnumber}"
