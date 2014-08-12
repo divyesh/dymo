@@ -27,13 +27,13 @@ module ApplicationHelper
     "homephone=\"#{visit.patient.home_phone}\" " +
     "mobile=\"#{visit.patient.mobile}\" " +
     "patientName=\"#{visit.patient.lastname} , #{visit.patient.firstname} #{visit.patient.middlename}\" " +
-    "physician=\"#{physician.firstname_last_name_with_physician_number}\" " +
+    "physician=\"#{physician.fullname_with_physician_number}\" " +
     "visitdate=\"#{strftime_date(visit.visitdate)}\" " +
     "city=\"#{visit.patient.city}\" " +
     "province=\"#{visit.patient.province}\" " +
     "postalcode=\"#{visit.patient.postal_code}\" " +
     "class=\"print-label-link\"> " +
-    "#{text}#{physician.firstname_last_name_with_physician_number}</a>"
+    "#{text}#{physician.fullname_with_physician_number}</a>"
   end
 
   private
