@@ -9,17 +9,17 @@ $(document).ready(function () {
     }
   });
 
-  var ajaxInterval;
-  if($('#tokens-table-body').length > 0) {
-    var ajaxCall = function() {
-      $('#filter_token').submit();
-    }
-    ajaxInterval = setInterval(function() { ajaxCall(); }, (1000 * 60));
-  } else {
-    if(ajaxInterval) {
-      clearInterval(ajaxInterval);
-    }
-  }
+  // var ajaxInterval;
+//   if($('#tokens-table-body').length > 0) {
+//     var ajaxCall = function() {
+//       $('#filter_token').submit();
+//     }
+//     ajaxInterval = setInterval(function() { ajaxCall(); }, (1000 * 60));
+//   } else {
+//     if(ajaxInterval) {
+//       clearInterval(ajaxInterval);
+//     }
+//   }
 
   $(".print-label-link").click(function(){
     var patientName = $(this).attr("patientName");
