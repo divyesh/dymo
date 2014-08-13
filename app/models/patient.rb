@@ -34,7 +34,7 @@ def patient_full_name
   end
 
   def fullname_with_health_insurance_number
-    "#{lastname} #{firstname} #{middlename} - #{healthnumber}"
+    "#{healthnumber} - #{lastname} #{firstname} #{middlename}"
   end
 
   def time_in_token

@@ -32,7 +32,7 @@ class ReportsController < ApplicationController
   end
 
   def physician_patients
-    if params[:filter_physician_id]
+    unless params[:filter_physician_id].blank?
       @physician = Physician.find(params[:filter_physician_id])
 
       if params[:all_patients] == 'yes'
@@ -44,6 +44,7 @@ class ReportsController < ApplicationController
         @visits = @physician.visits.where("(physician_visits.created_at >= ? AND physician_visits.created_at <= ?)", from_date, to_date)
       end
     else
+      flash[:alert] = "Please select physician."
       @visits = []
     end
 

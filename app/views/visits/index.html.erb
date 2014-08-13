@@ -22,12 +22,12 @@
     <th>Address</th>
     <th>Physician <small>(<u>click to print label</u>)</small></th>
     <th>Visited on</th>
-    <th colspan="4"></th>
+    <th colspan="2"></th>
   </tr>
 
 <% @visits.each do |visit| %>
   <tr>
-    <td><%= visit.patient.healthnumber %>&nbsp;<%= visit.patient.version_code %></td>
+    <td><%= link_to "#{visit.patient.healthnumber} #{visit.patient.version_code}", visit.patient %></td>
     <td><%= visit.patient.health_expiry_date.nil? ? '' : visit.patient.health_expiry_date.to_formatted_s(:long) %></td>
     <td><%= visit.patient.lastname %></td>
     <td><%= visit.patient.firstname %> &nbsp;<%= visit.patient.middlename %></td>
@@ -50,12 +50,10 @@
     <td>
       <%= visit.visitdate.nil? ? '' : visit.visitdate.to_formatted_s(:long) %>
     </td>
-    <td><%= link_to 'Show', patient_path(visit.patient) %></td>
-     <td><%= link_to 'Add New Visit', new_patient_visit_path(visit.patient) %>
+    <td class="text-center"><%= link_to 'Add New Visit', new_patient_visit_path(visit.patient) %>
 </td>
-  <td><%= link_to 'Edit', edit_patient_visit_path(visit.patient, visit) %></td>
-    <td class="actions">
-      <%= destroy_link(visit) %>
+    <td class="text-center">
+      <%= link_to 'Edit', edit_patient_visit_path(visit.patient, visit) %><%= " | " if can?(:destroy, visit) %><%= destroy_link(visit) %>
     </td>
 
   </tr>

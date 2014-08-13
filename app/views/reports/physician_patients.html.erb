@@ -123,7 +123,7 @@
     <tr>
       <th>Date</th>
       <th>Patient Name</th>
-      <th style="text-align: center;">ECG (yes/no)</th>
+      <th class="text-center">ECG (yes/no)</th>
     </tr>
   </thead>
   <tbody>
@@ -133,9 +133,9 @@
           <%= visit.visitdate.nil? ? "" : visit.visitdate.to_formatted_s(:long) %>
         </td>
         <td>
-          <%= visit.patient.fullname_with_health_insurance_number %>
+          <%= link_to visit.patient.fullname_with_health_insurance_number, visit.patient %>
         </td>
-        <td style="text-align: center;">
+        <td class="text-center">
           <%= visit.tests.where("test_code = ?", "ECG").count > 0 ? "Yes" : "No" %>
         </td>
       </tr>
