@@ -35,3 +35,20 @@ end
 [DONE] 3. generate report of patient physician wise
 4. click on patient should open it in edit form
 5. peak of the time report
+
+
+AppConfig Values:
+================
+1. print_token_url
+
+url to print the token. if not set default value used is "http://mh-it-6003.mhlab.ca/RestServiceImpl.svc/Print/"
+
+2. token_generation_interval
+
+interval between generation of token for same healthnumber. default is 1800 seconds.
+
+set this value in seconds.
+
+3. auto_refresh_tokens (yes/no)
+
+set this to enable or disable auto refresh of tokens. Default value is No. 
