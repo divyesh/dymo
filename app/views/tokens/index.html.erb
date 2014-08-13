@@ -16,6 +16,9 @@
           </td>
           <td style="text-align: right;">
             <h4><span style="color: #999; font-size: 12px;">Today:</span> <%= Date.today.to_formatted_s(:long) %></h4>
+            <% unless AppConfig.auto_refresh_tokens %>
+              <small style="font-style:italic">Note: Tokens are not auto refreshing...</small>
+            <% end %>
           </td>
         </tr>
       </table>
@@ -65,3 +68,21 @@
     <%= render 'patients/new_form' %>
   </div>
 </div>
+
+<% if AppConfig.auto_refresh_tokens %>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      var ajaxInterval;
+      if($('#tokens-table-body').length > 0) {
+        var ajaxCall = function() {
+          $('#filter_token').submit();
+        }
+        ajaxInterval = setInterval(function() { ajaxCall(); }, (1000 * 60));
+      } else {
+        if(ajaxInterval) {
+          clearInterval(ajaxInterval);
+        }
+      }
+    });
+  </script>
+<% end %>

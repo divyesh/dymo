@@ -8,4 +8,9 @@ class AppConfig < ActiveRecord::Base
     ap = AppConfig.where("name = ?", "token_generation_interval").first
     ap ? ap.value.to_i : 1800
   end
+  
+  def self.auto_refresh_tokens
+    ap = AppConfig.where("name = ?", "auto_refresh_tokens").first
+    ap ? ap.value.downcase == "yes" : false
+  end
 end
