@@ -3,6 +3,7 @@ class Token < ActiveRecord::Base
   workflow_column :state
 
   belongs_to :patient
+  belongs_to :user
   has_many :token_histories, dependent: :destroy
 
   workflow do
@@ -88,13 +89,17 @@ class Token < ActiveRecord::Base
       token_history = self.token_histories.build
       token_history.punch_in_time = DateTime.now
       token_history.note = "visit_registered"
+      token_history.user = self.user
       token_history.save!
+
+      self.save!
     end
 
     def done
       token_history = self.token_histories.build
       token_history.punch_in_time = DateTime.now
       token_history.note = "completed"
+      token_history.user = self.user
       token_history.save!
       self.completed_at = DateTime.now
       self.save!

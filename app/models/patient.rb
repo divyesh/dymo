@@ -14,17 +14,18 @@ class Patient < ActiveRecord::Base
     end
   end
 
-  def new_time_in_token
+  def new_time_in_token(user)
     token = Token.new({
       patient: self,
       no: Token.where("(created_at >= ? AND created_at <= ?)", DateTime.now.beginning_of_day, DateTime.now.end_of_day).size + 1
     })
-
+    token.user = user
     token.save!
 
     token_history = token.token_histories.build
     token_history.punch_in_time = token.created_at
     token_history.note = "time_in"
+    token_history.user = user
     token_history.save!
     token
   end

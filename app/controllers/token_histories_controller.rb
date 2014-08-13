@@ -31,12 +31,14 @@ class TokenHistoriesController < ApplicationController
   # POST /token_histories.json
   def create
     @token_history = @token.token_histories.new(token_history_params)
+    @token_history.user = current_user
     authorize! :create, @token_history
     @token_history.punch_in_time = DateTime.now
 
     respond_to do |format|
       if @token_history.save
         if @token_history.note == "discarded"
+          @token.user = current_user
           @token.discard!
         end
         format.html { redirect_to @token, notice: 'Token punched successfully created.' }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140813162339) do
+ActiveRecord::Schema.define(version: 20140813170205) do
 
   create_table "app_configs", force: true do |t|
     t.string   "name"
@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 20140813162339) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "comment"
+    t.integer  "user_id"
   end
 
   create_table "tokens", force: true do |t|
@@ -103,6 +104,7 @@ ActiveRecord::Schema.define(version: 20140813162339) do
     t.datetime "updated_at"
     t.string   "state"
     t.datetime "completed_at"
+    t.integer  "user_id"
   end
 
   create_table "users", force: true do |t|

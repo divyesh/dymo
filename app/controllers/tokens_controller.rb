@@ -41,7 +41,7 @@ class TokensController < ApplicationController
       @token = Token.where("(created_at >= ? AND created_at <= ?) AND patient_id = ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day, @patient.id).first
 
       if @token.nil? || @token.generatable?
-        @token = @patient.new_time_in_token
+        @token = @patient.new_time_in_token(current_user)
 
         print_token
 
@@ -65,6 +65,7 @@ class TokensController < ApplicationController
 
   def done
     authorize! :done, @token
+    @token.user = current_user
     @token.done!
     respond_to do |format|
       format.html { redirect_to tokens_path, notice: "Token was successfully updated." }
@@ -74,6 +75,7 @@ class TokensController < ApplicationController
 
   def discard
     authorize! :discard, @token
+    @token.user = current_user
     @token.discard!
     respond_to do |format|
       format.html { redirect_to tokens_path, notice: "Token was successfully updated." }
