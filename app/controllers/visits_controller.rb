@@ -106,7 +106,7 @@ class VisitsController < ApplicationController
     end
 
     def visit_params
-      params.require(:visit).permit(:patient_id, :visitdate, :payment_program, :specimen_priority, :amount, test_ids: [], physician_ids: [])
+      params.require(:visit).permit(:patient_id, :visitdate, :payment_program, :specimen_priority, :amount, :lab_number, test_ids: [], physician_ids: [])
     end
 
     def set_tests
