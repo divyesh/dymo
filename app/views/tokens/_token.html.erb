@@ -1,20 +1,22 @@
 <tr class="<%= token_state_bgcolor(token) %>">
   <td><%= token.no %></td>
   <td><%= token.patient.healthnumber %></td>
-  <td>  
-  <%= link_to token.patient.patient_full_name , patient_path(token.patient) %> </td>
+  <td>
+    <%= link_to token.patient.patient_full_name , patient_path(token.patient) %> </td>
   <td><%= token.created_at.to_formatted_s(:long) %></td>
   <td>
     <%= token.state.gsub('_', ' ').capitalize %>
     <% if token.visit_registered? || token.completed? %>
       <% visit = token.patient.visits.order("created_at DESC").first %>
-      <br />      
+      <br />
     <% end %>
   </td>
-  <td class="text-center"><%= next_state_link(token) %>
-  <%= token.discard_msg if token.discarded? %>
+  <td class="text-center">
+    <%= next_state_link(token) %>
+    <%= token.discard_msg if token.discarded? %>
   </td>
-  
-  <td class="last"><small><%= link_to 'Punch In(s)', token %></small><%= " | " if can?(:destroy, token) %>
-  <small><%= destroy_link token %></small></td>
+  <td class="last">
+    <small><%= link_to 'Punch In(s)', token %></small><%= " | " if can?(:destroy, token) %>
+    <small><%= destroy_link token %></small>
+  </td>
 </tr>
