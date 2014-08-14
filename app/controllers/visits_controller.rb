@@ -40,8 +40,8 @@ class VisitsController < ApplicationController
     @visit = @patient.visits.new
     authorize! :new, @visit
     @visit.visitdate = DateTime.now
-    @tests = Test.all.to_a
-    @test_groups = @tests.group_by { |t| t.test_group }
+    @tests = Test.all
+    @test_groups = @tests.group(:test_group).order("group_index ASC")
   end
 
   def edit

@@ -45,11 +45,12 @@
       <td colspan="2">
         <div id="test_groups" title="SELECT TESTS">
           <h2 style="margin-left: 20px;">SELECT TESTS</h2>
-          <% @test_groups.sort.each do |group, tests| %>
+          <% @test_groups.each_with_index do |test, index| %>
+            <%=raw '<div class="clear"></div>' if (index + 1) % 5 == 0 %>
             <div class="test-groups" style="float: left; margin-left: 20px; border: solid 1px #ccc; ">
-              <h4><%= group %></h4>
+              <h4><%= test.test_group %></h4>
               <div class="test-group" >
-                <%= f.collection_check_boxes(:test_ids, tests, :id, :test_name) %>
+                <%= f.collection_check_boxes(:test_ids, Test.where("test_group = ?", test.test_group).order("tests.index ASC"), :id, :test_name) %>
               </div>
             </div>
           <% end %>
