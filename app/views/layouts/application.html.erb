@@ -19,13 +19,15 @@
       <% end %>
     </div>
     <h1 id="logo">
-      Specimen Collection Center - MedHealth Laboratories Ltd.
+      Specimen Collection Center #101
+      <h3>Med-Health Laboratories Ltd.</h3>
       <ul id="top-nav" class="top-nav">
+      <li><%= link_to 'Tokens', tokens_path %></li>
+      <li class="divider">|</li>
         <li><%= link_to 'Patients', root_path %></li>
         <li class="divider">|</li>
         <li><%= link_to 'Physicians', physicians_path %></li>
         <li class="divider">|</li>
-        <li><%= link_to 'Tokens', tokens_path %></li>
         <li class="divider">|</li>
         <li><%= link_to 'Tests', tests_path %></li>
         <li class="divider">|</li>
