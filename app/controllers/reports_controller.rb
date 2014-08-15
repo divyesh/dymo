@@ -89,10 +89,12 @@ class ReportsController < ApplicationController
     @tokens = Hash.new
 
     (from_date.to_i..to_date.to_i).step(1.hour).each_with_index do |date, index|
-      key = "#{Time.at(date)} - #{Time.at(date) + 59.minute}"
+      key = "#{Time.at(date).strftime('%Y/%m/%d, %H:%M')} - #{(Time.at(date) + 1.hour).strftime('%Y/%m/%d, %H:%M')}"
       value = Token.where("(created_at >= ? AND created_at <= ?)", Time.at(date), Time.at(date) + 59.minute).count
       @tokens[key] = value
     end
+
+    @peak_hour = @tokens.max_by { |k,v| v }
   end
 
   private
