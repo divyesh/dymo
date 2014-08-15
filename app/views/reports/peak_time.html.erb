@@ -44,7 +44,7 @@
 
 </fieldset>
 <div style="float: right;">
-  <% if @peak_hour.size >= 1 %>
+  <% if @peak_hour && @peak_hour.size >= 1 %>
     Peak hour: <h2><%= @peak_hour.first %> => <%= @peak_hour.last %> token(s)</h2>
   <% end %>
 </div>
