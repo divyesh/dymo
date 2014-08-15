@@ -83,12 +83,16 @@ class ReportsController < ApplicationController
   end
 
   def peak_time
-    from_date = Date.civil(2014,1,1)
-    to_date = from_date + (Time::days_in_month(1) - 1).days
+    from_date = formatted_date(params[:start_date], { time: params[:start_time], type: 'start_time' })
+    to_date = formatted_date(params[:end_date], { time: params[:end_time], type: 'end_time' })
 
-    @tokens = Token.where("(created_at >= ? AND created_at <= ?)", from_date, to_date)
+    @tokens = Hash.new
 
-    to_date = from_date + 6.days
+    (from_date.to_i..to_date.to_i).step(1.hour).each_with_index do |date, index|
+      key = "#{Time.at(date)} - #{Time.at(date) + 59.minute}"
+      value = Token.where("(created_at >= ? AND created_at <= ?)", Time.at(date), Time.at(date) + 59.minute).count
+      @tokens[key] = value
+    end
   end
 
   private

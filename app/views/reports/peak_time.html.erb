@@ -1,0 +1,51 @@
+<h1>Tokens</h1>
+
+<fieldset class="with-border" style="float: left;">
+  <%= form_tag reports_peak_time_path, method: :get do %>
+    <table class="no-border" width="100%">
+      <tr>
+        <td width="34%" style="vertical-align: top;">
+          <table class="no-border">
+            <tr>
+              <td>
+                <strong style="font-weight: bold;">Date <small class="hint">(yyyy/mm/dd)</small>:</strong>
+              </td>
+              <td class="datepicker-swrapper">
+                From: <%= text_field_tag :start_date, (params[:start_date].blank? ? Date.today : params[:start_date]), class: 'input-sm' %>
+              </td>
+              <td class="datepicker-swrapper">
+                To: <%= text_field_tag :end_date, (params[:end_date].blank? ? Date.today : params[:end_date]), class: 'input-sm' %>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <strong style="font-weight: bold;">Time <small class="hint">(hh:mm)</small>:</strong>
+              </td>
+              <td class="time">
+                From: <%= text_field_tag :start_time, (params[:start_time].blank? ? DateTime.now.beginning_of_day.strftime("%I:%M %p") : params[:start_time]), class: 'input-sm' %>
+              </td>
+              <td class="time">
+                To: <%= text_field_tag :end_time, (params[:end_time].blank? ? DateTime.now.end_of_day.strftime("%I:%M %p") : params[:end_time]), class: 'input-sm' %>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <div style="border-top: solid 1px #ccc; padding-top: 10px; margin-top: 10px; text-align: left;">
+      <%= submit_tag "Generate", :name => nil %> | <%= link_to "Reset", reports_peak_time_path %>
+      <p style="float: right; display: none;">
+        Download:
+        <%= link_to "CSV", reports_peak_time_path(params.merge({ format: :csv })) %> |
+        <%= link_to "Excel", reports_peak_time_path(params.merge({ format: :xls })) %>
+      </p>
+    </div>
+  <% end %>
+
+</fieldset>
+<div class="clear">
+</div>
+<br />
+<br />
+<br />
+<%= line_chart @tokens %>

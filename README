@@ -52,3 +52,5 @@ set this value in seconds.
 3. auto_refresh_tokens (yes/no)
 
 set this to enable or disable auto refresh of tokens. Default value is No. 
+
+('2014-01-01'.to_datetime.to_i .. '2014-02-01'.to_datetime.to_i).step(1.hour) do |date|

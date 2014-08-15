@@ -10,8 +10,7 @@ Dymo::Application.routes.draw do
   get 'reports/summary'
   #get 'reports/migrate_physicians'
   get 'reports/physician_patients'
-
-  # get 'reports/peak_time'
+  get 'reports/peak_time'
 
   resources :tokens, except: [:edit, :update] do
     resources :token_histories, except: [:edit, :update]
