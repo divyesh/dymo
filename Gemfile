@@ -66,4 +66,6 @@ gem "prawn"
 
 gem "prawn-table"
 
+gem 'groupdate'
+
 ruby "2.0.0"

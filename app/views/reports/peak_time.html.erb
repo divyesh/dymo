@@ -45,7 +45,7 @@
 </fieldset>
 <div style="float: right;">
   <% if @peak_hour.size >= 1 %>
-  <h2>Peak hour: <%= @peak_hour[0] %><br/><br/> Total tokens: <%= @peak_hour[1] %></h2>
+    Peak hour: <h2><%= @peak_hour.first %> => <%= @peak_hour.last %> token(s)</h2>
   <% end %>
 </div>
 <div class="clear">

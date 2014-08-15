@@ -83,42 +83,54 @@ class ReportsController < ApplicationController
   end
 
   def peak_time
-    from_date = formatted_date(params[:start_date], { time: params[:start_time], type: 'start_time' })
-    to_date = formatted_date(params[:end_date], { time: params[:end_time], type: 'end_time' })
+    @from_date = formatted_date(params[:start_date], { time: params[:start_time], type: 'start_time' })
+    @to_date = formatted_date(params[:end_date], { time: params[:end_time], type: 'end_time' })
 
-    @tokens = Hash.new
+    @completed_tokens = line_chart_tokens("completed")
+    @discarded_tokens = line_chart_tokens("discarded")
+    @time_in_tokens = line_chart_tokens("time_in")
+    @visit_reg_tokens = line_chart_tokens("visit_registered")
+    tokens = line_chart_tokens
 
-    (from_date.to_i..to_date.to_i).step(1.hour).each_with_index do |date, index|
-      key = "#{Time.at(date).strftime('%Y/%m/%d, %H:%M')} - #{(Time.at(date) + 1.hour).strftime('%Y/%m/%d, %H:%M')}"
-      value = Token.where("(created_at >= ? AND created_at <= ?)", Time.at(date), Time.at(date) + 59.minute).count
-      @tokens[key] = value
-    end
-
-    @peak_hour = @tokens.max_by { |k,v| v }
+    @peak_hour = tokens.max_by { |k,v| v }
+    
+    @tokens = [{ name: "Completed (#{tokens_count('completed')})", data: @completed_tokens }, { name: "Discarded (#{tokens_count('discarded')})", data: @discarded_tokens }, { name: "Time in (#{tokens_count('time_in')})", data: @time_in_tokens }, { name: "Visit Registered (#{tokens_count('visit_registered')})", data: @visit_reg_tokens }]
   end
 
-  private
+private
 
-    def pie_chart_tokens
-      @tokens_30 = @tokens.to_a.select { |t| (t.completed_at - t.created_at) <= 1800 }
-      @tokens_30 = [] if @tokens_30.nil?
+  def tokens_count(state)
+    Token.where("(created_at >= ? AND created_at <= ?) AND state = ?", @from_date, @to_date, state).count
+  end
 
-      @tokens_40 = @tokens.to_a.select { |t| (((t.completed_at - t.created_at) > 1800) && ((t.completed_at - t.created_at) <= 2400)) }
-      @tokens_40 = [] if @tokens_40.nil?
-
-      @tokens_60 = @tokens.to_a.select { |t| (((t.completed_at - t.created_at) > 2400) && ((t.completed_at - t.created_at) <= 3600)) }
-      @tokens_60 = [] if @tokens_60.nil?
-
-      @tokens_61 = @tokens.to_a.select { |t| (t.completed_at - t.created_at) > 3600 }
-      @tokens_61 = [] if @tokens_61.nil?
-
-      @pie_tokens = { "Seen in <= 30 minutes" => @tokens_30.size, "Seen in 31-40 minutes" => @tokens_40.size, "Seen in 41-60 minutes" => @tokens_60.size, " Seen in >60 minutes" => @tokens_61.size}
+  def line_chart_tokens(state=nil)
+    if state
+      Token.where("(created_at >= ? AND created_at <= ?) AND state = ?", @from_date, @to_date, state).group_by_hour(:created_at).count
+    else
+      Token.where("(created_at >= ? AND created_at <= ?)", @from_date, @to_date).group_by_hour(:created_at).count
     end
+  end
 
-    def formatted_date(date, options)
-      time = options[:time]
-      time = (options[:type] == 'start_time' ? DateTime.now.beginning_of_day.strftime("%H:%M") : DateTime.now.end_of_day.strftime("%H:%M")) if time.blank?
-      date = Date.today.to_s if params[:start_date].blank?
-      (time + ' ' + date).to_datetime
-    end
+  def pie_chart_tokens
+    @tokens_30 = @tokens.to_a.select { |t| (t.completed_at - t.created_at) <= 1800 }
+    @tokens_30 = [] if @tokens_30.nil?
+
+    @tokens_40 = @tokens.to_a.select { |t| (((t.completed_at - t.created_at) > 1800) && ((t.completed_at - t.created_at) <= 2400)) }
+    @tokens_40 = [] if @tokens_40.nil?
+
+    @tokens_60 = @tokens.to_a.select { |t| (((t.completed_at - t.created_at) > 2400) && ((t.completed_at - t.created_at) <= 3600)) }
+    @tokens_60 = [] if @tokens_60.nil?
+
+    @tokens_61 = @tokens.to_a.select { |t| (t.completed_at - t.created_at) > 3600 }
+    @tokens_61 = [] if @tokens_61.nil?
+
+    @pie_tokens = { "Seen in <= 30 minutes" => @tokens_30.size, "Seen in 31-40 minutes" => @tokens_40.size, "Seen in 41-60 minutes" => @tokens_60.size, " Seen in >60 minutes" => @tokens_61.size}
+  end
+
+  def formatted_date(date, options)
+    time = options[:time]
+    time = (options[:type] == 'start_time' ? DateTime.now.beginning_of_day.strftime("%H:%M") : DateTime.now.end_of_day.strftime("%H:%M")) if time.blank?
+    date = Date.today.to_s if params[:start_date].blank?
+    (time + ' ' + date).to_datetime
+  end
 end
