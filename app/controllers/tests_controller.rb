@@ -31,7 +31,7 @@ class TestsController < ApplicationController
 
     respond_to do |format|
       if @test.save
-        format.html { redirect_to tests_path, notice: 'Test was successfully created.' }
+        format.html { redirect_to tests_url, notice: 'Test was successfully created.' }
         format.json { render :show, status: :created, location: @test }
       else
         format.html { render :new }
@@ -46,7 +46,7 @@ class TestsController < ApplicationController
     authorize! :update, @test
     respond_to do |format|
       if @test.update(test_params)
-        format.html { redirect_to tests_path, notice: 'Test was successfully updated.' }
+        format.html { redirect_to tests_url, notice: 'Test was successfully updated.' }
         format.json { render :show, status: :ok, location: @test }
       else
         format.html { render :edit }
@@ -74,6 +74,6 @@ class TestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def test_params
-      params.require(:test).permit(:loinc, :test_group, :test_code, :test_name, :specimen_source, :group_index, :index)
+      params.require(:test).permit(:loinc, :test_group_id, :test_code, :test_name, :specimen_source, :group_index, :index, :position)
     end
 end

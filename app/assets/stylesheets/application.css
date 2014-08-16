@@ -410,6 +410,10 @@ ul#top-nav li {
 ul#top-nav li.dropdown {
   border: solid 1px transparent;
 }
+ul#top-nav li.dropdown > a {
+  background: transparent url("/assets/down-arrow.png") right 5px no-repeat;
+  padding-right: 10px;
+}
 ul#top-nav li.divider {
   border: 0 none;
   padding: 0;
@@ -417,6 +421,10 @@ ul#top-nav li.divider {
 ul#top-nav li.dropdown:hover {
   background: #fff;
   border: solid 1px #ccc;
+}
+ul#top-nav li.dropdown:hover > a {
+  background: transparent url("/assets/down-arrow.png") right 5px no-repeat;
+  color: #0000ff;
 }
 ul#top-nav li ul {
   padding: 0;

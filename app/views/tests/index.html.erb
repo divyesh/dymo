@@ -10,8 +10,8 @@
       <th>Test code</th>
       <th>Test name</th>
       <th>Specimen source</th>
-      <th>Group Index</th>
-      <th>Index</th>
+      <th>Group Position</th>
+      <th>Position</th>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -20,14 +20,16 @@
     <% @tests.each do |test| %>
       <tr>
         <td><%= test.loinc %></td>
-        <td><%= test.test_group %></td>
-        <td><%= test.test_code %></td>
+        <td><%= test.test_group.name %></td>
+        <td class="text-center"><%= test.test_code %></td>
         <td><%= test.test_name %></td>
-        <td><%= test.specimen_source %></td>
-        <td><%= test.group_index %></td>
-        <td><%= test.index %></td>
-        <td><%= link_to 'Edit', edit_test_path(test) %></td>
-        <td><%= destroy_link test %></td>
+        <td class="text-center"><%= test.specimen_source %></td>
+        <td class="text-center"><%= test.test_group.position %></td>
+        <td class="text-center"><%= test.position %></td>
+        <td class="text-center">
+          <%= link_to 'Edit', edit_test_path(test) %><%= " | " if can?(:destroy, test) %>
+          <%= destroy_link test %>
+        </td>
       </tr>
     <% end %>
   </tbody>

@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140813170205) do
+ActiveRecord::Schema.define(version: 20140816053910) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "app_configs", force: true do |t|
     t.string   "name"
@@ -75,9 +78,16 @@ ActiveRecord::Schema.define(version: 20140813170205) do
     t.boolean  "isactive"
   end
 
+  create_table "test_groups", force: true do |t|
+    t.string   "name"
+    t.integer  "position",   default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "tests", force: true do |t|
     t.string   "loinc"
-    t.string   "test_group"
+    t.string   "test_group_old"
     t.string   "test_code"
     t.string   "test_name"
     t.string   "specimen_source"
@@ -85,6 +95,8 @@ ActiveRecord::Schema.define(version: 20140813170205) do
     t.datetime "updated_at"
     t.string   "group_index"
     t.string   "index"
+    t.integer  "position",        default: 0
+    t.integer  "test_group_id"
   end
 
   create_table "token_histories", force: true do |t|

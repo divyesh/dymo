@@ -1,0 +1,12 @@
+<p>
+  <strong>Name:</strong>
+  <%= @test_group.name %>
+</p>
+
+<p>
+  <strong>Position:</strong>
+  <%= @test_group.position %>
+</p>
+
+<%= link_to 'Edit', edit_test_group_path(@test_group) %> |
+<%= link_to 'Back', test_groups_path %>

@@ -1,5 +1,4 @@
 Dymo::Application.routes.draw do
-
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root to: "visits#index"
 
@@ -22,6 +21,7 @@ Dymo::Application.routes.draw do
 
   resources :visits, only: [:index, :destroy]
   resources :physicians
+  resources :test_groups
   resources :tests
   resources :app_configs
 

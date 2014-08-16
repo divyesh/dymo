@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  $("#visit_physician_ids, #filter_physician_id").selectize();
+  $("#visit_physician_ids, #filter_physician_id, #test_test_group_id").selectize();
 
   $("#all_patients_cb_cont :checkbox").on("click", function () {
     if ($(this).is(":checked")) {

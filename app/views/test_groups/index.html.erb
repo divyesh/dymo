@@ -1,0 +1,28 @@
+<h1 style="float: left;">Listing Test Groups&nbsp;&nbsp;<span style="font-size: 13px;"><%= link_to 'New Test group', new_test_group_path %></span></h1>
+
+<div class="clear"></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Position</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @test_groups.each do |test_group| %>
+      <tr>
+        <td><%= test_group.name %></td>
+        <td class="text-center"><%= test_group.position %></td>
+        <td class="text-center">
+          <%= link_to 'Show', test_group %> | 
+          <%= link_to 'Edit', edit_test_group_path(test_group) %>
+          <%= " | " if can?(:destroy, test_group) %>
+          <%= destroy_link test_group %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
