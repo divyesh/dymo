@@ -45,6 +45,7 @@ class VisitsController < ApplicationController
 
   def edit
     authorize! :edit, @visit
+    @test_groups = Test.select("test_group").group(:test_group, :group_index).order("group_index ASC")
   end
 
   def create
