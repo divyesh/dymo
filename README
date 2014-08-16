@@ -53,4 +53,10 @@ set this value in seconds.
 
 set this to enable or disable auto refresh of tokens. Default value is No. 
 
-('2014-01-01'.to_datetime.to_i .. '2014-02-01'.to_datetime.to_i).step(1.hour) do |date|
+
+Test and Test group migrations
+==============================
+1. Download latest code. Overwrite except database.yml
+2. Run bundle exec rake db:migrate
+3. Run bundle exec rake dymo:set_tests_and_test_groups
+
