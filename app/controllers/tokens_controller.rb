@@ -5,6 +5,7 @@ class TokensController < ApplicationController
 
   def index
     @patient = Patient.new
+    @token = Token.new
     date = filter_date(:start_date)
 
     if !params[:state].nil? && params[:state] != 'all'
@@ -34,30 +35,37 @@ class TokensController < ApplicationController
     authorize! :create, @token
     options = parse_healthcard(params[:healthcard])
 
-    @patient = Patient.where(healthnumber: options[:healthnumber]).first
-    @patient = Patient.create(options) unless @patient
+    unless options[:healthnumber].blank?
+      @patient = Patient.where(healthnumber: options[:healthnumber]).first
+      @patient = Patient.create(options) unless @patient
 
-    unless @patient.errors.any?
-      @token = Token.where("(created_at >= ? AND created_at <= ?) AND patient_id = ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day, @patient.id).first
+      unless @patient.errors.any?
+        @token = Token.where("(created_at >= ? AND created_at <= ?) AND patient_id = ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day, @patient.id).first
 
-      if @token.nil? || @token.generatable?
-        @token = @patient.new_time_in_token(current_user)
+        if @token.nil? || @token.generatable?
+          @token = @patient.new_time_in_token(current_user)
 
-        print_token
+          print_token
 
-        respond_to do |format|
-          format.html { redirect_to tokens_path, notice: 'Token was successfully created.' }
-          format.json { render :show, status: :created, location: @token }
+          respond_to do |format|
+            format.html { redirect_to tokens_path, notice: 'Token was successfully created.' }
+            format.json { render :show, status: :created, location: @token }
+          end
+        else
+          respond_to do |format|
+            format.html { redirect_to tokens_path, notice: "Token already generated for this patient for today. Token number is Token#: #{@token.no}." }
+            format.json { render :show, status: :created, location: @token }
+          end
         end
       else
         respond_to do |format|
-          format.html { redirect_to tokens_path, notice: "Token already generated for this patient for today. Token number is Token#: #{@token.no}." }
-          format.json { render :show, status: :created, location: @token }
+          format.html { redirect_to tokens_path, notice: "Patient does not exist. Add patient using 'Add Patient' link on this page -->" }
+          format.json { render text: 'Patient does not exist.' }
         end
       end
     else
       respond_to do |format|
-        format.html { redirect_to tokens_path, notice: "Patient does not exist. Add patient using 'Add Patient' link on this page -->" }
+        format.html { redirect_to tokens_path, notice: "Please enter healthnumber or swipe healthcard" }
         format.json { render text: 'Patient does not exist.' }
       end
     end

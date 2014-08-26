@@ -2,7 +2,7 @@
 <div>
   <div style="float: left; width: 60%;">
   <%= form_for Token.new do %>
-      Enter Health#/Swipe Card: <%= text_field_tag :healthcard, params[:healthcard], :class => 'text' %>
+      Enter Health#/Swipe Card: <%= text_field_tag :healthcard, params[:healthcard], :class => 'text', :required => true %>
       <%= submit_tag "Generate Token", :name => nil %> <a id="add-patient-link" href="javascript:void(0);">Add Patient</a>
       <br />
       <i>To generate token for patient, type Health # and Generate Token.</i><br />
