@@ -153,8 +153,61 @@ var xml='<?xml version="1.0" encoding="utf-8"?>'+
 '<Bounds X="1848" Y="495" Width="3105" Height="255" /></ObjectInfo></DieCutLabel>';
 return xml;
 }
-
 function physicianLabel(PhysicianNumber,CPSO,name,address1,address2,city,province,postalcode,phone,FAX)
+{
+try {
+
+
+        var labelXml = New_PhysicianLable()
+
+        var label = dymo.label.framework.openLabelXml(labelXml);
+
+		var address;
+	    if(address=='undefined')
+		address=address1+' '+address2;
+            else
+		address=address1;
+            // set label text
+
+            label.setObjectText("PHYSICIAN_NAME",  name+' '+PhysicianNumber  );
+            label.setObjectText("ADDRESS", address + ',\n' + city + ', ' + province + ', ' + postalcode);
+            label.setObjectText("PHONE",'PH: '+phone+' FAX: '+FAX);
+
+            // select printer to print on
+            // for simplicity sake just use the first LabelWriter printer
+            var printers = dymo.label.framework.getPrinters();
+            if (printers.length == 0)
+                throw "No DYMO printers are installed. Install DYMO printers.";
+
+            var printerName = "";
+            for (var i = 0; i < printers.length; ++i) {
+                var printer = printers[i];
+                if (printer.printerType == "LabelWriterPrinter") {
+                    printerName = printer.name;
+                    break;
+                }
+            }
+
+            if (printerName == "")
+                throw "No LabelWriter printers found. Install LabelWriter printer";
+
+
+	   
+            var num = window.prompt('How many Labels you wants to print?', '1');
+            if (null == num)
+                num = 0;
+	    if(num!=0)
+            for (var i = 0; i < num; i++)
+	    {
+            	label.print(printerName);
+            }
+	    num=0;
+
+    } catch (e) {
+        alert(e.message || e);
+    }
+}
+function physicianLabel_OLD(PhysicianNumber,CPSO,name,address1,address2,city,province,postalcode,phone,FAX)
 {
 try {
 
@@ -172,7 +225,7 @@ try {
 
             label.setObjectText("Address",  name+' '+PhysicianNumber  );
             label.setObjectText("TEXT", address + ',\n' + city + ', ' + province + ', ' + postalcode);
-           label.setObjectText("TEXT_1",'PH: '+phone+' FAX: '+FAX);
+            label.setObjectText("TEXT_1",'PH: '+phone+' FAX: '+FAX);
 
             // select printer to print on
             // for simplicity sake just use the first LabelWriter printer
@@ -255,4 +308,35 @@ function LoadPhysicianXML() {
 	'<Bounds X="331" Y="1133" Width="4622" Height="360" />' +
 	'</ObjectInfo></DieCutLabel>';
 return phxml;
+}
+
+function New_PhysicianLable()
+{
+  return '<?xml version="1.0" encoding="utf-8"?>'+
+		 '<DieCutLabel Version="8.0" Units="twips"><PaperOrientation>Landscape</PaperOrientation><Id>Address</Id>'+
+		 '<PaperName>30252 Address</PaperName><DrawCommands><RoundRectangle X="0" Y="0" Width="1581" Height="5040" Rx="270" Ry="270" />'+
+		'</DrawCommands><ObjectInfo><TextObject><Name>PHYSICIAN_NAME</Name><ForeColor Alpha="255" Red="0" Green="0" Blue="0" />'+
+		'<BackColor Alpha="0" Red="255" Green="255" Blue="255" /><LinkedObjectName></LinkedObjectName>'+
+		'<Rotation>Rotation0</Rotation><IsMirrored>False</IsMirrored><IsVariable>False</IsVariable>'+
+		'<HorizontalAlignment>Left</HorizontalAlignment><VerticalAlignment>Top</VerticalAlignment>'+
+		'<TextFitMode>ShrinkToFit</TextFitMode><UseFullFontHeight>True</UseFullFontHeight><Verticalized>False</Verticalized>'+
+		'<StyledText><Element><String>PHYSICIAN NAME</String><Attributes>'+
+		'<Font Family="Arial" Size="12" Bold="False" Italic="False" Underline="False" Strikeout="False" />'+
+		'<ForeColor Alpha="255" Red="0" Green="0" Blue="0" /></Attributes></Element></StyledText>'+
+		'</TextObject><Bounds X="331" Y="150" Width="4019" Height="300" /></ObjectInfo><ObjectInfo>'+
+		'<TextObject><Name>ADDRESS</Name><ForeColor Alpha="255" Red="0" Green="0" Blue="0" />'+
+		'<BackColor Alpha="0" Red="255" Green="255" Blue="255" /><LinkedObjectName></LinkedObjectName>'+
+		'<Rotation>Rotation0</Rotation><IsMirrored>False</IsMirrored><IsVariable>False</IsVariable>'+
+		'<HorizontalAlignment>Left</HorizontalAlignment><VerticalAlignment>Top</VerticalAlignment>'+
+		'<TextFitMode>ShrinkToFit</TextFitMode><UseFullFontHeight>True</UseFullFontHeight>'+
+		'<Verticalized>False</Verticalized><StyledText><Element><String>ADDRESS</String>'+
+		'<Attributes><Font Family="Arial" Size="12" Bold="False" Italic="False" Underline="False" Strikeout="False" />'+
+		'<ForeColor Alpha="255" Red="0" Green="0" Blue="0" /></Attributes></Element></StyledText></TextObject>'+
+		'<Bounds X="345" Y="567.900024414063" Width="4095" Height="495" /></ObjectInfo><ObjectInfo><TextObject>'+
+		'<Name>PHONE</Name><ForeColor Alpha="255" Red="0" Green="0" Blue="0" /><BackColor Alpha="0" Red="255" Green="255" Blue="255" />'+
+		'<LinkedObjectName></LinkedObjectName><Rotation>Rotation0</Rotation><IsMirrored>False</IsMirrored><IsVariable>False</IsVariable>'+
+		'<HorizontalAlignment>Left</HorizontalAlignment><VerticalAlignment>Top</VerticalAlignment><TextFitMode>ShrinkToFit</TextFitMode>'+
+		'<UseFullFontHeight>True</UseFullFontHeight><Verticalized>False</Verticalized><StyledText><Element><String>PHONEString><Attributes>'+
+		'<Font Family="Arial" Size="12" Bold="False" Italic="False" Underline="False" Strikeout="False" /><ForeColor Alpha="255" Red="0" Green="0" Blue="0" />'+
+		'</Attributes></Element></StyledText></TextObject><Bounds X="331" Y="1253" Width="4067" Height="240" /></ObjectInfo></DieCutLabel>';
 }
