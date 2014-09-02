@@ -30,7 +30,7 @@ class Patient < ActiveRecord::Base
     token
   end
 
-def patient_full_name
+  def patient_full_name
     "#{lastname} #{firstname} "
   end
 
@@ -40,6 +40,10 @@ def patient_full_name
 
   def time_in_token
     tokens.where("(created_at >= ? AND created_at <= ?) AND state = ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day, "time_in").first
+  end
+
+  def last_visit
+    visits.order("created_at DESC").first
   end
 
   def last_visit_date
