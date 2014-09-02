@@ -41,6 +41,7 @@
 	  <th>Specimen Priority</th>
 	  <th>Amount</th>
     <th>Tests</th>
+    <th></th>
   </tr>
 
 <% @patient.visits.order("created_at DESC").each do |visit| %>
@@ -60,6 +61,9 @@
       <% visit.tests.each_with_index do |test, index| %>
         <%= "#{test.test_code}" %><%= ", " unless visit.tests.size == (index + 1) %>
       <% end %>
+    </td>
+    <td>
+      <%= link_to 'Edit', edit_patient_visit_path(@patient, visit) %>
     </td>
   </tr>
 <% end %>
