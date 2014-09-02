@@ -60,3 +60,6 @@ Test and Test group migrations
 2. Run bundle exec rake db:migrate
 3. Run bundle exec rake dymo:set_tests_and_test_groups
 
+
+1. On deleting visit token should also be deleted
+2. 

@@ -1,5 +1,12 @@
 $(document).ready(function () {
   $("#visit_physician_ids, #filter_physician_id, #test_test_group_id").selectize();
+  $("#visit_test_ids1").selectize({
+    onItemAdd: function(value, $item) {
+      var $label = $("#tests_check_boxes label[data-value=\"" + value  + "\"]");
+      $label.show();
+      $label.find('input[type="checkbox"]').prop('checked', true);
+    }
+  });
 
   $("#all_patients_cb_cont :checkbox").on("click", function () {
     if ($(this).is(":checked")) {

@@ -45,12 +45,23 @@
       <td colspan="2">
         <div id="test_groups" title="SELECT TESTS">
           <h2 style="margin-left: 20px;">SELECT TESTS</h2>
+
+          <div class="input string optional visit_tests" style="padding-left: 20px;">
+            <%= f.collection_select :test_ids1, Test.order("tests.position ASC"), :id, :test_name, { selected: false, include_blank: true, prompt: "Search tests..." } %>
+          </div>
+          
+          <div class="clear">
+            <br />
+          </div>
+          
           <% @test_groups.each_with_index do |test_group, index| %>
-            
+
             <div class="test-groups" style="float: left; margin-left: 20px; border: solid 1px #ccc; ">
               <h4><%= test_group.name %></h4>
-              <div class="test-group" >
-                <%= f.collection_check_boxes(:test_ids, test_group.tests.order("tests.position ASC"), :id, :test_name) %>
+              <div id="tests_check_boxes" class="test-group" >
+                <%= f.collection_check_boxes(:test_ids, test_group.tests.order("tests.position ASC"), :id, :test_name) do |b| %>
+                  <% b.label(:"data-value" => b.object.id, class: (b.object.visible?(@visit.test_ids) ? "show" : "hide") ) { b.check_box + ' ' + b.text } %>
+                <% end %>
               </div>
             </div>
           <% end %>

@@ -38,8 +38,14 @@ class Patient < ActiveRecord::Base
     "#{healthnumber} - #{lastname} #{firstname} #{middlename}"
   end
 
-  def time_in_token
-    tokens.where("(created_at >= ? AND created_at <= ?) AND state = ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day, "time_in").first
+  def time_in_token(user)
+    token = tokens.where("(created_at >= ? AND created_at <= ?) AND state = ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day, "time_in").first
+    unless token
+      token = self.new_time_in_token(user) 
+    else
+      token.user = user
+    end
+    token
   end
 
   def last_visit

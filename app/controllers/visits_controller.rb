@@ -55,9 +55,8 @@ class VisitsController < ApplicationController
 
     respond_to do |format|
       if @visit.save
-        token = @visit.patient.time_in_token
-        token.user = current_user
-        token.add_visit! if token
+        token = @visit.patient.time_in_token(current_user)
+        token.add_visit!
 
         format.html { redirect_to(@patient, notice: 'Visit was successfully created and token time registered.') }
         format.json  { render json: @visit, status: :created, location: @visit }

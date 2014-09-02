@@ -465,3 +465,15 @@ ul#top-nav li ul li a {
   float: left;
   min-width: 350px;
 }
+.hide {
+  display: none;
+}
+.show {
+  display: block;
+}
+.inline-show {
+  display: inline;
+}
+.inline-block-show {
+  display: inline-block;
+}
