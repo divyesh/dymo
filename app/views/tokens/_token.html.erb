@@ -10,20 +10,24 @@
       <% visit = token.patient.visits.order("created_at DESC").first %>
       <br />
     <% end %>
-    <% if token.visit_registered? || token.completed? %>
-      <hr style="border-top: solid 1px rgba(0,0,0,0.1);" />    
-      <small><strong>Print labels:</strong></small><br />
+    
+  </td>
+  
+  <td class="text-center">
+    <%= next_state_link(token) %>
+    <%= token.discard_msg if token.discarded? %>
+  </td>
+  <td>
+  <% if token.visit_registered? || token.completed? %>     
+      
       <% token.patient.last_visit.physicians.each do |physician| %>
         <small><%= print_physician_label_link(token.patient.last_visit, physician) %><br /></small>
       <% end %>
     <% end %>
   </td>
-  <td class="text-center">
-    <%= next_state_link(token) %>
-    <%= token.discard_msg if token.discarded? %>
-  </td>
   <td class="last">
     <small><%= link_to 'Punch In(s)', token %></small><%= " | " if can?(:destroy, token) %>
     <small><%= destroy_link token %></small>
   </td>
+  
 </tr>
