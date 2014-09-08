@@ -1,13 +1,13 @@
 function printPatientLabel(PatientName, healthNumber, expiry, dob, sex, address, city, province, postalcode, homephone, mobile, physician, visiteddate) {
     try {
 
-        
-	
+
+
         var labelXml =  PatientLabel();
 	//debugger;
         var label = dymo.label.framework.openLabelXml(labelXml);
-	   
-            
+
+
             var ph;
 	    if (homephone=='undefined' || mobile == 'undefined')
                  ph = '';
@@ -30,7 +30,7 @@ function printPatientLabel(PatientName, healthNumber, expiry, dob, sex, address,
             label.setObjectText("ADDRESS_PHONE", address +',\n'+ city +', '+ province+', ' + postalcode+'\n'+ph);
             label.setObjectText("DOCTOR",physician);
             label.setObjectText("COLLECTION_DATE_TIME",'['+visiteddate+' '+now.getHours() +':'+now.getMinutes()+':'+now.getSeconds()+']');
-            
+
 
             // select printer to print on
             // for simplicity sake just use the first LabelWriter printer
@@ -159,7 +159,7 @@ try {
 
 
         var labelXml = New_PhysicianLable()
-
+        debugger;
         var label = dymo.label.framework.openLabelXml(labelXml);
 
 		var address;
@@ -192,7 +192,7 @@ try {
                 throw "No LabelWriter printers found. Install LabelWriter printer";
 
 
-	   
+
             var num = window.prompt('How many Labels you wants to print?', '1');
             if (null == num)
                 num = 0;
@@ -246,7 +246,7 @@ try {
                 throw "No LabelWriter printers found. Install LabelWriter printer";
 
 
-	   
+
             var num = window.prompt('How many Labels you wants to print?', '1');
             if (null == num)
                 num = 0;
@@ -312,31 +312,92 @@ return phxml;
 
 function New_PhysicianLable()
 {
-  return '<?xml version="1.0" encoding="utf-8"?>'+
-		 '<DieCutLabel Version="8.0" Units="twips"><PaperOrientation>Landscape</PaperOrientation><Id>Address</Id>'+
-		 '<PaperName>30252 Address</PaperName><DrawCommands><RoundRectangle X="0" Y="0" Width="1581" Height="5040" Rx="270" Ry="270" />'+
-		'</DrawCommands><ObjectInfo><TextObject><Name>PHYSICIAN_NAME</Name><ForeColor Alpha="255" Red="0" Green="0" Blue="0" />'+
-		'<BackColor Alpha="0" Red="255" Green="255" Blue="255" /><LinkedObjectName></LinkedObjectName>'+
-		'<Rotation>Rotation0</Rotation><IsMirrored>False</IsMirrored><IsVariable>False</IsVariable>'+
-		'<HorizontalAlignment>Left</HorizontalAlignment><VerticalAlignment>Top</VerticalAlignment>'+
-		'<TextFitMode>ShrinkToFit</TextFitMode><UseFullFontHeight>True</UseFullFontHeight><Verticalized>False</Verticalized>'+
-		'<StyledText><Element><String>PHYSICIAN NAME</String><Attributes>'+
-		'<Font Family="Arial" Size="12" Bold="False" Italic="False" Underline="False" Strikeout="False" />'+
-		'<ForeColor Alpha="255" Red="0" Green="0" Blue="0" /></Attributes></Element></StyledText>'+
-		'</TextObject><Bounds X="331" Y="150" Width="4019" Height="300" /></ObjectInfo><ObjectInfo>'+
-		'<TextObject><Name>ADDRESS</Name><ForeColor Alpha="255" Red="0" Green="0" Blue="0" />'+
-		'<BackColor Alpha="0" Red="255" Green="255" Blue="255" /><LinkedObjectName></LinkedObjectName>'+
-		'<Rotation>Rotation0</Rotation><IsMirrored>False</IsMirrored><IsVariable>False</IsVariable>'+
-		'<HorizontalAlignment>Left</HorizontalAlignment><VerticalAlignment>Top</VerticalAlignment>'+
-		'<TextFitMode>ShrinkToFit</TextFitMode><UseFullFontHeight>True</UseFullFontHeight>'+
-		'<Verticalized>False</Verticalized><StyledText><Element><String>ADDRESS</String>'+
-		'<Attributes><Font Family="Arial" Size="12" Bold="False" Italic="False" Underline="False" Strikeout="False" />'+
-		'<ForeColor Alpha="255" Red="0" Green="0" Blue="0" /></Attributes></Element></StyledText></TextObject>'+
-		'<Bounds X="345" Y="567.900024414063" Width="4095" Height="495" /></ObjectInfo><ObjectInfo><TextObject>'+
-		'<Name>PHONE</Name><ForeColor Alpha="255" Red="0" Green="0" Blue="0" /><BackColor Alpha="0" Red="255" Green="255" Blue="255" />'+
-		'<LinkedObjectName></LinkedObjectName><Rotation>Rotation0</Rotation><IsMirrored>False</IsMirrored><IsVariable>False</IsVariable>'+
-		'<HorizontalAlignment>Left</HorizontalAlignment><VerticalAlignment>Top</VerticalAlignment><TextFitMode>ShrinkToFit</TextFitMode>'+
-		'<UseFullFontHeight>True</UseFullFontHeight><Verticalized>False</Verticalized><StyledText><Element><String>PHONEString><Attributes>'+
-		'<Font Family="Arial" Size="12" Bold="False" Italic="False" Underline="False" Strikeout="False" /><ForeColor Alpha="255" Red="0" Green="0" Blue="0" />'+
-		'</Attributes></Element></StyledText></TextObject><Bounds X="331" Y="1253" Width="4067" Height="240" /></ObjectInfo></DieCutLabel>';
+  return '<?xml version="1.0" encoding="utf-8"?>' +
+    '<DieCutLabel Version="8.0" Units="twips">' +
+      '<PaperOrientation>Landscape</PaperOrientation>' +
+      '<Id>Address</Id>' +
+      '<PaperName>30252 Address</PaperName>' +
+      '<DrawCommands>' +
+        '<RoundRectangle X="0" Y="0" Width="1581" Height="5040" Rx="270" Ry="270" />' +
+      '</DrawCommands>' +
+      '<ObjectInfo>' +
+        '<TextObject>' +
+          '<Name>PHYSICIAN_NAME</Name>' +
+          '<ForeColor Alpha="255" Red="0" Green="0" Blue="0" />' +
+          '<BackColor Alpha="0" Red="255" Green="255" Blue="255" />' +
+          '<LinkedObjectName></LinkedObjectName>' +
+          '<Rotation>Rotation0</Rotation>' +
+          '<IsMirrored>False</IsMirrored>' +
+          '<IsVariable>False</IsVariable>' +
+          '<HorizontalAlignment>Left</HorizontalAlignment>' +
+          '<VerticalAlignment>Top</VerticalAlignment>' +
+          '<TextFitMode>ShrinkToFit</TextFitMode>' +
+          '<UseFullFontHeight>True</UseFullFontHeight>' +
+          '<Verticalized>False</Verticalized>' +
+          '<StyledText>' +
+            '<Element>' +
+              '<String>PHYSICIAN NAME</String>' +
+              '<Attributes>' +
+                '<Font Family="Arial" Size="12" Bold="False" Italic="False" Underline="False" Strikeout="False" />' +
+                '<ForeColor Alpha="255" Red="0" Green="0" Blue="0" />' +
+              '</Attributes>' +
+            '</Element>' +
+          '</StyledText>' +
+        '</TextObject>' +
+        '<Bounds X="331" Y="150" Width="4019" Height="300" />' +
+      '</ObjectInfo>' +
+      '<ObjectInfo>' +
+        '<TextObject>' +
+          '<Name>ADDRESS</Name>' +
+          '<ForeColor Alpha="255" Red="0" Green="0" Blue="0" />' +
+          '<BackColor Alpha="0" Red="255" Green="255" Blue="255" />' +
+          '<LinkedObjectName></LinkedObjectName>' +
+          '<Rotation>Rotation0</Rotation>' +
+          '<IsMirrored>False</IsMirrored>' +
+          '<IsVariable>False</IsVariable>' +
+          '<HorizontalAlignment>Left</HorizontalAlignment>' +
+          '<VerticalAlignment>Top</VerticalAlignment>' +
+          '<TextFitMode>ShrinkToFit</TextFitMode>' +
+          '<UseFullFontHeight>True</UseFullFontHeight>' +
+          '<Verticalized>False</Verticalized>' +
+          '<StyledText>' +
+            '<Element>' +
+              '<String>ADDRESS</String>' +
+              '<Attributes>' +
+                '<Font Family="Arial" Size="12" Bold="False" Italic="False" Underline="False" Strikeout="False" />' +
+                '<ForeColor Alpha="255" Red="0" Green="0" Blue="0" />' +
+              '</Attributes>' +
+            '</Element>' +
+          '</StyledText>' +
+        '</TextObject>' +
+        '<Bounds X="345" Y="567.900024414063" Width="4095" Height="495" />' +
+      '</ObjectInfo>' +
+      '<ObjectInfo>' +
+        '<TextObject>' +
+          '<Name>PHONE</Name>' +
+          '<ForeColor Alpha="255" Red="0" Green="0" Blue="0" />' +
+          '<BackColor Alpha="0" Red="255" Green="255" Blue="255" />' +
+          '<LinkedObjectName></LinkedObjectName>' +
+          '<Rotation>Rotation0</Rotation>' +
+          '<IsMirrored>False</IsMirrored>' +
+          '<IsVariable>False</IsVariable>' +
+          '<HorizontalAlignment>Left</HorizontalAlignment>' +
+          '<VerticalAlignment>Top</VerticalAlignment>' +
+          '<TextFitMode>ShrinkToFit</TextFitMode>' +
+          '<UseFullFontHeight>True</UseFullFontHeight>' +
+          '<Verticalized>False</Verticalized>' +
+          '<StyledText>' +
+            '<Element>' +
+              '<String>PHONE</String>' +
+              '<Attributes>' +
+                '<Font Family="Arial" Size="12" Bold="False" Italic="False" Underline="False" Strikeout="False" />' +
+                '<ForeColor Alpha="255" Red="0" Green="0" Blue="0" />' +
+              '</Attributes>' +
+            '</Element>' +
+          '</StyledText>' +
+        '</TextObject>' +
+        '<Bounds X="331" Y="1253" Width="4067" Height="240" />' +
+      '</ObjectInfo>' +
+    '</DieCutLabel>';
+
 }
