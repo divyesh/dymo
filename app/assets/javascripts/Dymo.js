@@ -159,7 +159,6 @@ try {
 
 
         var labelXml = New_PhysicianLable()
-        debugger;
         var label = dymo.label.framework.openLabelXml(labelXml);
 
 		var address;
