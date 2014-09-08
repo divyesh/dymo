@@ -3,8 +3,9 @@ $(document).ready(function () {
   $("#visit_test_ids1").selectize({
     onItemAdd: function(value, $item) {
       var $label = $("#tests_check_boxes label[data-value=\"" + value  + "\"]");
-      $label.show();
+      $label.show('bounce');
       $label.find('input[type="checkbox"]').prop('checked', true);
+      this.clear();
     }
   });
 
