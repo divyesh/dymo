@@ -30,7 +30,7 @@ class PatientsController < ApplicationController
 
         #Visit.create({ physician_id: params[:physician_id1], patient_id: @patient.id, visitdate: params[:visitdate], payment_program: params[:payment_program], test_ids: params[:test_ids] })
 
-        format.html { redirect_to(tokens_path, notice: 'Patient and Token were successfully created.') }
+        format.html { redirect_to(location_tokens_path(current_location), notice: 'Patient and Token were successfully created.') }
         format.json  { render json: @patient, status: :created, location: @patient }
         format.xml  { render xml: @patient, status: :created, location: @patient }
       else
