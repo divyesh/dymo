@@ -14,7 +14,7 @@
   </td>
   
   <td class="text-center">
-    <%= next_state_link(token) %>
+    <%= next_state_link(token, current_location) %>
     <%= token.discard_msg if token.discarded? %>
   </td>
   <td>
@@ -26,8 +26,8 @@
     <% end %>
   </td>
   <td class="last">
-    <small><%= link_to 'Punch In(s)', token %></small><%= " | " if can?(:destroy, token) %>
-    <small><%= destroy_link token %></small>
+    <small><%= link_to 'Punch In(s)', [current_location, token] %></small><%= " | " if can?(:destroy, token) %>
+    <small><%= destroy_link [current_location, token] %></small>
   </td>
   
 </tr>

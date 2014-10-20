@@ -4,7 +4,7 @@
   <%= @token.patient.fullname_with_health_insurance_number %> <%= @token.patient.version_code %>
 </p>
 <br />
-<%= next_state_link(@token) %>
+<%= next_state_link(@token, current_location) %>
 <br />
 <br />
 <hr />
@@ -29,7 +29,7 @@
         <td><%= token_history.punch_in_time.to_formatted_s(:long) %></td>
         <td><%= token_history.note %></td>
         <td><%= token_history.comment %></td>
-        <td><%= destroy_link [@token, token_history] %></td>
+        <td><%= destroy_link [current_location, @token, token_history] %></td>
       </tr>
     <% end %>
   </tbody>

@@ -3,7 +3,7 @@ class ReportsController < ApplicationController
     from_date = formatted_date(params[:start_date], { time: params[:start_time], type: 'start_time' })
     to_date = formatted_date(params[:end_date], { time: params[:end_time], type: 'end_time' })
 
-    @tokens = Token.where("(created_at >= ? AND created_at <= ?) AND (state = ?)", from_date, to_date, "completed")
+    @tokens = current_location.tokens.where("(created_at >= ? AND created_at <= ?) AND (state = ?)", from_date, to_date, "completed")
 
     if params[:duration] == "30"
       @tokens.to_a.select! { |t| (t.completed_at - t.created_at) <= 1800 }
@@ -24,24 +24,17 @@ class ReportsController < ApplicationController
     end
   end
 
-  def migrate_physicians
-    Visit.where("physician_id IS NOT NULL").each do |visit|
-      PhysicianVisit.create(visit_id: visit.id, physician_id: visit.physician_id)
-    end
-    redirect_to root_path, notice: "Migrated successfully. Total #{PhysicianVisit.count}"
-  end
-
   def physician_patients
     unless params[:filter_physician_id].blank?
       @physician = Physician.find(params[:filter_physician_id])
 
       if params[:all_patients] == 'yes'
-        @visits = @physician.visits
+        @visits = @physician.visits.where("visits.location_id = ?", current_location)
       else
         from_date = formatted_date(params[:start_date], { time: params[:start_time], type: 'start_time' })
         to_date = formatted_date(params[:end_date], { time: params[:end_time], type: 'end_time' })
 
-        @visits = @physician.visits.where("(physician_visits.created_at >= ? AND physician_visits.created_at <= ?)", from_date, to_date)
+        @visits = @physician.visits.where("(physician_visits.created_at >= ? AND physician_visits.created_at <= ? AND location_id = ?)", from_date, to_date, current_location)
       end
     else
       flash[:alert] = "Please select physician."
@@ -66,9 +59,9 @@ class ReportsController < ApplicationController
     @to_date = formatted_date(params[:end_date], { time: params[:end_time], type: 'end_time' })
 
     if params[:group_by] == "by_physician"
-      @physicians = Physician.joins(:visits).where("(visits.created_at >= ? AND visits.created_at <= ?)", @from_date, @to_date).distinct
+      @physicians = Physician.joins(:visits).where("(visits.created_at >= ? AND visits.created_at <= ?) AND visits.location_id = ?", @from_date, @to_date, current_location).distinct
     else
-      @visit_tests = VisitTest.where("visit_tests.created_at >= ? AND visit_tests.created_at <= ?", @from_date, @to_date)
+       @visit_tests = VisitTest.joins(:visit).where("visit_tests.created_at >= ? AND visit_tests.created_at <= ? AND visits.location_id = ?", @from_date, @to_date, current_location).select("visit_tests.*")
       @visit_tests = @visit_tests.to_a.group_by { |t| t.created_at.to_date }
     end
   end
@@ -76,10 +69,10 @@ class ReportsController < ApplicationController
   def summary
     @from_date = formatted_date(params[:start_date], { time: params[:start_time], type: 'start_time' })
     @to_date = formatted_date(params[:end_date], { time: params[:end_time], type: 'end_time' })
-    @visits = Visit.where("(created_at >= ? AND created_at <= ?)", @from_date, @to_date)
-    @tokens = Token.where("(created_at >= ? AND created_at <= ?)", @from_date, @to_date)
-    @paid_visits = Visit.where("(created_at >= ? AND created_at <= ? AND payment_program = ?)", @from_date, @to_date, "Paid Patient")
-    @tests = Test.joins(:visit_tests).where("visit_tests.created_at >= ? AND visit_tests.created_at <= ?", @from_date, @to_date).select("tests.test_code, COUNT(tests.test_code) AS count_all").group(:test_code)
+    @visits = current_location.visits.where("(created_at >= ? AND created_at <= ?)", @from_date, @to_date)
+    @tokens = current_location.tokens.where("(created_at >= ? AND created_at <= ?)", @from_date, @to_date)
+    @paid_visits = current_location.visits.where("(created_at >= ? AND created_at <= ? AND payment_program = ?)", @from_date, @to_date, "Paid Patient")
+    @tests = Test.joins(visit_tests: :visit).where("visit_tests.created_at >= ? AND visit_tests.created_at <= ? AND location_id = ?", @from_date, @to_date, current_location).select("tests.test_code, COUNT(tests.test_code) AS count_all").group(:test_code)
   end
 
   def peak_time
@@ -105,9 +98,9 @@ private
 
   def line_chart_tokens(state=nil)
     if state
-      Token.where("(created_at >= ? AND created_at <= ?) AND state = ?", @from_date, @to_date, state).group_by_hour(:created_at).count
+      current_location.tokens.where("(created_at >= ? AND created_at <= ?) AND state = ?", @from_date, @to_date, state).group_by_hour(:created_at).count
     else
-      Token.where("(created_at >= ? AND created_at <= ?)", @from_date, @to_date).group_by_hour(:created_at).count
+      current_location.tokens.where("(created_at >= ? AND created_at <= ?)", @from_date, @to_date).group_by_hour(:created_at).count
     end
   end
 

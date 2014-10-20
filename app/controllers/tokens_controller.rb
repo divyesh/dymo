@@ -5,13 +5,13 @@ class TokensController < ApplicationController
 
   def index
     @patient = Patient.new
-    @token = Token.new
+    @token = current_location.tokens.new
     date = filter_date(:start_date)
 
     if !params[:state].nil? && params[:state] != 'all'
-      @tokens = Token.where("(created_at >= ? AND created_at <= ?) AND state = ?", date.beginning_of_day, date.end_of_day, params[:state])
+      @tokens = current_location.tokens.where("(created_at >= ? AND created_at <= ?) AND state = ?", date.beginning_of_day, date.end_of_day, params[:state])
     else
-      @tokens = Token.where("(created_at >= ? AND created_at <= ?)", date.beginning_of_day, date.end_of_day)
+      @tokens = current_location.tokens.where("(created_at >= ? AND created_at <= ?)", date.beginning_of_day, date.end_of_day)
     end
     render text: '' if request.xhr? && @tokens.empty?
   end
@@ -40,21 +40,21 @@ class TokensController < ApplicationController
       @patient = Patient.create(options) unless @patient
 
       unless @patient.errors.any?
-        @token = Token.where("(created_at >= ? AND created_at <= ?) AND patient_id = ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day, @patient.id).first
+        @token = current_location.tokens.where("(created_at >= ? AND created_at <= ?) AND patient_id = ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day, @patient.id).first
 
         if @token.nil? || @token.generatable?
-          @token = @patient.new_time_in_token(current_user)
+          @token = @patient.new_time_in_token(current_user, current_location)
 
           print_token
 
           respond_to do |format|
-            format.html { redirect_to tokens_path, notice: 'Token was successfully created.' }
-            format.json { render :show, status: :created, location: @token }
+            format.html { redirect_to location_tokens_path(current_location), notice: 'Token was successfully created.' }
+            format.json { render :show, status: :created, location: [current_location, @token] }
           end
         else
           respond_to do |format|
-            format.html { redirect_to tokens_path, notice: "Token already generated for this patient for today. Token number is Token#: #{@token.no}." }
-            format.json { render :show, status: :created, location: @token }
+            format.html { redirect_to location_tokens_path(current_location), notice: "Token already generated for this patient for today. Token number is Token#: #{@token.no}." }
+            format.json { render :show, status: :created, location: [current_location, @token] }
           end
         end
       else
@@ -76,8 +76,8 @@ class TokensController < ApplicationController
     @token.user = current_user
     @token.done!
     respond_to do |format|
-      format.html { redirect_to tokens_path, notice: "Token was successfully updated." }
-      format.json { render :show, status: :created, location: @token }
+      format.html { redirect_to location_tokens_path(current_location), notice: "Token was successfully updated." }
+      format.json { render :show, status: :created, location: [current_location, @token] }
     end
   end
 
@@ -86,8 +86,8 @@ class TokensController < ApplicationController
     @token.user = current_user
     @token.discard!
     respond_to do |format|
-      format.html { redirect_to tokens_path, notice: "Token was successfully updated." }
-      format.json { render :show, status: :created, location: @token }
+      format.html { redirect_to location_tokens_path(current_location), notice: "Token was successfully updated." }
+      format.json { render :show, status: :created, location: [current_location, @token] }
     end
   end
 
@@ -108,7 +108,7 @@ class TokensController < ApplicationController
     authorize! :destroy, @token
     @token.destroy
     respond_to do |format|
-      format.html { redirect_to tokens_url, notice: 'Token was successfully destroyed.' }
+      format.html { redirect_to location_tokens_url(current_location), notice: 'Token was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

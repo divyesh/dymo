@@ -4,6 +4,7 @@ class Token < ActiveRecord::Base
 
   belongs_to :patient
   belongs_to :user
+  belongs_to :location
   has_many :token_histories, dependent: :destroy
 
   workflow do
@@ -20,6 +21,7 @@ class Token < ActiveRecord::Base
   end
 
   def generatable?
+    # TODO: Location specific generate time interval
     (((DateTime.now.to_time - self.created_at.to_time).to_i)/AppConfig.token_generation_interval) > 0
   end
 

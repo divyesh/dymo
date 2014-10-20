@@ -33,7 +33,8 @@
   <%= link_to 'Add New Visit', new_patient_visit_path(@patient) %></h3>
 <table>
   <tr>
-  <th>Labnumber</th>
+    <th>Location</th>
+    <th>Labnumber</th>
     <th>Physician number</th>
     <th> Phyisican Name <small>(<u>click to print label</u>)</small></th>
     <th>Visited on</th>
@@ -46,7 +47,8 @@
 
 <% @patient.visits.order("created_at DESC").each do |visit| %>
   <tr>
-  <td><%= visit.lab_number %></td>
+    <td><%= visit.location.name %></td>
+    <td><%= visit.lab_number %></td>
     <td><%= visit.physicians.map(&:physician_number).join(", ") %></td>
     <td>
       <% visit.physicians.each do |physician| %>
@@ -63,7 +65,7 @@
       <% end %>
     </td>
     <td>
-      <%= link_to 'Edit', edit_patient_visit_path(@patient, visit) %>
+      <%= link_to 'Edit', edit_patient_visit_path(@patient, visit) if can?(:update, visit) %>
     </td>
   </tr>
 <% end %>

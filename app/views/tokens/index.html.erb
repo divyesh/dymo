@@ -1,7 +1,7 @@
 <h1>Listing tokens</h1>
 <div>
   <div style="float: left; width: 60%;">
-  <%= form_for Token.new do %>
+  <%= form_for [current_location, Token.new] do %>
       Enter Health#/Swipe Card: <%= text_field_tag :healthcard, params[:healthcard], :class => 'text', :required => true %>
       <%= submit_tag "Generate Token", :name => nil %> <a id="add-patient-link" href="javascript:void(0);">Add Patient</a>
       <br />
@@ -28,7 +28,7 @@
   </div>
   <fieldset class="with-border" style="width: 35%; float: right">
     <legend>Filter tokens: </legend>
-    <%= form_tag tokens_path, method: :get, id: 'filter_token', remote: true do %>
+    <%= form_tag location_tokens_path(current_location), method: :get, id: 'filter_token', remote: true do %>
       <div class="field">
         Token type: <%= select_tag :state, options_for_select([["All", "all"], ["Time in", "time_in"], ["Visit registered", "visit_registered"], ["Completed", "completed"], ["Discarded", "discarded"]], params[:state].nil? ? "all" : params[:state]) %>
       </div>
@@ -36,8 +36,8 @@
         Select Date: <%= select_date filter_date(:start_date).to_date, prefix: :start_date  %>
       </div>
       <div style="border-top: solid 1px #ccc; padding-top: 10px; margin-top: 10px; text-align: left;">
-        <%= submit_tag "Filter tokens", :name => nil %> | <%= link_to "Reset", tokens_path %>
-        <span style="float: right;"><%= link_to "Display today's tokens", tokens_path(startdate: { year: Date.today.year, month: Date.today.month, day: Date.today.day }) %></span>
+        <%= submit_tag "Filter tokens", :name => nil %> | <%= link_to "Reset", location_tokens_path(current_location) %>
+        <span style="float: right;"><%= link_to "Display today's tokens", location_tokens_path(current_location, startdate: { year: Date.today.year, month: Date.today.month, day: Date.today.day }) %></span>
       </div>
     <% end %>
 

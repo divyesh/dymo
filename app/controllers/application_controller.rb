@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
   # before_action :detect_device_variant
+  before_action :authenticate_user!
+  before_action :set_location
 
   rescue_from CanCan::AccessDenied do |exception|
     if current_user && !current_user.admin?
@@ -65,7 +67,23 @@ class ApplicationController < ActionController::Base
   end
   helper_method :filter_date
 
+  def current_location
+    @current_location
+  end
+  helper_method :current_location
+
   private
+    def set_location
+      return unless user_signed_in?
+      remote_ip = request.remote_ip
+      @current_location = Location.where(ip_address: remote_ip).first
+      
+      if @current_location
+        current_user.current_location = @current_location
+      else
+        redirect_to new_location_url if current_user.admin? && params[:controller] != "devise/sessions"
+      end
+    end
 
     def detect_device_variant
       case request.user_agent

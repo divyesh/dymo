@@ -9,19 +9,24 @@
   <%= csrf_meta_tag %>
 </head>
 <body>
-
   <div id="hd">
-    <div style="text-align: right; padding: 10px 50px 0px 50px;;">
-      <% if user_signed_in? %>
-        Welcome <%= current_user.firstname %> <%= current_user.lastname %>, <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
-      <% else %>
-        Welcome Guest, <%= link_to('Login', new_user_session_path) %>
+    <div style="text-align: right; padding: 10px 50px 0px 40px;;">
+      <% if @current_location  %>
+        <strong style="float: left; font-weight: bold; background-color: yellow; display: inline-block; padding: 2px 5px; border: solid 1px #000;"><%= @current_location.name %></strong>
       <% end %>
+      <small>
+        <% if user_signed_in? %>
+          Welcome <%= current_user.firstname %> <%= current_user.lastname %><%= " | " if current_user.admin? %><%= link_to "Manage locations", locations_path if current_user.admin? %> | <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+        <% else %>
+          Welcome Guest, <%= link_to('Login', new_user_session_path) %>
+        <% end %>
+      </small>
     </div>
     <h1 id="logo">
     101 - Specimen Collection Center (Med-Health Laboratories Ltd.)
+      <% if user_signed_in? %>
       <ul id="top-nav" class="top-nav">
-      <li><%= link_to 'Tokens', tokens_path %></li>
+      <li><%= link_to 'Tokens', location_tokens_path(current_location) if @current_location %></li>
       <li class="divider">|</li>
         <li><%= link_to 'Patients', root_path %></li>
         <li class="divider">|</li>
@@ -46,6 +51,7 @@
           </ul>
         </li>
       </ul>
+      <% end %>
     </h1>
   </div>
 
@@ -58,10 +64,11 @@
   </div>
 
   <div id="ft">
+    <% if user_signed_in? %>
     <p>
-    <%= link_to 'Patients', root_path %> | <%= link_to 'Physicians', physicians_path %> | <%= link_to 'Tokens', tokens_path %> | <%= link_to 'Reports', reports_index_path %>  | <%= link_to 'Tests', tests_path %> | MedHealth App
+    <%= link_to 'Patients', root_path %> | <%= link_to 'Physicians', physicians_path %> | <%= link_to 'Tokens', location_tokens_path(current_location) if @current_location %> | <%= link_to 'Reports', reports_index_path %>  | <%= link_to 'Tests', tests_path %> | MedHealth App
     </p>
-
+    <% end %>
     <div id="dialog-confirm" style="display: none;" title="VERIFY PI INFORMATION ENTERED">
     <div id="patient-details">
       <h1 id="name">

@@ -7,12 +7,11 @@
 <% end %>
 <i>To search patient, type name OR type Health card and Press Search.</i><br />
 <i>To swipe card, first clear search text box and swipe card.</i>
-<br />
-<h2>Total Visits: <%= @visits.count %>
-</h2>
-
+<br />  
+<h2>Total Visits: <%= @visits.count %></h2>
 <table width="100%">
   <tr>
+    <th>Location</th>
     <th>OHIP</th>
     <th>Health Expiry</th>
     <th>Lastname</th>
@@ -28,6 +27,7 @@
 
 <% @visits.each do |visit| %>
   <tr>
+    <td><%= visit.location.name %></td>
     <td><%= visit.patient.healthnumber %>&nbsp;<%= visit.patient.version_code %></td>
     <td><%= visit.patient.health_expiry_date.nil? ? '' : visit.patient.health_expiry_date.to_formatted_s(:long) %></td>
     <td><%= visit.patient.lastname %></td>
@@ -55,7 +55,7 @@
     <td class="text-center"><%= link_to 'Add New Visit', new_patient_visit_path(visit.patient) %>
 </td>
     <td class="text-center">
-      <%= link_to 'Edit', edit_patient_visit_path(visit.patient, visit) %><%= " | " if can?(:destroy, visit) %><%= destroy_link(visit) %>
+      <%= link_to 'Edit', edit_patient_visit_path(visit.patient, visit) if can?(:update, visit) %><%= " | " if can?(:destroy, visit) %><%= destroy_link(visit) %>
     </td>
 
   </tr>

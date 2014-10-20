@@ -41,7 +41,7 @@ class TokenHistoriesController < ApplicationController
           @token.user = current_user
           @token.discard!
         end
-        format.html { redirect_to @token, notice: 'Token punched successfully created.' }
+        format.html { redirect_to [current_location, @token], notice: 'Token punched successfully created.' }
         format.json { render :show, status: :created, location: @token_history }
       else
         format.html { render :new }
@@ -69,7 +69,7 @@ class TokenHistoriesController < ApplicationController
   def destroy
     @token_history.destroy
     respond_to do |format|
-      format.html { redirect_to @token, notice: 'Token history was successfully destroyed.' }
+      format.html { redirect_to [current_location, @token], notice: 'Token history was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

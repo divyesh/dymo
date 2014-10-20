@@ -11,11 +11,13 @@ Dymo::Application.routes.draw do
   get 'reports/physician_patients'
   get 'reports/peak_time'
 
-  resources :tokens, except: [:edit, :update] do
-    resources :token_histories, except: [:edit, :update]
-    member do
-      post :done
-      post :discard
+  resources :locations do
+    resources :tokens, except: [:edit, :update] do
+      resources :token_histories, except: [:edit, :update]
+      member do
+        post :done
+        post :discard
+      end
     end
   end
 

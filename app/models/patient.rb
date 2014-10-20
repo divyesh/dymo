@@ -14,10 +14,10 @@ class Patient < ActiveRecord::Base
     end
   end
 
-  def new_time_in_token(user)
-    token = Token.new({
+  def new_time_in_token(user, location)
+    token = location.tokens.new({
       patient: self,
-      no: Token.where("(created_at >= ? AND created_at <= ?)", DateTime.now.beginning_of_day, DateTime.now.end_of_day).size + 1
+      no: location.tokens.where("(created_at >= ? AND created_at <= ?)", DateTime.now.beginning_of_day, DateTime.now.end_of_day).size + 1
     })
     token.user = user
     token.save!
@@ -38,10 +38,10 @@ class Patient < ActiveRecord::Base
     "#{healthnumber} - #{lastname} #{firstname} #{middlename}"
   end
 
-  def time_in_token(user)
-    token = tokens.where("(created_at >= ? AND created_at <= ?) AND state = ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day, "time_in").first
+  def time_in_token(user, location)
+    token = location.tokens.where("(created_at >= ? AND created_at <= ?) AND state = ?", DateTime.now.beginning_of_day, DateTime.now.end_of_day, "time_in").first
     unless token
-      token = self.new_time_in_token(user) 
+      token = self.new_time_in_token(user, location) 
     else
       token.user = user
     end

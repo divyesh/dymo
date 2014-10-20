@@ -24,7 +24,7 @@ class PatientsController < ApplicationController
 
     respond_to do |format|
       if @patient.save
-        @token = @patient.new_time_in_token(current_user)
+        @token = @patient.new_time_in_token(current_user, current_location)
 
         print_token
 

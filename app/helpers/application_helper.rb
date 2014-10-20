@@ -1,12 +1,12 @@
 module ApplicationHelper
-  def next_state_link(token)
+  def next_state_link(token, location)
     case token.current_state.name
     when :time_in
-      ((link_to 'Register Patient', new_patient_visit_path(token.patient)) + " / " +  (link_to "Discard", new_token_token_history_path(token,{ note: "discarded" }))).html_safe
+      ((link_to 'Register Patient', new_patient_visit_path(token.patient)) + " / " +  (link_to "Discard", new_location_token_token_history_path(location, token,{ note: "discarded" }))).html_safe
     when :visit_registered
-      ((form_for token, url: done_token_path(token), method: :post, html: { class: 'inline' } do |f|
+      ((form_for token, url: done_location_token_path(current_location, token), method: :post, html: { class: 'inline' } do |f|
         f. submit 'Process'
-      end) + " / " + (link_to "Discard", new_token_token_history_path(token, {note: "discarded"}))).html_safe
+      end) + " / " + (link_to "Discard", new_location_token_token_history_path(location, token, {note: "discarded"}))).html_safe
     end
   end
 

@@ -11,11 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140902093730) do
+ActiveRecord::Schema.define(version: 20141006142848) do
 
   create_table "app_configs", force: true do |t|
     t.string   "name"
     t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "locations", force: true do |t|
+    t.string   "name"
+    t.text     "address"
+    t.string   "ip_address"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -115,6 +123,7 @@ ActiveRecord::Schema.define(version: 20140902093730) do
     t.string   "state"
     t.datetime "completed_at"
     t.integer  "user_id"
+    t.integer  "location_id"
   end
 
   create_table "users", force: true do |t|
@@ -157,6 +166,7 @@ ActiveRecord::Schema.define(version: 20140902093730) do
     t.string   "specimen_priority"
     t.float    "amount"
     t.string   "lab_number"
+    t.integer  "location_id"
   end
 
 end

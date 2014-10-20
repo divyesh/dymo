@@ -63,3 +63,20 @@ Test and Test group migrations
 
 1. On deleting visit token should also be deleted
 2. 
+
+Locations
+  - Users
+  - Tokens
+  - AppConfigs
+  - Visits
+
+Common
+ - Patients
+ - Physicians
+ - Tests
+ - Test Groups
+
+Location - DONE, ADMIN DONE
+ - Name
+ - Address
+ - Ip Address

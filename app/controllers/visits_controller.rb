@@ -40,6 +40,7 @@ class VisitsController < ApplicationController
     @visit = @patient.visits.new
     authorize! :new, @visit
     @visit.visitdate = DateTime.now
+    @visit.location = current_location
     @test_groups = TestGroup.order("position ASC")
   end
 
@@ -51,11 +52,12 @@ class VisitsController < ApplicationController
   def create
     @visit = @patient.visits.new(visit_params)
     authorize! :create, @visit
+    @visit.location = current_location
     @visit.visitdate = DateTime.now
 
     respond_to do |format|
       if @visit.save
-        token = @visit.patient.time_in_token(current_user)
+        token = @visit.patient.time_in_token(current_user, current_location)
         token.add_visit!
 
         format.html { redirect_to(@patient, notice: 'Visit was successfully created and token time registered.') }

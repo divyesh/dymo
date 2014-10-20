@@ -1,5 +1,6 @@
 class Visit < ActiveRecord::Base
   belongs_to :patient
+  belongs_to :location
   #belongs_to :physician
   has_many :physician_visits, dependent: :destroy
   has_many :physicians, through: :physician_visits
