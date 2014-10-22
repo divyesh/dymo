@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141020175419) do
+ActiveRecord::Schema.define(version: 20141022185436) do
 
   create_table "app_configs", force: true do |t|
     t.string   "name"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20141020175419) do
     t.string   "mobile"
     t.boolean  "isactive"
     t.integer  "location_id"
+    t.integer  "old_id"
   end
 
   create_table "physician_visits", force: true do |t|
@@ -58,6 +59,7 @@ ActiveRecord::Schema.define(version: 20141020175419) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "location_id"
+    t.integer  "old_id"
   end
 
   create_table "physicians", force: true do |t|
@@ -84,6 +86,7 @@ ActiveRecord::Schema.define(version: 20141020175419) do
     t.string   "email"
     t.boolean  "isactive"
     t.integer  "location_id"
+    t.integer  "old_id"
   end
 
   create_table "test_groups", force: true do |t|
@@ -92,6 +95,7 @@ ActiveRecord::Schema.define(version: 20141020175419) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "location_id"
+    t.integer  "old_id"
   end
 
   create_table "tests", force: true do |t|
@@ -108,6 +112,7 @@ ActiveRecord::Schema.define(version: 20141020175419) do
     t.integer  "test_group_id"
     t.boolean  "visible_in_list", default: true
     t.integer  "location_id"
+    t.integer  "old_id"
   end
 
   create_table "token_histories", force: true do |t|
@@ -119,6 +124,7 @@ ActiveRecord::Schema.define(version: 20141020175419) do
     t.text     "comment"
     t.integer  "user_id"
     t.integer  "location_id"
+    t.integer  "old_id"
   end
 
   create_table "tokens", force: true do |t|
@@ -130,6 +136,7 @@ ActiveRecord::Schema.define(version: 20141020175419) do
     t.datetime "completed_at"
     t.integer  "user_id"
     t.integer  "location_id"
+    t.integer  "old_id"
   end
 
   create_table "users", force: true do |t|
@@ -151,6 +158,7 @@ ActiveRecord::Schema.define(version: 20141020175419) do
     t.string   "last_sign_in_ip"
     t.boolean  "admin",                  default: false
     t.integer  "location_id"
+    t.integer  "old_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -162,6 +170,7 @@ ActiveRecord::Schema.define(version: 20141020175419) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "location_id"
+    t.integer  "old_id"
   end
 
   create_table "visits", force: true do |t|
@@ -175,6 +184,7 @@ ActiveRecord::Schema.define(version: 20141020175419) do
     t.float    "amount"
     t.string   "lab_number"
     t.integer  "location_id"
+    t.integer  "old_id"
   end
 
 end
