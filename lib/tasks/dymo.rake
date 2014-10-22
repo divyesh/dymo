@@ -23,7 +23,11 @@ namespace :dymo do
     puts "Please enter location_id whose visits you want to migrate to current db: "
     location_id = STDIN.gets.strip
     
-    Visit.where("location_id = ?", location_id).each do |visit|
+    visits = Visit.where("location_id = ?", location_id)
+    
+    puts "Total visits to be migrated are: #{visits.count}"
+    
+    visits.each_with_index do |visit, index|
       visit_patient = Patient.where("old_id = ?", visit.patient_id).first
       patient = visit_patient
 
@@ -41,33 +45,42 @@ namespace :dymo do
 
       # update visit_test id for visit and remove duplicate patient
       visit_test = VisitTest.where("visit_id = ?", visit.old_id).first
-      visit_test.visit_id = visit.id
-
-      test = Test.where("old_id = ?", visit_test.test_id)
-      tests = Test.where("test_code = ?", test.test_code)
       
-      if tests.count > 1
-        test = Test.where("test_code = ? AND location_id = ?", test.test_code, 1).first
-        Test.where("test_code = ? AND location_id != ?", test.test_code, 1).delete_all
-      end
+      if visit_test
+        visit_test.visit_id = visit.id
 
-      visit_test.test_id = test.id
-      visit_test.save!
+        # test = Test.where("old_id = ?", visit_test.test_id)
+        # tests = Test.where("test_code = ?", test.test_code)
+        #
+        # if tests.count > 1
+        #   test = Test.where("test_code = ? AND location_id = ?", test.test_code, 1).first
+        #   Test.where("test_code = ? AND location_id != ?", test.test_code, 1).delete_all
+        # end
+        #
+        # visit_test.test_id = test.id
+        visit_test.save!
+      end
 
       # update visit_test id for visit and remove duplicate patient
       physician_visit = PhysicianVisit.where("visit_id = ?", visit.old_id).first
-      physician_visit.visit_id = visit.id
-
-      physician = Physician.where("old_id = ?", physician_visit.physician_id)
-      physicians = Physician.where("physician_number = ?", physician.physician_number)
-
-      if physicians.count > 1
-        physician = Physician.where("physician_number = ? AND location_id = ?", physician.physician_number, 1).first
-        Physician.where("physician_number = ? AND location_id != ?", physician.physician_number, 1).delete_all
-      end
       
-      physician_visit.physician_id = physician.id
-      physician_visit.save!
+      if physician_visit
+        physician_visit.visit_id = visit.id
+
+        physician = Physician.where("old_id = ?", physician_visit.physician_id)
+        physicians = Physician.where("physician_number = ?", physician.physician_number)
+
+        if physicians.count > 1
+          physician = Physician.where("physician_number = ? AND location_id = ?", physician.physician_number, 1).first
+          Physician.where("physician_number = ? AND location_id != ?", physician.physician_number, 1).delete_all
+        end
+      
+        physician_visit.physician_id = physician.id
+        physician_visit.save!
+      end
+
+      puts "#{index + 1} of #{visits.count} done. #{visits.count - (index + 1)} remaining."
+
     end
     puts "Done !"
   end
